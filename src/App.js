@@ -9,10 +9,10 @@ const App = ({ phases }) => {
     <div>
       {phases ? 
         phases.map(phase => (
-          <div key={phase.id}>
+          <div key={phase.phaseId}>
             <PhaseContainer 
               name={phase.name}
-              id={phase.id}
+              phaseId={phase.phaseId}
             />
           </div>
         )) :

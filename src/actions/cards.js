@@ -5,13 +5,13 @@ import { v4 as uuidv4 } from 'uuid';
 export const addCard = (name = '', phaseId = '') => ({
   type: 'ADD_CARD',
   name,
-  id: uuidv4(),
+  cardId: uuidv4(),
   phaseId
 });
 
 // REMOVE_CARD
 
-export const removeCard = ( id ) => ({
+export const removeCard = ( cardId ) => ({
   type: 'REMOVE_CARD',
-  id
+  cardId
 })
