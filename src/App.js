@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux'
+import PhaseCreatorContainer from './components/Phase/phaseCreatorContainer';
+import PhaseContainer from './components/Phase/phaseContainer';
 
-function App() {
+const App = ({ phases }) => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {phases ? 
+        phases.map(phase => (
+          <div key={phase.id}>
+            <PhaseContainer 
+              name={phase.name}
+              id={phase.id}
+            />
+          </div>
+        )) :
+        ''
+      }
+      <PhaseCreatorContainer/>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  phases: state.phases
+})
+
+export default connect(mapStateToProps)(App);
