@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { addColumn } from '../../actions/columns';
 
-const ColumnCreator = ({ addColumn, phaseId }) => {
+const ColumnCreator = ({ addColumn, phaseId, relevantCards }) => {
   const [columnName, setColumnNameState] = useState('');
   
   const setColumn = (e) => {
     e.preventDefault();
-    addColumn(columnName, phaseId);
+    let initialValuesCount = relevantCards.length;
+    addColumn(columnName, phaseId, initialValuesCount);
     setColumnNameState('');
   }
 
@@ -25,8 +26,12 @@ const ColumnCreator = ({ addColumn, phaseId }) => {
   )
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  addColumn: (name, phaseId) => dispatch(addColumn(name, phaseId)),
+const mapStateToProps = (state, ownProps) => ({
+  relevantCards: state.cards.filter(card => card.phaseId === ownProps.phaseId)
 })
 
-export default connect(null, mapDispatchToProps)(ColumnCreator);
+const mapDispatchToProps = (dispatch) => ({
+  addColumn: (name, phaseId, initialValuesCount) => dispatch(addColumn(name, phaseId, initialValuesCount)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ColumnCreator);
