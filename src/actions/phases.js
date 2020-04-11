@@ -14,3 +14,11 @@ export const removePhase = ( phaseId ) => ({
   type: 'REMOVE_PHASE',
   phaseId
 })
+
+// RENAME_PHASE
+
+export const renamePhase = (name, phaseId) => ({
+  type: 'RENAME_PHASE',
+  name,
+  phaseId
+})

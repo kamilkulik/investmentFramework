@@ -26,8 +26,43 @@ export default (state = columnReducerDefaultState, action) => {
           return { ...column }
         }
       })
+    case 'ADD_GENERIC_COLUMN_VALUE':
+      return state.map(column => {
+        if (column.phaseId === action.phaseId) {
+          column.values.push(0);
+          return {
+            ...column,
+            values: column.values
+          }
+        } else {
+          return { ...column }
+        }
+      }) 
+    case 'REMOVE_CARD':
+      return removeCard(state, action)
+    case 'REMOVE_PHASE':
+      return state.filter(({ phaseId }) => phaseId !== action.phaseId)
+    case 'RENAME_COLUMN':
+      return state.map(( column ) => {
+        return column.columnId === action.columnId ? { ...column, name: action.name, columnId: action.columnId } : column
+      })
     default:
       return state
   }
 };
 
+function removeCard(state, action) {
+  const columnsWithAdjustedValues = state.map(column => {
+    if (column.phaseId === action.phaseId) {
+      column.values.splice(action.index, 1);
+        return {
+          ...column,
+          values: column.values
+        }
+    } else {
+      return { ...column }
+    }
+  });
+  const newState = columnsWithAdjustedValues.filter(({ values }) => values.length > 0)
+  return newState
+}

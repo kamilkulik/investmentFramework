@@ -11,7 +11,17 @@ export const addCard = (name = '', phaseId = '') => ({
 
 // REMOVE_CARD
 
-export const removeCard = ( cardId ) => ({
+export const removeCard = ( cardId, phaseId, index ) => ({
   type: 'REMOVE_CARD',
+  cardId,
+  phaseId,
+  index
+})
+
+// RENAME_CARD
+
+export const renameCard = (name, cardId) => ({
+  type: 'RENAME_CARD',
+  name,
   cardId
 })

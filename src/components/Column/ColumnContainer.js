@@ -1,15 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { removeColumn } from '../../actions/columns';
+import { removeColumn, renameColumn } from '../../actions/columns';
 import ColumnValue from '../Column/ColumnValue';
 import { v4 as uuidv4 } from 'uuid';
 
-const ColumnContainer = ({ name, columnId, removeColumn, columnValues }) => {
+const ColumnContainer = ({ name, columnId, removeColumn, renameColumn, columnValues }) => {
+
+  const [columnName, setColumnName] = useState(name)
+  const [optionsPopover, setOptionsPopover] = useState(false);
+  const columnTextArea = React.createRef();
+
+  const changeColumnName = (e) => {
+    if (columnName !== name) {
+      e.preventDefault()
+      renameColumn(columnName, columnId)
+    }
+  }
+
+  const onKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      columnTextArea.current.blur();
+    }
+  }
 
   return (
     <div>
-      <h6>{name}</h6>
-      <button onClick={() => removeColumn(columnId)}>X</button>
+      <form 
+        onBlur={changeColumnName}
+        onKeyDown={onKeyPress}
+        >
+        <textarea rows='1' cols='20' type='text' style={{ resize: 'none', ':hover': {cursor : 'pointer'}, border: 'none' }} 
+        onClick={(e) => e.target.select()}
+        value={columnName}
+        onChange={(e) => setColumnName(e.target.value)}
+        ref={columnTextArea}
+        /> 
+      </form>
+      <button onClick={() => setOptionsPopover(!optionsPopover)}>...</button>
+      {optionsPopover && <button onClick={() => removeColumn(columnId)}>X</button>}
       {columnValues.values.map((value, index) => (
         <div key={uuidv4()}>
           <ColumnValue
@@ -28,7 +57,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  removeColumn: (columnId) => dispatch(removeColumn(columnId))
+  removeColumn: (columnId) => dispatch(removeColumn(columnId)),
+  renameColumn: (name, columnId) => dispatch(renameColumn(name, columnId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ColumnContainer);

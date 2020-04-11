@@ -7,8 +7,10 @@ const ColumnValue = ({ value, columnId, index, setColumnValue }) => {
 const [columnValueState, setColumnValueState] = useState(value);
 
 const setValue = (e) => {
-  e.preventDefault();
-  setColumnValue(columnId, index, columnValueState);
+  if (value !== columnValueState) {
+    e.preventDefault();
+    setColumnValue(columnId, index, columnValueState);
+  }
 };
 
   return (

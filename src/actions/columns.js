@@ -25,3 +25,18 @@ export const setColumnValue = ( columnId, index, columnValue ) => ({
   index,
   columnValue
 });
+
+// ADD_GENERIC_COLUMN_VALUE
+
+export const addGenericColumnValue = ( phaseId ) => ({
+  type: 'ADD_GENERIC_COLUMN_VALUE',
+  phaseId
+});
+
+// RENAME_COLUMN
+
+export const renameColumn = (name, columnId) => ({
+  type: 'RENAME_COLUMN',
+  name,
+  columnId
+})
