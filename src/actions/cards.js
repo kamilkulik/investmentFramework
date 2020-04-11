@@ -5,13 +5,23 @@ import { v4 as uuidv4 } from 'uuid';
 export const addCard = (name = '', phaseId = '') => ({
   type: 'ADD_CARD',
   name,
-  id: uuidv4(),
+  cardId: uuidv4(),
   phaseId
 });
 
 // REMOVE_CARD
 
-export const removeCard = ( id ) => ({
+export const removeCard = ( cardId, phaseId, index ) => ({
   type: 'REMOVE_CARD',
-  id
+  cardId,
+  phaseId,
+  index
+})
+
+// RENAME_CARD
+
+export const renameCard = (name, cardId) => ({
+  type: 'RENAME_CARD',
+  name,
+  cardId
 })

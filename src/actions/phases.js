@@ -5,12 +5,20 @@ import { v4 as uuidv4 } from 'uuid';
 export const setPhaseName = (name = '') => ({
   type: 'ADD_PHASE',
   name,
-  id: uuidv4()
+  phaseId: uuidv4()
 });
 
 // REMOVE_PHASE_NAME
 
-export const removePhase = ( id ) => ({
+export const removePhase = ( phaseId ) => ({
   type: 'REMOVE_PHASE',
-  id
+  phaseId
+})
+
+// RENAME_PHASE
+
+export const renamePhase = (name, phaseId) => ({
+  type: 'RENAME_PHASE',
+  name,
+  phaseId
 })
