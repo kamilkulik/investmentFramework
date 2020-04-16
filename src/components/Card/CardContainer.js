@@ -36,7 +36,6 @@ const CardContainer = ({ name, cardId, phaseId, index, removeCard, renameCard, s
       ref={cardTextArea}
       onBlur={changeCardName}
       onKeyDown={onKeyPress}
-      className={classNames.join(' ')}
       /> 
       <SmallBtn onClick={() => removeCard(cardId, phaseId, index)}>X</SmallBtn>
     </>

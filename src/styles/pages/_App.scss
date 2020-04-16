@@ -9,7 +9,7 @@
   &-layout {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: 50px repeat(4, minmax(min-content, 150px)) 50px;
+    grid-template-rows: 50px repeat(auto-fill, minmax(min-content, 150px)) 50px;
     column-gap: var(--gutter);
   }
 

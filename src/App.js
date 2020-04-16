@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import PhaseCreatorContainer from './components/Phase/phaseCreatorContainer';
 import PhaseContainer from './components/Phase/phaseContainer';
+import ElementCreator from './components/ElementCreator/ElementCreator';
+import { setPhaseName } from './actions/phases';
 
-const App = ({ phases }) => {
+const App = ({ phases, setPhaseName }) => {
 
   return (
     <div className='main-layout'>
-      {phases ? 
+      {phases && 
         phases.map(phase => (
           <div key={phase.phaseId} className='main--phase'>
             <PhaseContainer 
@@ -15,16 +16,25 @@ const App = ({ phases }) => {
               phaseId={phase.phaseId}
             />
           </div>
-        )) :
-        ''
+        ))
       }
-      <PhaseCreatorContainer/>
+      <ElementCreator
+        classNames={['main--phase-creator']}
+        setElementName={setPhaseName}
+        placeholder='Dodaj krok'
+        addText='Dodaj fazę'
+        btnText='+ Dodaj kolejną fazę'
+      />
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
   phases: state.phases
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setPhaseName: (name) => dispatch(setPhaseName(name)),
 })
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
