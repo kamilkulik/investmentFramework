@@ -1,0 +1,40 @@
+:root {
+  --colNum: 1;
+  --rowNum: 2;
+  // --gridHeight: calc(100vh / var(--rowNum) - 5px * (var(--rowNum) - 1) / var(--rowNum));;
+  --gutter: 0px;
+}
+
+.table {
+  display: grid;
+  grid-template-columns: 178px repeat(auto-fill, min-content);
+  grid-template-rows: repeat(var(--rowNum), min-content);
+  grid-gap: var(--gutter);
+  background-color: $color-grey-light-2;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: $box-shadow-light;
+
+  &--grid-item {
+    grid-column-start: auto;
+    grid-row-start: auto;
+  }
+
+  &--rowStart {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  &--rowName {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+
+  &--column {
+    grid-row: 1 / 2;
+  }
+
+  &--value {
+    grid-row: 2 / 3;
+  }
+};

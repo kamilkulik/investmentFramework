@@ -21,7 +21,7 @@ const CardCreator = ({ addCard, phaseId, addGenericColumnValue, columns = [] }) 
           value={CardName}
           onChange={(e) => setCardNameState(e.target.value)}
           />
-        <button>Dodaj Aktywo</button>
+        <button className='creator--button'>Dodaj Aktywo</button>
       </form>
     </div>
   )

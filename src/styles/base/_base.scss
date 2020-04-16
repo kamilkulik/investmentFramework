@@ -1,0 +1,50 @@
+@import-normalize;
+
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  // overflow: hidden;
+}
+
+p {
+  margin: 0;
+}
+
+// code {
+//   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+//     monospace;
+// }
+
+html {
+ 
+  /*  In media query, if more than one query applies, then the last one will apply
+      For instance, tablet with 1050px width, triggers less than 1200 query
+      Tablet whose width is 850px triggers less than 900px query
+      Phone with 580px width, triggers less than 600px, 900px and 1200px queries, so which gets chosen by the browser? It actually looks at which query is last and applies that
+      Therefore, if you want the browser to correctly apply breakpoints & corresponding media queries, given max-width properties are used, order queries here from largest to smallest
+  */
+
+  //  This defines what 1 REM is
+  font-size: 62.5%; // 1 REM = 10px; 10px/16px = 62.5%
+  
+  @include respond(tab-land) { // width < 1200px?
+    font-size: 56.25%; // 1rem = 9px; 9/16 = 56.25%
+}
+
+@include respond(tab-port) { // width < 900px?
+    font-size: 50%; // 1rem = 8px; 8/16 = 50%
+}
+
+@include respond(phone) { // width < 600px?
+    font-size: 46.428% // 1 rem = 6.5px; 6.5/16 = 46.428%
+}
+
+@include respond(big-desktop) {
+    font-size: 75%; // 1rem = 12px; 12/16 = 75%
+}
+}

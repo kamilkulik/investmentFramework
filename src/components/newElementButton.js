@@ -2,7 +2,7 @@ import React from 'react';
 
 const newElementButton = ({ title, buttonAction }) => {
   return (
-    <div>
+    <div className='creator--button-title'>
       <button 
         onClick={() => buttonAction()}
         >

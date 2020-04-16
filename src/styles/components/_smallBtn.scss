@@ -1,0 +1,8 @@
+.smallBtn {
+  @include greyButton;
+  height: 100%;
+      
+  &:hover {
+    @include greyToDarkGrey;
+  }
+}

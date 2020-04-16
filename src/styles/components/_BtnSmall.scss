@@ -1,0 +1,32 @@
+.btn-small,
+.btn-small:link,
+.btn-small:visited {
+
+  outline: none;
+  font-size: 3rem;
+  color: $color-secondary-dark;
+  background-color: transparent;
+  border-radius: 5rem;
+  border: 3px solid $color-secondary-dark;
+  padding: 1.5rem 3rem;
+  cursor: pointer;
+  transition: all .4s;
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  @include respond(phone) {
+    width: 60vw;
+    white-space: normal;
+  }
+
+  @include respond(small-phone) {
+    font-size: 2rem;
+  }
+
+  @include respond(phone-land) {
+    font-size: 2rem;
+    width: 40vw;
+  }
+}

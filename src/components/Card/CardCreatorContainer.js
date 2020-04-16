@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import NewElementButton from '../../components/newElementButton';
 import CardCreator from '../../components/Card/CardCreator';
 
-const CardCreatorContainer = ({ phaseId }) => {
+const CardCreatorContainer = ({ className, phaseId }) => {
 
   const [cardCreator, setCardCreator] = useState(false);
 
   return (
-    <div>
+    <div className={`${className} creator`} onBlur={() => setCardCreator(false)}>
       {cardCreator ? 
         <CardCreator 
           phaseId={phaseId}
         /> :
         <NewElementButton 
-        title='Dodaj kolejne aktywo'
+        title='+ Dodaj kolejne aktywo'
         buttonAction={() => setCardCreator(true)}
         />
       }
-      {cardCreator && <button onClick={() => setCardCreator(false)}>X</button>}
+      {cardCreator && <button className='creator--button-x' onClick={() => setCardCreator(false)}>X</button>}
     </div>
   );
 }

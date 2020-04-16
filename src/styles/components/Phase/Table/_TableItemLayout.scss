@@ -1,0 +1,77 @@
+.row {
+
+  &--container {
+    display: flex;
+    height: 30px;
+    align-items: center;
+    justify-content: flex-end;
+
+    textarea {
+      height: 20px;
+      font-size: 1.2rem;
+      overflow-x: hidden;
+      padding: 2px;
+      background-color: $color-grey-light-2;
+    }
+
+    form {
+      height: 30px;
+      align-items: center;
+      display: flex;
+    }
+
+    input {
+      width: 95%;
+      border: none;
+      text-align: center;
+    }
+  }
+
+}
+
+.column {
+
+  &--container {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    textarea {
+      resize: none; 
+      padding: 2px;
+      font-size: 1.2rem;
+      border: none;
+      overflow-x: hidden;
+      height: 20px;
+      background-color: $color-grey-light-2;
+    }
+
+    form {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+
+.value {
+  
+
+  form {
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  input {
+    border-radius: 4px;
+    height: 20px;
+    width: 90%;
+    border: none;
+    text-align: center;
+    box-shadow: $box-shadow-value;
+  }
+}
