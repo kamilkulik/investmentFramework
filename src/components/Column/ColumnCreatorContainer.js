@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import NewElementButton from '../../components/newElementButton';
 import ColumnCreator from '../../components/Column/ColumnCreator';
 
-const ColumnCreatorContainer = ({ phaseId }) => {
+const ColumnCreatorContainer = ({ className, phaseId }) => {
 
   const [columnCreator, setColumnCreator] = useState(false);
 
   return (
-    <div>
+    <div className={`${className} creator`} onBlur={() => setColumnCreator(false)}>
       {columnCreator ? 
         <ColumnCreator 
           phaseId={phaseId}
         /> :
         <NewElementButton 
-        title='Dodaj kolejny wskaźnik'
+        title='+ Dodaj kolejny wskaźnik'
         buttonAction={() => setColumnCreator(true)}
         />
       }
-      {columnCreator && <button onClick={() => setColumnCreator(false)}>X</button>}
+      {columnCreator && <button className='creator--button-x' onClick={() => setColumnCreator(false)}>X</button>}
     </div>
   );
 }

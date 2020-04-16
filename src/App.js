@@ -6,10 +6,10 @@ import PhaseContainer from './components/Phase/phaseContainer';
 const App = ({ phases }) => {
 
   return (
-    <div>
+    <div className='main-layout'>
       {phases ? 
         phases.map(phase => (
-          <div key={phase.phaseId}>
+          <div key={phase.phaseId} className='main--phase'>
             <PhaseContainer 
               name={phase.name}
               phaseId={phase.phaseId}

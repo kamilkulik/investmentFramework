@@ -7,15 +7,15 @@ const PhaseCreatorContainer = () => {
   const [phaseCreator, setPhaseCreator] = useState(false);
 
   return (
-    <div>
+    <div className='main--phase-creator creator' onBlur={() => setPhaseCreator(false)}>
       {phaseCreator ? 
         <PhaseCreator /> :
         <NewElementButton 
-        title='Dodaj kolejną fazę'
+        title='+ Dodaj kolejną fazę'
         buttonAction={() => setPhaseCreator(true)}
       />
       }
-      {phaseCreator && <button onClick={() => setPhaseCreator(false)}>X</button>}
+      {phaseCreator && <button className='creator--button-x' onClick={() => setPhaseCreator(false)}>X</button>}
     </div>
   );
 }

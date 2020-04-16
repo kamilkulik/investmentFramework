@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { removePhase, renamePhase } from '../../actions/phases';
 import CardCreatorContainer from '../../components/Card/CardCreatorContainer';
-import CardContainer from '../../components/Card/CardContainer';
 import ColumnCreatorContainer from '../../components/Column/ColumnCreatorContainer';
-import ColumnContainer from '../../components/Column/ColumnContainer';
+import TableContainer from '../../components/Table/TableContainer';
+import SmallBtn from '../../components/SmallBtn';
 
 const PhaseContainer = ({ name, phaseId, removePhase, renamePhase, cards, columns }) => {
 
-  const [optionsPopover, setOptionsPopover] = useState(false);
   const [phaseName, setPhaseName] = useState(name)
   const nameTextArea = React.createRef();
 
@@ -27,65 +26,34 @@ const PhaseContainer = ({ name, phaseId, removePhase, renamePhase, cards, column
   }
 
   return (
-    <div>
-      <form 
-        onBlur={changePhaseName}
-        onKeyDown={onKeyPress}
-        >
+    <div className='phase'>
+      <div className='phase--header'>
         <textarea rows='1' cols='20' type='text' style={{ resize: 'none', ':hover': {cursor : 'pointer'}, border: 'none' }} 
         onClick={(e) => e.target.select()}
         value={phaseName}
         onChange={(e) => setPhaseName(e.target.value)}
         ref={nameTextArea}
+        onBlur={changePhaseName}
+        onKeyDown={onKeyPress}
         /> 
-      </form>
-      <button onClick={() => setOptionsPopover(!optionsPopover)}>...</button>
-      {optionsPopover && 
-        <div>
-          <button onClick={() => removePhase(phaseId)}>X</button>
-        </div>}
-      {cards.length > 0 ? 
-        <div>
-          <div>{
-            cards.map((card, index) => (
-              <div key={card.cardId}>
-                <CardContainer 
-                  name={card.name}
-                  cardId={card.cardId}
-                  phaseId={card.phaseId}
-                  index={index}
-                />
-              </div>
-            ))
-          }</div>
-          <div>
-            <div>{
-              columns.map(column => (
-                <div key={column.columnId}>
-                  <ColumnContainer 
-                    name={column.name}
-                    columnId={column.columnId}
-                    phaseId={column.phaseId}
-                  />
-                </div>
-              ))
-            }</div>
-            <ColumnCreatorContainer 
-              phaseId={phaseId}
-            />
-          </div>
-        </div>
-        :
-      <CardCreatorContainer
-        phaseId={phaseId}
-      />
-      }
-      {cards.length > 0 ?
-        <CardCreatorContainer
+        <SmallBtn onClick={() => removePhase(phaseId)}>X</SmallBtn>
+      </div>
+      {cards.length > 0 && 
+          <TableContainer 
+            phaseId={phaseId}
+            cards={cards}
+            columns={columns}
+            className='phase--table'
+          />}
+      {cards.length > 0 && 
+        <ColumnCreatorContainer 
           phaseId={phaseId}
-        /> :
-        '' 
-      }
+          className='phase--newColumn'
+        />}
+      {cards.length === 0 && <CardCreatorContainer
+        phaseId={phaseId}
+        className='phase--newRow'
+        /> }
     </div>
   )
 };

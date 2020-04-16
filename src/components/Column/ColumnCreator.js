@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { addColumn } from '../../actions/columns';
 
-const ColumnCreator = ({ addColumn, phaseId, relevantCards }) => {
+const ColumnCreator = ({ addColumn, phaseId, relevantCards, relevantColumns }) => {
   const [columnName, setColumnNameState] = useState('');
   
   const setColumn = (e) => {
@@ -10,6 +10,7 @@ const ColumnCreator = ({ addColumn, phaseId, relevantCards }) => {
     let initialValuesCount = relevantCards.length;
     addColumn(columnName, phaseId, initialValuesCount);
     setColumnNameState('');
+    // addGridColumn();
   }
 
   return (
@@ -20,14 +21,15 @@ const ColumnCreator = ({ addColumn, phaseId, relevantCards }) => {
           value={columnName}
           onChange={(e) => setColumnNameState(e.target.value)}
           />
-        <button>Dodaj Wskaźnik</button>
+        <button className='creator--button'>Dodaj Wskaźnik</button>
       </form>
     </div>
   )
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  relevantCards: state.cards.filter(card => card.phaseId === ownProps.phaseId)
+  relevantCards: state.cards.filter(card => card.phaseId === ownProps.phaseId),
+  relevantColumns: state.columns.filter(({ phaseId }) => phaseId === ownProps.phaseId)
 })
 
 const mapDispatchToProps = (dispatch) => ({

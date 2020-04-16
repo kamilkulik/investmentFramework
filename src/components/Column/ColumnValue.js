@@ -14,10 +14,10 @@ const setValue = (e) => {
 };
 
   return (
-    <div>
+    <div className='value'>
       <form onBlur={setValue}>
         <input 
-          type='number'
+          type='text'
           value={columnValueState}
           onChange={(e) => setColumnValueState(e.target.value)}
         />

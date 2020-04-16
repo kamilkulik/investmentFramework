@@ -1,0 +1,41 @@
+.phase {
+  display: grid;
+  grid-template-columns: min-content min-content;
+  grid-template-rows: auto auto 150px;
+  grid-template-areas:
+    'phaseName .'
+    'tableContainer columnCreator'
+    'cardCreator columnCreator';
+
+  &--header {
+    grid-area: phaseName;
+    background-color: $color-grey-light-2;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+    padding: 5px;
+
+    textarea {
+      background-color: $color-grey-light-2;
+      color: $color-black;
+      height: 4rem;
+      font-size: 2rem;
+      padding: 2px;
+    }
+  }
+
+  &--table {
+    grid-area: tableContainer;
+  }
+
+  &--newColumn {
+    grid-area: columnCreator;
+  }
+
+  &--newRow {
+    grid-area: cardCreator;
+  }
+};

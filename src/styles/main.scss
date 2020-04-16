@@ -1,0 +1,15 @@
+@import './abstracts/mixins';
+@import './abstracts/variables';
+
+@import './base/animations';
+@import './base/base';
+@import './base/typography';
+
+@import './components/BtnSmall';
+@import './components/DefaultCreator';
+@import './components/Phase/PhaseContainer';
+@import './components/Phase/Table/TableContainer';
+@import './components/Phase/Table/TableItemLayout';
+@import './components/smallBtn';
+
+@import './pages/_App';

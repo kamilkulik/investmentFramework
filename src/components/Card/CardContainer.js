@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import SmallBtn from '../SmallBtn';
 import { connect } from 'react-redux';
 import { removeCard, renameCard } from '../../actions/cards';
 
-const CardContainer = ({ name, cardId, phaseId, index, removeCard, renameCard }) => {
+const CardContainer = ({ name, cardId, phaseId, index, removeCard, renameCard, smallButton = true }) => {
 
   const [cardName, setCardName] = useState(name)
-  const [optionsPopover, setOptionsPopover] = useState(false);
   const cardTextArea = React.createRef();
 
   const changeCardName = (e) => {
@@ -22,22 +22,24 @@ const CardContainer = ({ name, cardId, phaseId, index, removeCard, renameCard })
     }
   }
 
+  const classNames = [];
+  if (smallButton) {
+    classNames.push('smallBtn')
+  }
+
   return (
-    <div>
-      <form 
+    <>
+      <textarea name='rowName' rows='1' cols='10' wrap='off' type='text' style={{ resize: 'none', border: 'none' }} 
+      onClick={(e) => e.target.select()}
+      value={cardName}
+      onChange={(e) => setCardName(e.target.value)}
+      ref={cardTextArea}
       onBlur={changeCardName}
       onKeyDown={onKeyPress}
-      >
-        <textarea rows='1' cols='20' type='text' style={{ resize: 'none', ':hover': {cursor : 'pointer'}, border: 'none' }} 
-        onClick={(e) => e.target.select()}
-        value={cardName}
-        onChange={(e) => setCardName(e.target.value)}
-        ref={cardTextArea}
-        /> 
-      </form>
-      <button onClick={() => setOptionsPopover(!optionsPopover)}>...</button>
-      {optionsPopover && <button onClick={() => removeCard(cardId, phaseId, index)}>X</button> }
-    </div>
+      className={classNames.join(' ')}
+      /> 
+      <SmallBtn onClick={() => removeCard(cardId, phaseId, index)}>X</SmallBtn>
+    </>
   )
 };
 
