@@ -1,42 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { removeColumn, renameColumn } from '../../actions/columns';
 import ColumnValue from '../Column/ColumnValue';
-import SmallBtn from '../SmallBtn';
+import DefaultContainer from '../DefaultElement/DefaultContainer';
 import { v4 as uuidv4 } from 'uuid';
 
-const ColumnContainer = ({ name, columnId, removeColumn, renameColumn, columnValues }) => {
-
-  const [columnName, setColumnName] = useState(name)
-  const columnTextArea = React.createRef();
-
-  const changeColumnName = (e) => {
-    if (columnName !== name) {
-      e.preventDefault()
-      renameColumn(columnName, columnId)
-    }
-  }
-
-  const onKeyPress = (e) => {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-      columnTextArea.current.blur();
-    }
-  }
+const ColumnContainer = ({ name, columnId, phaseId, removeColumn, renameColumn, columnValues }) => {
 
   return (
     <>
-    <div className='table--column table--grid-item column--container'>
-      <textarea rows='1' cols='10' type='text' 
-        onClick={(e) => e.target.select()}
-        value={columnName}
-        onChange={(e) => setColumnName(e.target.value)}
-        ref={columnTextArea}
-        onBlur={changeColumnName}
-        onKeyDown={onKeyPress}
-      /> 
-      <SmallBtn onClick={() => removeColumn(columnId)}>X</SmallBtn>
-    </div>
+      <DefaultContainer
+        classNames={['table--colum', 'table--grid-item', 'column--container']}
+        name={name}
+        elementId={columnId}
+        phaseId={phaseId}
+        removeElement={removeColumn}
+        renameElement={renameColumn}
+      />
       <div className='table--value table--grid-item'>
         {
         columnValues.values.map((value, index) => (
