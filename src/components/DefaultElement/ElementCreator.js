@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NewElementButton from '../../components/newElementButton';
+import NewElementButton from '../newElementButton';
 
 const ElementCreatorContainer = ({ setElementName, placeholder, addText, btnText, classNames, phaseId, columns = [], cards = [], addGenericColumnValue, type }) => {
 

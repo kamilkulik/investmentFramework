@@ -1,44 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { removePhase, renamePhase } from '../../actions/phases';
-import ElementCreator from '../../components/ElementCreator/ElementCreator';
+import ElementCreator from '../DefaultElement/ElementCreator';
 import TableContainer from '../../components/Table/TableContainer';
-import SmallBtn from '../../components/SmallBtn';
 import { addCard } from '../../actions/cards';
-import { addColumn } from '../../actions/columns';
-import { addGenericColumnValue } from '../../actions/columns';
+import { addColumn, addGenericColumnValue } from '../../actions/columns';
+import DefaultContainer from '../DefaultElement/DefaultContainer';
 
 const PhaseContainer = ({ name, phaseId, removePhase, renamePhase, cards, columns, addCard, addColumn, addGenericColumnValue }) => {
 
-  const [phaseName, setPhaseName] = useState(name)
-  const nameTextArea = React.createRef();
-
-  const changePhaseName = () => {
-    if (phaseName !== name) {
-      renamePhase(phaseName, phaseId)
-    }
-  }
-
-  const onKeyPress = (e) => {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-      nameTextArea.current.blur();
-    }
-  }
-
   return (
     <div className='phase'>
-      <div className='phase--header'>
-        <textarea rows='1' cols='20' type='text' style={{ resize: 'none', ':hover': {cursor : 'pointer'}, border: 'none' }} 
-        onClick={(e) => e.target.select()}
-        value={phaseName}
-        onChange={(e) => setPhaseName(e.target.value)}
-        ref={nameTextArea}
-        onBlur={changePhaseName}
-        onKeyDown={onKeyPress}
-        /> 
-        <SmallBtn onClick={() => removePhase(phaseId)}>X</SmallBtn>
-      </div>
+      <DefaultContainer
+        classNames={['phase--header']}
+        name={name}
+        elementId={phaseId}
+        phaseId={phaseId}
+        removeElement={removePhase}
+        renameElement={renamePhase}
+      />
       {cards.length > 0 && 
           <TableContainer 
             phaseId={phaseId}

@@ -1,23 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ElementCreator from '../../components/ElementCreator/ElementCreator';
-import CardContainer from '../../components/Card/CardContainer';
+import ElementCreator from '../DefaultElement/ElementCreator';
 import ColumnContainer from '../../components/Column/ColumnContainer';
-import { addCard } from '../../actions/cards';
+import { addCard, removeCard, renameCard } from '../../actions/cards';
 import { addGenericColumnValue } from '../../actions/columns';
+import DefaultContainer from '../DefaultElement/DefaultContainer';
 
-const TableContainer = ({ phaseId, className, cards, columns, addCard, addGenericColumnValue }) => {
+const TableContainer = ({ phaseId, className, cards, columns, addCard, addGenericColumnValue, removeCard, renameCard }) => {
   return (
     <div className={`${className} table`}>
       <div className='table--rowStart'></div>
       {<div className='table--rowName'>{
         cards.map((card, index) => (
           <div key={card.cardId} className='row--container'>
-            <CardContainer 
+            <DefaultContainer
               name={card.name}
-              cardId={card.cardId}
+              elementId={card.cardId}
               phaseId={card.phaseId}
               index={index}
+              removeElement={removeCard}
+              renameElement={renameCard}
             />
           </div>
         ))
@@ -44,6 +46,9 @@ const TableContainer = ({ phaseId, className, cards, columns, addCard, addGeneri
         />
         ))
       }
+      {columns.length > 0 &&
+        
+      }
     </div>
   )
 }
@@ -55,6 +60,8 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   addCard: (name, phaseId) => dispatch(addCard(name, phaseId)),
+  removeCard: (cardId, phaseId, index) => dispatch(removeCard(cardId, phaseId, index)),
+  renameCard: (name, cardId) => dispatch(renameCard(name, cardId)),
   addGenericColumnValue: (phaseId) => dispatch(addGenericColumnValue(phaseId)),
 })
 
