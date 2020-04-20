@@ -1,6 +1,6 @@
 import { createStore, combineReducers, compose } from 'redux';
 import phaseReducer from '../reducers/phases';
-import cardReducer from '../reducers/cards';
+import rowReducer from '../reducers/rows';
 import columnReducer from '../reducers/columns';
 import filterReducer from '../reducers/filters';
 
@@ -11,7 +11,7 @@ export default () => {
     combineReducers(
       {
         phases: phaseReducer,
-        cards: cardReducer,
+        rows: rowReducer,
         columns: columnReducer,
         filters: filterReducer,
       }

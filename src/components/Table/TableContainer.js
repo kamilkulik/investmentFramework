@@ -2,24 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ElementCreator from '../DefaultElement/ElementCreator';
 import ColumnContainer from '../../components/Column/ColumnContainer';
-import { addCard, removeCard, renameCard } from '../../actions/cards';
+import { addrow, removerow, renamerow } from '../../actions/rows';
 import { addGenericColumnValue } from '../../actions/columns';
 import DefaultContainer from '../DefaultElement/DefaultContainer';
+import selectorFunction from '../../selectors/rowSelector';
 
-const TableContainer = ({ phaseId, className, cards, columns, addCard, addGenericColumnValue, removeCard, renameCard }) => {
+const TableContainer = ({ phaseId, className, rows, columns, addrow, addGenericColumnValue, removerow, renamerow, visibleValues }) => {
   return (
     <div className={`${className} table`}>
       <div className='table--rowStart'></div>
       {<div className='table--rowName'>{
-        cards.map((card, index) => (
-          <div key={card.cardId} className='row--container'>
+        rows.map((row, index) => (
+          <div key={row.rowId} className='row--container'>
             <DefaultContainer
-              name={card.name}
-              elementId={card.cardId}
-              phaseId={card.phaseId}
+              name={row.name}
+              elementId={row.rowId}
+              phaseId={row.phaseId}
               index={index}
-              removeElement={removeCard}
-              renameElement={renameCard}
+              removeElement={removerow}
+              renameElement={renamerow}
             />
           </div>
         ))
@@ -27,13 +28,13 @@ const TableContainer = ({ phaseId, className, cards, columns, addCard, addGeneri
         <ElementCreator
           phaseId={phaseId}
           classNames={['phase--newRow']}
-          setElementName={addCard} 
+          setElementName={addrow} 
           placeholder='Nazwa aktywa' 
           addText='Dodaj Aktywo' 
           btnText='+ Dodaj Kolejne Aktywo' 
           columns={columns} 
           addGenericColumnValue={addGenericColumnValue}
-          type='card'
+          type='row'
         />
         </div>
       }
@@ -43,25 +44,46 @@ const TableContainer = ({ phaseId, className, cards, columns, addCard, addGeneri
           name={column.name}
           columnId={column.columnId}
           phaseId={column.phaseId}
+          visibleValues={visibleValues}
         />
         ))
-      }
-      {columns.length > 0 &&
-        
       }
     </div>
   )
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  cards: state.cards.filter((card) => card.phaseId === ownProps.phaseId),
-  columns: state.columns.filter((column) => column.phaseId === ownProps.phaseId)
-})
+const mapStateToProps = (state, ownProps) => {
+  const rows = state.rows.filter((row) => row.phaseId === ownProps.phaseId);
+  const columns = state.columns.filter((column) => column.phaseId === ownProps.phaseId);
+  const filters = state.filters.filter((filter) => filter.phaseId === ownProps.phaseId);
+  const visibleRows = selectorFunction(rows, columns, filters);  // OK
+  let valuesArray = [];
+  rows.forEach(row => visibleRows.forEach(vRow => vRow === row ? valuesArray.push(rows.indexOf(row)) : ''));
+  return {
+    rows: visibleRows,
+    columns,
+    filters,
+    visibleValues: valuesArray
+}}
+
+/*
+
+Inputs:
+  1. all rows
+  2. filtered out Rows i.e. visibleRows
+
+Output:
+  1. Indexes of rows items which are found in the visibleRows array
+
+Algorithm:
+  1. Check if an element from one array is present in another one
+
+*/
 
 const mapDispatchToProps = dispatch => ({
-  addCard: (name, phaseId) => dispatch(addCard(name, phaseId)),
-  removeCard: (cardId, phaseId, index) => dispatch(removeCard(cardId, phaseId, index)),
-  renameCard: (name, cardId) => dispatch(renameCard(name, cardId)),
+  addrow: (name, phaseId) => dispatch(addrow(name, phaseId)),
+  removerow: (rowId, phaseId, index) => dispatch(removerow(rowId, phaseId, index)),
+  renamerow: (name, rowId) => dispatch(renamerow(name, rowId)),
   addGenericColumnValue: (phaseId) => dispatch(addGenericColumnValue(phaseId)),
 })
 

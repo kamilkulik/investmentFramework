@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { removePhase, renamePhase } from '../../actions/phases';
 import ElementCreator from '../DefaultElement/ElementCreator';
 import TableContainer from '../../components/Table/TableContainer';
-import { addCard } from '../../actions/cards';
+import { addrow } from '../../actions/rows';
 import { addColumn, addGenericColumnValue } from '../../actions/columns';
 import DefaultContainer from '../DefaultElement/DefaultContainer';
+import FilterCreator from '../Filters/FilterCreator';
+import FilterSausageBar from '../Filters/FilterSausageBar';
 
-const PhaseContainer = ({ name, phaseId, removePhase, renamePhase, cards, columns, addCard, addColumn, addGenericColumnValue }) => {
+const PhaseContainer = ({ name, phaseId, removePhase, renamePhase, rows, columns, filters, addrow, addColumn, addGenericColumnValue }) => {
 
   return (
     <div className='phase'>
@@ -19,48 +21,64 @@ const PhaseContainer = ({ name, phaseId, removePhase, renamePhase, cards, column
         removeElement={removePhase}
         renameElement={renamePhase}
       />
-      {cards.length > 0 && 
+      <FilterSausageBar 
+        phaseId={phaseId}
+        filters={filters}
+      />
+      {rows.length > 0 && 
           <TableContainer 
             phaseId={phaseId}
             className='phase--table'
-          />}
-      {cards.length > 0 && 
+          />
+      }
+      <div className='phase--newColumn'>
+      {rows.length > 0 && 
         <ElementCreator
           phaseId={phaseId}
-          classNames={['phase--newColumn']}
+          classNames={[]}
           setElementName={addColumn} 
           placeholder='Nazwa wskaźnika' 
           addText='Dodaj Wskaźnik' 
           btnText='+ Dodaj Wskaźnik' 
           columns={columns} 
-          cards={cards}
-        />}
-      {cards.length === 0 && 
+          rows={rows}
+        />
+      }
+      {columns.length > 0 &&
+        <FilterCreator 
+          phaseId={phaseId}
+          classNames={[]}
+          titleButton='+ Add new filter'
+        />
+      }
+      </div>
+      {rows.length === 0 && 
         <ElementCreator
           phaseId={phaseId}
           classNames={['phase--newRow']}
-          setElementName={addCard} 
+          setElementName={addrow} 
           placeholder='Nazwa aktywa' 
           addText='Dodaj Aktywo' 
           btnText='+ Dodaj Aktywo' 
           columns={columns} 
-          cards={cards}
+          rows={rows}
           addGenericColumnValue={addGenericColumnValue}
-          type='card'
+          type='row'
         /> }
     </div>
   )
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  cards: state.cards.filter((card) => card.phaseId === ownProps.phaseId),
-  columns: state.columns.filter(column => column.phaseId === ownProps.phaseId)
+  rows: state.rows.filter((row) => row.phaseId === ownProps.phaseId),
+  columns: state.columns.filter(column => column.phaseId === ownProps.phaseId),
+  filters: state.filters.filter((filter) => filter.phaseId === ownProps.phaseId)
 })
 
 const mapDispatchToProps = dispatch => ({
   removePhase: (id) => dispatch(removePhase(id)),
   renamePhase: (name, phaseId) => dispatch(renamePhase(name, phaseId)),
-  addCard: (name, phaseId) => dispatch(addCard(name, phaseId)),
+  addrow: (name, phaseId) => dispatch(addrow(name, phaseId)),
   addGenericColumnValue: (phaseId) => dispatch(addGenericColumnValue(phaseId)),
   addColumn: (name, phaseId, initialValuesCount) => dispatch(addColumn(name, phaseId, initialValuesCount)),
 })

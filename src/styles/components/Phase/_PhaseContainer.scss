@@ -1,11 +1,12 @@
 .phase {
   display: grid;
   grid-template-columns: min-content min-content;
-  grid-template-rows: auto auto 150px;
+  grid-template-rows: auto auto auto 150px;
   grid-template-areas:
     'phaseName .'
+    'filterBar .'
     'tableContainer columnCreator'
-    'cardCreator columnCreator';
+    'rowCreator columnCreator';
 
   &--header {
     grid-area: phaseName;
@@ -27,15 +28,20 @@
     }
   }
 
+  &--filterBar {
+    grid-area: filterBar;
+  }
+
   &--table {
     grid-area: tableContainer;
   }
 
   &--newColumn {
     grid-area: columnCreator;
+    align-content: space-around;
   }
 
   &--newRow {
-    grid-area: cardCreator;
+    grid-area: rowCreator;
   }
 };

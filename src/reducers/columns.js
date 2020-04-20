@@ -39,7 +39,7 @@ export default (state = columnReducerDefaultState, action) => {
         }
       }) 
     case 'REMOVE_CARD':
-      return removeCard(state, action)
+      return removerow(state, action)
     case 'REMOVE_PHASE':
       return state.filter(({ phaseId }) => phaseId !== action.phaseId)
     case 'RENAME_COLUMN':
@@ -51,7 +51,7 @@ export default (state = columnReducerDefaultState, action) => {
   }
 };
 
-function removeCard(state, action) {
+function removerow(state, action) {
   const columnsWithAdjustedValues = state.map(column => {
     if (column.phaseId === action.phaseId) {
       column.values.splice(action.index, 1);
