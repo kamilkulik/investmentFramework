@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 const ColumnContainer = ({ name, columnId, phaseId, removeColumn, renameColumn, columnValues }) => {
 
   return (
-    <>
+    <React.Fragment>
       <DefaultContainer
         classNames={['table--colum', 'table--grid-item', 'column--container']}
         name={name}
@@ -30,12 +30,19 @@ const ColumnContainer = ({ name, columnId, phaseId, removeColumn, renameColumn, 
       ))
         }
       </div>
-  </>)
+  </React.Fragment>)
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  columnValues: state.columns.find(column => column.columnId === ownProps.columnId)
-});
+const mapStateToProps = (state, ownProps) => {
+  const column = state.columns.find(column => column.columnId === ownProps.columnId); // OK
+  const visibleColumnValues = () => {
+    const values = column.values.filter((value, index) => ownProps.visibleValues.includes(index));
+    return {...column, values};
+  }
+  return {
+    columnValues: column.values.length > 1 ? visibleColumnValues() : column
+  }
+};
 
 const mapDispatchToProps = dispatch => ({
   removeColumn: (columnId) => dispatch(removeColumn(columnId)),

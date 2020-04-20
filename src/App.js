@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import PhaseContainer from './components/Phase/phaseContainer';
-import ElementCreator from './components/ElementCreator/ElementCreator';
+import ElementCreator from './components/DefaultElement/ElementCreator';
 import { setPhaseName } from './actions/phases';
 
 const App = ({ phases, setPhaseName }) => {

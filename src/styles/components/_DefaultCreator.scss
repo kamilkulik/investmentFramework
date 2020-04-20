@@ -3,12 +3,14 @@
   padding: 4px;
   display: grid;
   grid-template-columns: 124px 54px;
-  grid-template-rows: repeat(auto-fill, minmax(min-content, 27px)) ;
+  grid-template-rows: repeat(minmax(auto-fill, 2), minmax(min-content, 27px)) ;
   row-gap: 4px;
 
   & > div {
     width: 178px;
-    height: 56px;
+    height: auto;
+    // background-color: $color-grey-light-2;
+    // border-radius: 2px;
   }
 
   input {

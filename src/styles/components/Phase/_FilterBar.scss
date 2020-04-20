@@ -1,0 +1,13 @@
+.filterBar {
+
+  display: flex;
+  justify-content: flex-start;
+
+  background-color: $color-grey-light-2;
+  box-shadow: $box-shadow-light;
+}
+
+.filterSausage {
+  display: flex;
+  justify-content: space-around;
+}

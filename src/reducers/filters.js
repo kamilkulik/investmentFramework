@@ -6,12 +6,16 @@ export default (state = filterReducerDefaultState, action) => {
       return [
         ...state,
         { 
-          name: action.name,
+          filterId: action.filterId,
+          name: action.filterName,
+          phaseId: action.phaseId,
           columnId: action.columnId,
-          type: action.type,
-          between: action.between
+          filterType: action.filterType,
+          value: action.value
         }
       ]
+    case 'REMOVE_FILTER':
+      return state.filter(({ filterId }) => filterId !== action.filterId)
     default:
       return state
   }
