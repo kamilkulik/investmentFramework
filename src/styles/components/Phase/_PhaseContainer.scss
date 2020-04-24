@@ -1,7 +1,7 @@
 .phase {
   display: grid;
   grid-template-columns: min-content min-content;
-  grid-template-rows: auto auto auto 150px;
+  grid-template-rows: auto auto auto 70px;
   grid-template-areas:
     'phaseName .'
     'filterBar .'

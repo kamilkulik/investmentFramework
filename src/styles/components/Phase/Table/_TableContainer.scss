@@ -8,7 +8,7 @@
 .table {
   display: grid;
   grid-template-columns: 178px repeat(auto-fill, min-content);
-  grid-template-rows: repeat(var(--rowNum), min-content);
+  grid-template-rows: 30px min-content;
   grid-gap: var(--gutter);
   background-color: $color-grey-light-2;
   border-bottom-left-radius: 5px;
@@ -36,5 +36,9 @@
 
   &--value {
     grid-row: 2 / 3;
+  }
+
+  &--decision {
+    grid-row: 1 / 3;
   }
 };

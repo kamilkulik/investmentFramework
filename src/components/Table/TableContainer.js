@@ -6,9 +6,12 @@ import { addrow, removerow, renamerow } from '../../actions/rows';
 import { addGenericColumnValue } from '../../actions/columns';
 import DefaultContainer from '../DefaultElement/DefaultContainer';
 import selectorFunction from '../../selectors/rowSelector';
+import DecisionGate from '../DecisionGate/DecisionGate';
+import TableContext from './Table-context';
 
-const TableContainer = ({ phaseId, className, rows, columns, addrow, addGenericColumnValue, removerow, renamerow, visibleValues }) => {
+const TableContainer = ({ phaseId, className, rows, columns, filters, addrow, addGenericColumnValue, removerow, renamerow, visibleValues }) => {
   return (
+    <TableContext.Provider value={{ rows, phaseId }}>
     <div className={`${className} table`}>
       <div className='table--rowStart'></div>
       {<div className='table--rowName'>{
@@ -48,7 +51,12 @@ const TableContainer = ({ phaseId, className, rows, columns, addrow, addGenericC
         />
         ))
       }
+      {filters.length > 0 && 
+        <DecisionGate 
+        classNames={['table--decision']} 
+        phaseId={phaseId}/>}
     </div>
+    </TableContext.Provider>
   )
 }
 
@@ -65,20 +73,6 @@ const mapStateToProps = (state, ownProps) => {
     filters,
     visibleValues: valuesArray
 }}
-
-/*
-
-Inputs:
-  1. all rows
-  2. filtered out Rows i.e. visibleRows
-
-Output:
-  1. Indexes of rows items which are found in the visibleRows array
-
-Algorithm:
-  1. Check if an element from one array is present in another one
-
-*/
 
 const mapDispatchToProps = dispatch => ({
   addrow: (name, phaseId) => dispatch(addrow(name, phaseId)),

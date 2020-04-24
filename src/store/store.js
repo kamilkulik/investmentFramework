@@ -1,22 +1,29 @@
-import { createStore, combineReducers, compose } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import phaseReducer from '../reducers/phases';
 import rowReducer from '../reducers/rows';
 import columnReducer from '../reducers/columns';
 import filterReducer from '../reducers/filters';
+import selectedReducer from '../reducers/selected';
+import { loadState } from './localStorage';
 
+const reducer = combineReducers(
+  {
+    phases: phaseReducer,
+    rows: rowReducer,
+    columns: columnReducer,
+    filters: filterReducer,
+    selected: selectedReducer,
+  }
+)
+const persistedState = loadState();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
   const store = createStore(
-    combineReducers(
-      {
-        phases: phaseReducer,
-        rows: rowReducer,
-        columns: columnReducer,
-        filters: filterReducer,
-      }
-    ),
-    composeEnhancers()
+    reducer,
+    persistedState,
+    composeEnhancers(applyMiddleware(thunk))
     );
   return store
 };
