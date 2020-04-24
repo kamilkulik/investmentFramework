@@ -1,0 +1,67 @@
+import React, { useState, useContext } from 'react';
+import { connect } from 'react-redux';
+import TableContext from '../Table/Table-context';
+import ColumnItemBox from '../Column/ColumnItemBox';
+import DecisionItem from './DecisionItem';
+import NewElementButton from '../newElementButton';
+import { addSelected } from '../../actions/selected';
+
+const DecisionGate = ({ phases, phaseId, classNames, addSelected }) => {
+
+  const { rows } = useContext(TableContext);
+  const [actionType, setActionType] = useState('');
+
+  const nextPhaseName = () => {
+    const phaseIds = phases.map(phase => phase.phaseId)
+    const curPhaseIndex = phaseIds.indexOf(phaseId);
+    const nPhaseName = `Phase${curPhaseIndex + 2}`
+    return nPhaseName
+  }
+
+  const proceed = () => {
+    switch (actionType) {
+      case 'compare': addSelected(nextPhaseName(), rows)
+        break;
+      default:
+        console.log('run with error')
+    }
+  }
+
+  return (
+    <ColumnItemBox classNames={classNames}>
+      <div className='decision-gate'>
+        <p>Select assets for next steps:</p>
+          {rows.map(row => (
+            <div key={row.rowId} className='decision-gate__item'>
+              <DecisionItem 
+                name={row.name}
+              />
+            </div>
+          ))}
+        <p>How do you want to proceed?</p>
+        <select id='nextAction' onChange={(e) => setActionType(e.target.value)}>
+          <option value=''>Select action</option>
+          <option value='compare'>Compare in next phase</option>
+          <option value='proceed'>Proceed to risk planning</option>
+          <option value='add'>Add to risk planning</option>
+        </select>
+        <NewElementButton 
+          title={'Submit'}
+          buttonAction={proceed}
+        />
+      </div>  
+    </ColumnItemBox>
+  )
+};
+
+const mapStateToProps = (state) => {
+  return ({
+    phases: state.phases
+  })
+}
+
+const mapDispatchToProps = dispatch => ({
+  addSelected: (name, rows) => dispatch(addSelected(name, rows))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DecisionGate);

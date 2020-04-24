@@ -11,6 +11,11 @@ export default (state = rowReducerDefaultState, action) => {
           phaseId: action.phaseId
         }
       ]
+    case 'ADD_ROWS':
+      return [
+        ...state,
+        ...action.newRows
+      ]
     case 'REMOVE_CARD':
       return state.filter(({ rowId }) => rowId !== action.rowId)
     case 'REMOVE_PHASE':

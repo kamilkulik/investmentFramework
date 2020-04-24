@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import NewElementButton from '../newElementButton';
 import SmallBtn from '../SmallBtn';
 import { connect } from 'react-redux';
@@ -6,17 +6,16 @@ import { removeFilter } from '../../actions/filters';
 
 const FilterSausage = ({ filter, removeFilter }) => {
 
-  const [filterEditor, setFilterEditor] = useState(false)
+  //const [filterEditor, setFilterEditor] = useState(false)
 
   return (
     <React.Fragment>
       <NewElementButton
         title={`${filter.name}: ${filter.filterType} ${filter.value}`}
         classNames={['filterSausage']}
-        onClick={setFilterEditor(true)}
+        //onClick={() => setFilterEditor(true)}
       />
       <SmallBtn onClick={() => removeFilter(filter.filterId)}>X</SmallBtn>
-      <NewElementButton/>
     </React.Fragment>
   )
 };
