@@ -21,10 +21,3 @@ export function addSelected(name = '', rows) {
     });
   }
 }; 
-
-// REMOVE_SELECTED
-
-export const removeSelected = ( cardId ) => ({
-  type: 'REMOVE_PHASE',
-  cardId
-})

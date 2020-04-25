@@ -6,10 +6,17 @@ import DecisionItem from './DecisionItem';
 import NewElementButton from '../newElementButton';
 import { addSelected } from '../../actions/selected';
 
-const DecisionGate = ({ phases, phaseId, classNames, addSelected }) => {
+const DecisionGate = ({ handleFireAction, phases, phaseId, classNames, addSelected }) => {
 
   const { rows } = useContext(TableContext);
   const [actionType, setActionType] = useState('');
+  const [selectedRowsState, setSelectedRows] = useState([]);
+
+  const handleRowSelect = (selected, rowId) => {
+    selected ? 
+    setSelectedRows([...selectedRowsState, rows.find(row => row.rowId === rowId)]) :
+    setSelectedRows(selectedRowsState.filter(row => row.rowId !== rowId))
+  }
 
   const nextPhaseName = () => {
     const phaseIds = phases.map(phase => phase.phaseId)
@@ -19,8 +26,10 @@ const DecisionGate = ({ phases, phaseId, classNames, addSelected }) => {
   }
 
   const proceed = () => {
+    handleFireAction();
     switch (actionType) {
-      case 'compare': addSelected(nextPhaseName(), rows)
+      case 'compare': 
+        selectedRowsState.length > 0 && addSelected(nextPhaseName(), selectedRowsState)
         break;
       default:
         console.log('run with error')
@@ -34,7 +43,8 @@ const DecisionGate = ({ phases, phaseId, classNames, addSelected }) => {
           {rows.map(row => (
             <div key={row.rowId} className='decision-gate__item'>
               <DecisionItem 
-                name={row.name}
+                row={row}
+                handleRowSelect={handleRowSelect}
               />
             </div>
           ))}
@@ -45,10 +55,11 @@ const DecisionGate = ({ phases, phaseId, classNames, addSelected }) => {
           <option value='proceed'>Proceed to risk planning</option>
           <option value='add'>Add to risk planning</option>
         </select>
-        <NewElementButton 
+        {selectedRowsState.length > 0 && actionType &&
+          <NewElementButton 
           title={'Submit'}
           buttonAction={proceed}
-        />
+        />}
       </div>  
     </ColumnItemBox>
   )
