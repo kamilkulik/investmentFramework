@@ -5,6 +5,7 @@ import rowReducer from '../reducers/rows';
 import columnReducer from '../reducers/columns';
 import filterReducer from '../reducers/filters';
 import selectedReducer from '../reducers/selected';
+import valuesReducer from '../reducers/values';
 import { loadState } from './localStorage';
 
 const reducer = combineReducers(
@@ -14,6 +15,7 @@ const reducer = combineReducers(
     columns: columnReducer,
     filters: filterReducer,
     selected: selectedReducer,
+    values: valuesReducer,
   }
 )
 const persistedState = loadState();

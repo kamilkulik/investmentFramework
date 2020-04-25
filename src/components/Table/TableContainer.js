@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import ElementCreator from '../DefaultElement/ElementCreator';
 import ColumnContainer from '../../components/Column/ColumnContainer';
@@ -10,6 +10,13 @@ import DecisionGate from '../DecisionGate/DecisionGate';
 import TableContext from './Table-context';
 
 const TableContainer = ({ phaseId, className, rows, columns, filters, addrow, addGenericColumnValue, removerow, renamerow, visibleValues }) => {
+  
+  const [actionFired, fireAction] = useState(false);
+
+  const handleFireAction = () => {
+    fireAction(true)
+  }
+  
   return (
     <TableContext.Provider value={{ rows, phaseId }}>
     <div className={`${className} table`}>
@@ -51,10 +58,11 @@ const TableContainer = ({ phaseId, className, rows, columns, filters, addrow, ad
         />
         ))
       }
-      {filters.length > 0 && 
+      {filters.length > 0 && actionFired === false &&
         <DecisionGate 
         classNames={['table--decision']} 
-        phaseId={phaseId}/>}
+        phaseId={phaseId}
+        handleFireAction={handleFireAction}/>}
     </div>
     </TableContext.Provider>
   )
