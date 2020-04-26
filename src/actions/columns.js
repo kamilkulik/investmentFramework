@@ -32,22 +32,6 @@ export const removeColumn = ( columnId ) => ({
   columnId
 });
 
-// SET_COLUMN_VALUE
-
-export const setColumnValue = ( columnId, index, columnValue ) => ({
-  type: 'SET_COLUMN_VALUE',
-  columnId,
-  index,
-  columnValue
-});
-
-// ADD_GENERIC_COLUMN_VALUE
-
-export const addGenericColumnValue = ( phaseId ) => ({
-  type: 'ADD_GENERIC_COLUMN_VALUE',
-  phaseId
-});
-
 // RENAME_COLUMN
 
 export const renameColumn = (name, columnId) => ({

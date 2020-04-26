@@ -21,9 +21,10 @@ const App = ({ phases, setPhaseName }) => {
       <ElementCreator
         classNames={['main--phase-creator']}
         setElementName={setPhaseName}
-        placeholder='Dodaj krok'
-        addText='Dodaj fazę'
-        btnText='+ Dodaj kolejną fazę'
+        placeholder='Add phase'
+        addText='Add Phase'
+        btnText='+ Add next phase'
+        type='phase'
       />
     </div>
   );

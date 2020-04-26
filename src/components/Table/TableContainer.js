@@ -34,17 +34,17 @@ const TableContainer = ({ phaseId, className, rows, columns, filters, addrow, ad
           </div>
         ))
         }
-        <ElementCreator
+        {filters.length === 0 && <ElementCreator
           phaseId={phaseId}
           classNames={['phase--newRow']}
           setElementName={addrow} 
-          placeholder='Nazwa aktywa' 
-          addText='Dodaj Aktywo' 
-          btnText='+ Dodaj Kolejne Aktywo' 
+          placeholder='Add an asset' 
+          addText='Add Asset' 
+          btnText='+ Add Another Asset' 
           columns={columns} 
           addGenericColumnValue={addGenericColumnValue}
           type='row'
-        />
+        />}
         </div>
       }
       {columns.map(column => (
@@ -53,7 +53,7 @@ const TableContainer = ({ phaseId, className, rows, columns, filters, addrow, ad
           name={column.name}
           columnId={column.columnId}
           phaseId={column.phaseId}
-          visibleValues={visibleValues}
+          visiableRows={rows}
         />
         ))
       }
@@ -71,14 +71,12 @@ const mapStateToProps = (state, ownProps) => {
   const rows = state.rows.filter((row) => row.phaseId === ownProps.phaseId);
   const columns = state.columns.filter((column) => column.phaseId === ownProps.phaseId);
   const filters = state.filters.filter((filter) => filter.phaseId === ownProps.phaseId);
-  const visibleRows = selectorFunction(rows, columns, filters);  // OK
-  let valuesArray = [];
-  rows.forEach(row => visibleRows.forEach(vRow => vRow === row ? valuesArray.push(rows.indexOf(row)) : ''));
+  const values = state.values.filter((value) => value.phaseId === ownProps.phaseId);
+  const visibleRows = selectorFunction(rows, columns, filters, values);  // OK
   return {
     rows: visibleRows,
     columns,
-    filters,
-    visibleValues: valuesArray
+    filters
 }}
 
 const mapDispatchToProps = dispatch => ({

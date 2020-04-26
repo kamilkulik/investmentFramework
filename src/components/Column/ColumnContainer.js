@@ -5,7 +5,7 @@ import ColumnValue from '../Column/ColumnValue';
 import DefaultContainer from '../DefaultElement/DefaultContainer';
 import { v4 as uuidv4 } from 'uuid';
 
-const ColumnContainer = ({ name, columnId, phaseId, removeColumn, renameColumn, rows, values }) => {
+const ColumnContainer = ({ name, columnId, phaseId, removeColumn, renameColumn, values }) => {
 
   return (
     <React.Fragment>
@@ -36,15 +36,10 @@ const ColumnContainer = ({ name, columnId, phaseId, removeColumn, renameColumn, 
 
 const mapStateToProps = (state, ownProps) => {
   const rows = state.rows.filter((row) => row.phaseId === ownProps.phaseId);
-  // const column = state.columns.find(column => column.columnId === ownProps.columnId); // OK
-  const values = state.values.filter(value => value.phaseId === ownProps.phaseId && value.columnId === ownProps.columnId);
-  // const visibleColumnValues = () => {
-  //   const values = column.values.filter((value, index) => ownProps.visibleValues.includes(index));
-  //   return {...column, values};
-  // }
+  const visibleRowsIds = ownProps.visiableRows.map(el => el.rowId)
+  const values = state.values.filter(value => value.phaseId === ownProps.phaseId && value.columnId === ownProps.columnId && visibleRowsIds.includes(value.rowId));
   return {
     rows,
-    // columnValues: column.values.length > 1 ? visibleColumnValues() : column,
     values
   }
 };

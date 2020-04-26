@@ -6,6 +6,12 @@
     align-items: center;
     justify-content: flex-end;
 
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     textarea {
       height: 20px;
       font-size: 1.2rem;
