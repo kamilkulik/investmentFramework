@@ -26,19 +26,7 @@ export default (state = columnReducerDefaultState, action) => {
           return { ...column }
         }
       })
-    case 'ADD_GENERIC_COLUMN_VALUE':
-      return state.map(column => {
-        if (column.phaseId === action.phaseId) {
-          column.values.push(0);
-          return {
-            ...column,
-            values: column.values
-          }
-        } else {
-          return { ...column }
-        }
-      }) 
-    case 'REMOVE_CARD':
+    case 'REMOVE_ROW':
       return removerow(state, action)
     case 'REMOVE_PHASE':
       return state.filter(({ phaseId }) => phaseId !== action.phaseId)

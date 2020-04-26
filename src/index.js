@@ -23,6 +23,7 @@ store.subscribe(() => {
     rows: store.getState().rows,
     columns: store.getState().columns,
     filters: store.getState().filters,
-    selected: store.getState().selected
+    selected: store.getState().selected,
+    values: store.getState().values
   })
 })

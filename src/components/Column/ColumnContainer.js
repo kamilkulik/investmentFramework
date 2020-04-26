@@ -5,7 +5,7 @@ import ColumnValue from '../Column/ColumnValue';
 import DefaultContainer from '../DefaultElement/DefaultContainer';
 import { v4 as uuidv4 } from 'uuid';
 
-const ColumnContainer = ({ name, columnId, phaseId, removeColumn, renameColumn, columnValues }) => {
+const ColumnContainer = ({ name, columnId, phaseId, removeColumn, renameColumn, rows, values }) => {
 
   return (
     <React.Fragment>
@@ -19,28 +19,33 @@ const ColumnContainer = ({ name, columnId, phaseId, removeColumn, renameColumn, 
       />
       <div className='table--value table--grid-item'>
         {
-        columnValues.values.map((value, index) => (
-        <div key={uuidv4()}>
-          <ColumnValue
-            value={value}
-            columnId={columnId}
-            index={index}
-          />
-        </div>
-      ))
+        values.map((value, index) => {
+          return (
+            <div key={uuidv4()}>
+              <ColumnValue
+                value={value.value}
+                valueId={value.valueId}
+                index={index}
+              />
+            </div>)
+          })
         }
       </div>
   </React.Fragment>)
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const column = state.columns.find(column => column.columnId === ownProps.columnId); // OK
-  const visibleColumnValues = () => {
-    const values = column.values.filter((value, index) => ownProps.visibleValues.includes(index));
-    return {...column, values};
-  }
+  const rows = state.rows.filter((row) => row.phaseId === ownProps.phaseId);
+  // const column = state.columns.find(column => column.columnId === ownProps.columnId); // OK
+  const values = state.values.filter(value => value.phaseId === ownProps.phaseId && value.columnId === ownProps.columnId);
+  // const visibleColumnValues = () => {
+  //   const values = column.values.filter((value, index) => ownProps.visibleValues.includes(index));
+  //   return {...column, values};
+  // }
   return {
-    columnValues: column.values.length > 1 ? visibleColumnValues() : column
+    rows,
+    // columnValues: column.values.length > 1 ? visibleColumnValues() : column,
+    values
   }
 };
 

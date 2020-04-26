@@ -2,7 +2,7 @@ const rowReducerDefaultState = [];
 
 export default (state = rowReducerDefaultState, action) => {
   switch (action.type) {
-    case 'ADD_CARD':
+    case 'ADD_ROW':
       return [
         ...state,
         { 
@@ -16,11 +16,11 @@ export default (state = rowReducerDefaultState, action) => {
         ...state,
         ...action.newRows
       ]
-    case 'REMOVE_CARD':
+    case 'REMOVE_ROW':
       return state.filter(({ rowId }) => rowId !== action.rowId)
     case 'REMOVE_PHASE':
       return state.filter(({ phaseId }) => phaseId !== action.phaseId)
-    case 'RENAME_CARD':
+    case 'RENAME_ROW':
       return state.map(( row ) => {
         return row.rowId === action.rowId ? { ...row, name: action.name, rowId: action.rowId } : row
       })

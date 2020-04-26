@@ -1,18 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
-
-// ADD_VALUE
-
-export const addrow = (name = '', phaseId = '') => ({
-  type: 'ADD_CARD',
-  name,
-  rowId: uuidv4(),
-  phaseId
-});
+// import { v4 as uuidv4 } from 'uuid';
 
 // REMOVE_VALUE
 
 export const removerow = ( rowId, phaseId, index ) => ({
-  type: 'REMOVE_CARD',
+  type: 'REMOVE_ROW',
   rowId,
   phaseId,
   index
@@ -20,10 +11,8 @@ export const removerow = ( rowId, phaseId, index ) => ({
 
 // SET_VALUE
 
-export const setValue = (phaseId, rowId, columnId, value) => ({
+export const setValue = (value = 0, valueId) => ({
   type: 'SET_VALUE',
-  phaseId,
-  rowId,
-  columnId,
   value,
+  valueId,
 })

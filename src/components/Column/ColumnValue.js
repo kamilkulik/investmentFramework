@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { setColumnValue } from '../../actions/columns';
+import { setValue } from '../../actions/values';
 
-const ColumnValue = ({ value, columnId, index, setColumnValue }) => {
+const ColumnValue = ({ value, valueId, setValue }) => {
 
-const [columnValueState, setColumnValueState] = useState(value);
+const [columnValueState, setValueState] = useState(value);
 
-const setValue = (e) => {
+const setNewValue = (e) => {
   if (value !== columnValueState) {
     e.preventDefault();
-    setColumnValue(columnId, index, columnValueState);
+    setValue(columnValueState, valueId);
   }
 };
 
   return (
     <div className='value'>
-      <form onBlur={setValue}>
+      <form onBlur={setNewValue}>
         <input 
           type='text'
           value={columnValueState}
-          onChange={(e) => setColumnValueState(e.target.value)}
+          onChange={(e) => setValueState(e.target.value)}
         />
       </form>
     </div>
@@ -27,7 +27,7 @@ const setValue = (e) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setColumnValue: (columnId, index, columnValue) => dispatch(setColumnValue(columnId, index, columnValue))
+  setValue: (value, valueId) => dispatch(setValue(value, valueId))
 });
 
 export default connect(null, mapDispatchToProps)(ColumnValue);
