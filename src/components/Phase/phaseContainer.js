@@ -4,7 +4,7 @@ import { removePhase, renamePhase } from '../../actions/phases';
 import ElementCreator from '../DefaultElement/ElementCreator';
 import TableContainer from '../../components/Table/TableContainer';
 import { addrow } from '../../actions/rows';
-import { addColumn, addGenericColumnValue } from '../../actions/columns';
+import { addColumn } from '../../actions/columns';
 import DefaultContainer from '../DefaultElement/DefaultContainer';
 import FilterCreator from '../Filters/FilterCreator';
 import FilterSausageBar from '../Filters/FilterSausageBar';
@@ -42,6 +42,7 @@ const PhaseContainer = ({ name, phaseId, removePhase, renamePhase, rows, columns
           btnText='+ Dodaj Wskaźnik' 
           columns={columns} 
           rows={rows}
+          type='column'
         />
       }
       {columns.length > 0 &&
@@ -78,9 +79,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   removePhase: (id) => dispatch(removePhase(id)),
   renamePhase: (name, phaseId) => dispatch(renamePhase(name, phaseId)),
-  addrow: (name, phaseId) => dispatch(addrow(name, phaseId)),
-  addGenericColumnValue: (phaseId) => dispatch(addGenericColumnValue(phaseId)),
-  addColumn: (name, phaseId, initialValuesCount) => dispatch(addColumn(name, phaseId, initialValuesCount)),
+  addrow: (name, phaseId, columns) => dispatch(addrow(name, phaseId, columns)),
+  addColumn: (name, phaseId, rows) => dispatch(addColumn(name, phaseId, rows)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhaseContainer);

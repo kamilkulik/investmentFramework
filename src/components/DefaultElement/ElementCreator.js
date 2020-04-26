@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import NewElementButton from '../newElementButton';
 
-const ElementCreatorContainer = ({ setElementName, placeholder, addText, btnText, classNames, phaseId, columns = [], rows = [], addGenericColumnValue, type }) => {
+const ElementCreatorContainer = ({ setElementName, placeholder, addText, btnText, classNames, phaseId, columns = [], rows = [], type }) => {
 
   const [elementCreator, setElementCreator] = useState(false);
   const [elementName, setElementNameState] = useState('');
   const elementNameRef = React.createRef();
   
   const setElement = () => {
-    let initialValuesCount = rows.length;
-    setElementName(elementName, phaseId, initialValuesCount);
-    type === 'row' && columns.length > 0 && addGenericColumnValue(phaseId); 
+    if (type === 'row') {
+      setElementName(elementName, phaseId, columns);
+    } else if (type === 'column') {
+      setElementName(elementName, phaseId, rows);
+    }
     setElementNameState('');
     setElementCreator(false);
   }

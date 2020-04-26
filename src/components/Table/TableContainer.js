@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import ElementCreator from '../DefaultElement/ElementCreator';
 import ColumnContainer from '../../components/Column/ColumnContainer';
 import { addrow, removerow, renamerow } from '../../actions/rows';
-import { addGenericColumnValue } from '../../actions/columns';
 import DefaultContainer from '../DefaultElement/DefaultContainer';
 import selectorFunction from '../../selectors/rowSelector';
 import DecisionGate from '../DecisionGate/DecisionGate';
@@ -83,10 +82,9 @@ const mapStateToProps = (state, ownProps) => {
 }}
 
 const mapDispatchToProps = dispatch => ({
-  addrow: (name, phaseId) => dispatch(addrow(name, phaseId)),
+  addrow: (name, phaseId, columns) => dispatch(addrow(name, phaseId, columns)),
   removerow: (rowId, phaseId, index) => dispatch(removerow(rowId, phaseId, index)),
   renamerow: (name, rowId) => dispatch(renamerow(name, rowId)),
-  addGenericColumnValue: (phaseId) => dispatch(addGenericColumnValue(phaseId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableContainer);

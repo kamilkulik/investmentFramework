@@ -2,13 +2,28 @@ import { v4 as uuidv4 } from 'uuid';
 
 // ADD_COLUMN
 
-export const addColumn = (name = '', phaseId = '', initialValuesCount = 0) => ({
-  type: 'ADD_COLUMN',
-  name,
-  columnId: uuidv4(),
-  phaseId,
-  initialValuesCount
-});
+export const addColumn = (name = '', phaseId = '', rows) => {
+  
+  const columnId = uuidv4();
+  
+  return (dispatch) => {
+
+    dispatch({
+      type: 'ADD_COLUMN',
+      name,
+      columnId,
+      phaseId,
+    });
+
+    dispatch({
+      type: 'SET_GENERIC_VALUES',
+      phaseId,
+      columnId,
+      rows,
+    })
+  }
+  
+};
 
 // REMOVE_COLUMN
 
