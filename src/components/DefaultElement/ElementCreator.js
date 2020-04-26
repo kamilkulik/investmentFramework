@@ -12,6 +12,8 @@ const ElementCreatorContainer = ({ setElementName, placeholder, addText, btnText
       setElementName(elementName, phaseId, columns);
     } else if (type === 'column') {
       setElementName(elementName, phaseId, rows);
+    } else if (type === 'phase') {
+      setElementName(elementName);
     }
     setElementNameState('');
     setElementCreator(false);

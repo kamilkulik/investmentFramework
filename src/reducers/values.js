@@ -32,6 +32,10 @@ export default (state = valueReducerDefaultState, action) => {
       return addGenericValues(state, action)
     case 'REMOVE_ROW':
       return state.filter(value => value.rowId !== action.rowId)
+    case 'REMOVE_COLUMN':
+      return state.filter(value => value.columnId !== action.columnId)
+    case 'REMOVE_PHASE':
+      return state.filter(value => value.phaseId !== action.phaseId)
     case 'ADD_GENERIC_ROW_VALUES':
       return addGenericRowValues(state, action)
     case 'REMOVE_VALUE':
