@@ -8,15 +8,17 @@ const ElementCreatorContainer = ({ setElementName, placeholder, addText, btnText
   const elementNameRef = React.createRef();
   
   const setElement = () => {
-    if (type === 'row') {
-      setElementName(elementName, phaseId, columns);
-    } else if (type === 'column') {
-      setElementName(elementName, phaseId, rows);
-    } else if (type === 'phase') {
-      setElementName(elementName);
-    }
-    setElementNameState('');
-    setElementCreator(false);
+    if (elementName) {
+      if (type === 'row') {
+        setElementName(elementName, phaseId, columns);
+      } else if (type === 'column') {
+        setElementName(elementName, phaseId, rows);
+      } else if (type === 'phase') {
+        setElementName(elementName);
+      }
+      setElementNameState('');
+      setElementCreator(false);
+    } 
   }
   
   const onKeyPress = (e) => {

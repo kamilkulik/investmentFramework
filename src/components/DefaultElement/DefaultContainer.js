@@ -7,8 +7,10 @@ const DefaultContainer = ({ children, classNames = [], name, elementId, phaseId,
   const elementTextArea = React.createRef();
 
   const changeElementName = () => {
-    if (elementName !== name) {
+    if (elementName !== name && elementName) {
       renameElement(elementName, elementId)
+    } else if (!elementName) {
+      setElementName(name)
     }
   }
 
