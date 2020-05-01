@@ -1,8 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-// ADD_SELECTED
-
-export function addSelected(name = '', rows) {
+export const nextPhase = (name = '', rows) => {
   return (dispatch) => {
     const phaseId = uuidv4();
     const newRows = rows.map(row => {
@@ -21,3 +19,13 @@ export function addSelected(name = '', rows) {
     });
   }
 }; 
+
+export const addToPositionSizing = (rows) => ({
+  type: 'ADD_SELECTED',
+  rows
+})
+
+export const removeAsset = (rowId) => ({
+  type: 'REMOVE_SELECTED_ASSET',
+  rowId
+})

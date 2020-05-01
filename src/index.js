@@ -24,6 +24,7 @@ store.subscribe(() => {
     columns: store.getState().columns,
     filters: store.getState().filters,
     selected: store.getState().selected,
-    values: store.getState().values
+    values: store.getState().values,
+    accInfo: store.getState().accInfo
   })
 })

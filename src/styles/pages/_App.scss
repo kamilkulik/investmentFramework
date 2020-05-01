@@ -23,4 +23,9 @@
     grid-column: 1 / span 2;
   }
 
+  &--positionSizing {
+    grid-row-start: auto;
+    grid-column: 2 / span 8;
+  }
+
 }
