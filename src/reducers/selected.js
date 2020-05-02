@@ -10,6 +10,9 @@ export default (state = selectedReducerDefaultState, action) => {
         entryPrice: 0,
         targetPrice: 0,
         stopLossPrice: 0,
+        maxLoss: 0,
+        estimatedTradeProfit: 0,
+        positionValue: 0,
       }))
       return [
         ...state,
@@ -17,7 +20,54 @@ export default (state = selectedReducerDefaultState, action) => {
       ]
     case 'REMOVE_SELECTED_ASSET':
       return state.filter(({ rowId }) => rowId !== action.rowId)
+    case 'SET_ENTRY_PRICE':
+      return setPrice(state, action)
+    case 'SET_TARGET_PRICE':
+      return setPrice(state, action)
+    case 'SET_STOP_LOSS':
+      return setPrice(state, action)
+    case 'SET_TRADE_DATA':
+      return state.map(asset => {
+        if (asset.rowId === action.rowId) {
+          return {
+            ...asset,
+            noOfShares: action.tradeData.noOfShares,
+            maxLoss: action.tradeData.maxLoss,
+            estimatedTradeProfit: action.tradeData.estimatedTradeProfit,
+            positionValue: action.tradeData.positionValue,
+          }
+        } else {
+          return { ...asset }
+        }
+      })
     default:
       return state
   }
 };
+
+const setPrice = (state, action) => {
+  const updatedState = state.map(asset => {
+    if (asset.rowId === action.rowId) {
+      let updatedAsset;
+      switch (action.type) {
+        case 'SET_ENTRY_PRICE':
+          updatedAsset = { ...asset, entryPrice: parseFloat(action.price)};
+          break;
+        case 'SET_TARGET_PRICE':
+          updatedAsset =  { ...asset, targetPrice: parseFloat(action.price)};
+          break;
+        case 'SET_STOP_LOSS':
+          updatedAsset = { ...asset, stopLossPrice: parseFloat(action.price)};
+          break;
+        default:
+          updatedAsset = asset;
+      }
+      return { ...updatedAsset }
+    } else {
+      return { ...asset }
+    }
+  });
+  return [
+    ...updatedState
+  ]
+}

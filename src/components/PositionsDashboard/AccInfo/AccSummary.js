@@ -11,10 +11,10 @@ const AccSummary = () => {
   return (
     <List component="nav" aria-label="mailbox folders">
       <ListItem button divider>
-        <ListItemText primary={`Target Profit: ${'250k'}`} />
+        <ListItemText primary={`Estimated Total Profit: ${'250k'}`} />
       </ListItem>
       <ListItem button divider>
-        <ListItemText primary={`MaxLoss: ${'20k'}`} />
+        <ListItemText primary={`Max Total Loss: ${'20k'}`} />
       </ListItem>
       <ListItem button divider>
         <ListItemText primary={`Account Return / Risk Ratio: ${'3'}`} />

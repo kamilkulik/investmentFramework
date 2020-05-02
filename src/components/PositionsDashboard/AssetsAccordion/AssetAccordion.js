@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import DashboardContext from '../Dashboard-context';
+import AssetContainer from './AssetContainer';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -56,8 +57,8 @@ const AssetAccordion = ({ removeSelectedAsset }) => {
               >
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls={`${asset.cardIf}bh-content`}
-              id={`${asset.cardIf}bh-header`}
+              aria-controls={`${asset.rowId}bh-content`}
+              id={`${asset.rowId}bh-header`}
             >
             <div className={classes.bar}>
               <FormControlLabel
@@ -75,10 +76,9 @@ const AssetAccordion = ({ removeSelectedAsset }) => {
             </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>
-                Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
-                maximus est, id dignissim quam.
-              </Typography>
+              <AssetContainer 
+                rowId={asset.rowId}
+              />
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </React.Fragment>

@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { saveState } from './store/localStorage';
 
-const store = configureStore();
+export const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
