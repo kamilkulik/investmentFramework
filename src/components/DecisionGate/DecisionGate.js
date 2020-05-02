@@ -4,9 +4,9 @@ import TableContext from '../Table/Table-context';
 import ColumnItemBox from '../Column/ColumnItemBox';
 import DecisionItem from './DecisionItem';
 import NewElementButton from '../newElementButton';
-import { addSelected } from '../../actions/selected';
+import { nextPhase, addToPositionSizing } from '../../actions/selected';
 
-const DecisionGate = ({ handleFireAction, phases, phaseId, classNames, addSelected }) => {
+const DecisionGate = ({ handleFireAction, phases, phaseId, classNames, nextPhase, addToPositionSizing }) => {
 
   const { rows } = useContext(TableContext);
   const [actionType, setActionType] = useState('');
@@ -29,7 +29,12 @@ const DecisionGate = ({ handleFireAction, phases, phaseId, classNames, addSelect
     handleFireAction();
     switch (actionType) {
       case 'compare': 
-        selectedRowsState.length > 0 && addSelected(nextPhaseName(), selectedRowsState)
+        selectedRowsState.length > 0 && nextPhase(nextPhaseName(), selectedRowsState)
+        break;
+      case 'proceed':
+        selectedRowsState.length > 0 && addToPositionSizing(selectedRowsState)
+        break;
+      case 'add':
         break;
       default:
         console.log('run with error')
@@ -72,7 +77,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  addSelected: (name, rows) => dispatch(addSelected(name, rows))
+  nextPhase: (name, rows) => dispatch(nextPhase(name, rows)),
+  addToPositionSizing: (rows) => dispatch(addToPositionSizing(rows))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DecisionGate);

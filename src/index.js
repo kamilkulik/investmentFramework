@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { saveState } from './store/localStorage';
 
-const store = configureStore();
+export const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
@@ -24,6 +24,7 @@ store.subscribe(() => {
     columns: store.getState().columns,
     filters: store.getState().filters,
     selected: store.getState().selected,
-    values: store.getState().values
+    values: store.getState().values,
+    accInfo: store.getState().accInfo
   })
 })
