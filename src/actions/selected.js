@@ -30,26 +30,24 @@ export const removeAsset = (rowId) => ({
   rowId
 })
 
-export const setEntryPrice = (rowId, entryPrice = 0) => ({
-    type: 'SET_ENTRY_PRICE',
-    rowId,
-    price: entryPrice
-})
-
-export const setTargetPrice = (rowId, targetPrice = 0) => ({
-  type: 'SET_TARGET_PRICE',
-  rowId,
-  price: targetPrice
-})
-
-export const setStopLoss = (rowId, stopLossPrice = 0) => ({
-  type: 'SET_STOP_LOSS',
-  rowId,
-  price: stopLossPrice
-})
-
 export const setTradeData = (rowId, tradeData) => ({
   type: 'SET_TRADE_DATA',
   rowId,
   tradeData
 })
+
+export const setPrice = (type, rowId, price = 0) => {
+  let actionType;
+  if (type === 'entryPrice') {
+    actionType = 'SET_ENTRY_PRICE'
+  } else if (type === 'targetPrice') {
+    actionType = 'SET_TARGET_PRICE'
+  } else if (type === 'stopLossPrice') {
+    actionType = 'SET_STOP_LOSS'
+  }
+  return {
+    type: actionType,
+    rowId,
+    price
+  }
+}

@@ -25,10 +25,3 @@ export function setFloatingBrokerFee(floatingFee = 0) {
     floatingFee
   }
 }
-
-export function setBrokerFeeThreshold(feeThreshold = 0) {
-  return {
-    type: 'SET_BROKER_FEE_THRESHOLD',
-    feeThreshold
-  }
-}

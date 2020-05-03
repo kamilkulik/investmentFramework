@@ -9,7 +9,9 @@ import { setAccountSize, setAccountRisk } from '../../../actions/accInfo';
 
 const AccForm = ({ setAccountSize, setAccountRisk }) => {
 
-  const { accInfo } = useContext(DashboardContext)
+  const { accInfo } = useContext(DashboardContext);
+  const [focus, setFocus] = useState(false);
+  const accSize = React.createRef();
 
   const [values, setValues] = useState({
     accSize: accInfo.accSize,
@@ -26,17 +28,20 @@ const AccForm = ({ setAccountSize, setAccountRisk }) => {
     } else if (prop === 'accRisk') {
       setAccountRisk(values.accRisk)
     }
+    setFocus(false)
   }
 
   return (
     <React.Fragment>
       <FormControl fullWidth variant="outlined">
-        <InputLabel htmlFor="outlined-adornment-size">Account Size</InputLabel>
+        <InputLabel htmlFor="accSize">Account Size</InputLabel>
         <OutlinedInput
-          id="outlined-adornment-size"
-          value={values.accSize}
+          id="accSize"
+          ref={accSize}
+          value={focus ? values.accSize : values.accSize.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
           onChange={handleChange('accSize')}
           onBlur={setValue('accSize')}
+          onClick={() => setFocus(true)}
           startAdornment={<InputAdornment position="start">$</InputAdornment>}
           labelWidth={60}
         />
