@@ -30,13 +30,14 @@ const TradeDetails = ({ rowId }) => {
   
   return (
     <React.Fragment>
-      <p>Number of shares: {noOfShares}</p>
-      <p>Position Value: {positionValue}</p>
+      <p>Number of shares: {noOfShares.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
+      <p>Position Value: ${positionValue.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
       <p>Return / Risk ratio: {returnRiskRatio}</p>
-      <p>Estimated trade profit: ${estimatedTradeProfit}</p>
-      <p>Max loss: ${maxLoss}</p>
-      <p>Profit per Share: ${profitPerShare}</p>
-      <p>Loss per Share: ${lossPerShare}</p>
+      <p>Estimated trade profit: ${estimatedTradeProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
+      <p>Max loss: ${maxLoss.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
+      <p>Profit per Share: ${profitPerShare.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
+      <p>Loss per Share: ${lossPerShare.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
+      
     </React.Fragment>
   )
 }

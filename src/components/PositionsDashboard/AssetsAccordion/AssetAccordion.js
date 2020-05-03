@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { calculateShares } from '../../../internalAPI/tradeData';
 import { removeAsset } from '../../../actions/selected';
 
 const useStyles = makeStyles(() => ({
@@ -35,7 +36,7 @@ const useStyles = makeStyles(() => ({
 const AssetAccordion = ({ removeSelectedAsset }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const { selected } = React.useContext(DashboardContext);
+  const { accInfo, selected } = React.useContext(DashboardContext);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -49,6 +50,7 @@ const AssetAccordion = ({ removeSelectedAsset }) => {
   return (
     <div className={classes.root}>
       {selected.map(asset => {
+        const shares = calculateShares(accInfo, asset)
         return (
           <React.Fragment key={asset.rowId}>
             <ExpansionPanel 
@@ -71,7 +73,7 @@ const AssetAccordion = ({ removeSelectedAsset }) => {
                 </IconButton>}
               />
               <Typography className={classes.heading}>{asset.name}</Typography>
-              <Typography className={classes.secondaryHeading}>{`shares #: ${asset.noOfShares} Target Price: ${asset.targetPrice} Stop Loss Price: ${asset.stopLossPrice}`}
+              <Typography className={classes.secondaryHeading}>{`No of shares: ${shares.noOfShares} Target Price: $${asset.targetPrice} Stop Loss Price: $${asset.stopLossPrice}`}
               </Typography>
             </div>
             </ExpansionPanelSummary>

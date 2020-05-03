@@ -6,13 +6,9 @@ export default (state = selectedReducerDefaultState, action) => {
       const rows = action.rows.map(el => ({
         name: el.name,
         rowId: el.rowId,
-        noOfShares: 0,
         entryPrice: 0,
         targetPrice: 0,
         stopLossPrice: 0,
-        maxLoss: 0,
-        estimatedTradeProfit: 0,
-        positionValue: 0,
       }))
       return [
         ...state,

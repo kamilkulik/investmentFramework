@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import DashboardContext from '../Dashboard-context';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-import { setTradeData } from '../../../actions/selected';
-import { setEntryPrice, setTargetPrice, setStopLoss } from '../../../actions/selected';
+import { setPrice, setTradeData } from '../../../actions/selected';
 
-const PriceForm = ({ rowId, selected, accInfo, setEntryPrice, setTargetPrice, setStopLoss, setTradeDataRedux }) => {
+const PriceForm = ({ rowId, setPrice }) => {
 
+  const { selected } = React.useContext(DashboardContext);
   const assetInfo = selected.find(el => el.rowId === rowId)
 
   const [values, setValues] = useState({
@@ -22,13 +23,15 @@ const PriceForm = ({ rowId, selected, accInfo, setEntryPrice, setTargetPrice, se
   }
 
   const setValue = (prop) => () => {
-    if (prop === 'entryPrice') {
-      setEntryPrice(rowId, values.entryPrice)
-    } else if (prop === 'targetPrice') {
-      setTargetPrice(rowId, values.targetPrice)
-    } else if (prop === 'stopLossPrice') {
-      setStopLoss(rowId, values.stopLossPrice)
-    }
+    let price;
+      if (prop === 'entryPrice') {
+        price = values.entryPrice
+      } else if (prop === 'targetPrice') {
+        price = values.targetPrice
+      } else if (prop === 'stopLossPrice') {
+        price = values.stopLossPrice
+      }
+    setPrice(prop, rowId, price) 
   }
 
   return (
@@ -70,16 +73,9 @@ const PriceForm = ({ rowId, selected, accInfo, setEntryPrice, setTargetPrice, se
   )  
 }
 
-const mapStateToProps = (state) => ({
-  selected: state.selected, 
-  accInfo: state.accInfo
-})
-
 const mapDispatchToProps = (dispatch) => ({
-  setEntryPrice: (rowId, entryPrice) => dispatch(setEntryPrice(rowId, entryPrice)),
-  setTargetPrice: (rowId, targetPrice) => dispatch(setTargetPrice(rowId, targetPrice)),
-  setStopLoss: (rowId, stopLossPrice) => dispatch(setStopLoss(rowId, stopLossPrice)),
+  setPrice: (prop, rowId, price) => dispatch(setPrice(prop, rowId, price)),
   setTradeDataRedux: (rowId, tradeData) => dispatch(setTradeData(rowId, tradeData))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PriceForm);
+export default connect(null, mapDispatchToProps)(PriceForm);
