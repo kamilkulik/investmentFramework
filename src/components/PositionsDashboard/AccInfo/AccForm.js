@@ -26,7 +26,7 @@ const AccForm = ({ setAccountSize, setAccountRisk }) => {
     if (prop === 'accSize') {
       setAccountSize(values.accSize)
     } else if (prop === 'accRisk') {
-      setAccountRisk(values.accRisk)
+      setAccountRisk({ ...accInfo, accSize: values.accSize, accRisk: parseFloat(values.accRisk) })
     }
     setFocus(false)
   }

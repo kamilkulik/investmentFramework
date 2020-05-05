@@ -6,15 +6,17 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import DashboardContext from '../Dashboard-context';
 import { setMinBrokerFee, setFloatingBrokerFee } from '../../../actions/accInfo';
+import { roundToTwo } from '../../../utils/roundingFunc';
 
 const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
-
+  
   const { accInfo } = useContext(DashboardContext)
+  const feeThreshold = roundToTwo(accInfo.minFee / (accInfo.floatingFee * 0.01));
 
   const [values, setValues] = useState({
     minFee: accInfo.minFee,
     floatingFee: accInfo.floatingFee,
-    feeThreshold: accInfo.feeThreshold
+    feeThreshold: feeThreshold
   })
 
   const handleChange = (prop) => (event) => {
@@ -28,6 +30,7 @@ const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
       setFloatingBrokerFee(values.floatingFee)
     } 
   }
+
 
   return (
     <React.Fragment>

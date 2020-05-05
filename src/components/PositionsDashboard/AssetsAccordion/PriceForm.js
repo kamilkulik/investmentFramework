@@ -6,17 +6,21 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import { setPrice, setTradeData } from '../../../actions/selected';
+import { roundToTwo } from '../../../utils/roundingFunc';
+import { defaultStopLoss } from '../../../internalAPI/tradeData';
 
 const PriceForm = ({ rowId, setPrice }) => {
 
-  const { selected } = React.useContext(DashboardContext);
-  const assetInfo = selected.find(el => el.rowId === rowId)
-
+  const { accInfo, selected } = React.useContext(DashboardContext);
+  const assetInfo = selected.find(el => el.rowId === rowId);
+  
   const [values, setValues] = useState({
     entryPrice: assetInfo.entryPrice,
     targetPrice: assetInfo.targetPrice,
     stopLossPrice: assetInfo.stopLossPrice
   })
+  const defaultStopLossPrice = defaultStopLoss(assetInfo, accInfo);
+  const minStopLoss = values.stopLossPrice > defaultStopLossPrice ? defaultStopLossPrice : values.stopLossPrice;
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value })
@@ -29,9 +33,10 @@ const PriceForm = ({ rowId, setPrice }) => {
       } else if (prop === 'targetPrice') {
         price = values.targetPrice
       } else if (prop === 'stopLossPrice') {
-        price = values.stopLossPrice
+        price = roundToTwo(minStopLoss)
+        setValues({ ...values, stopLossPrice: price})
       }
-    setPrice(prop, rowId, price) 
+    setPrice(prop, rowId, price)
   }
 
   return (
@@ -62,7 +67,7 @@ const PriceForm = ({ rowId, setPrice }) => {
       <InputLabel htmlFor={`${rowId}-stop-loss-price`}>Stop-Loss Price</InputLabel>
       <OutlinedInput
         id={`${rowId}-stop-loss-price`}
-        value={values.stopLossPrice}
+        value={minStopLoss}
         onChange={handleChange('stopLossPrice')}
         onBlur={setValue('stopLossPrice')}
         startAdornment={<InputAdornment position="start">$</InputAdornment>}

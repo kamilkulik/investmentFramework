@@ -1,0 +1,546 @@
+{
+    "extension": "linecounter",
+    "version": "0.2.7",
+    "workspace": "/Users/kamilkulik/Documents/DEV/InvestmentFramework/investmentframework",
+    "linecount": [
+        {
+            "version": "0.2.7",
+            "counttime": "2020-05-04 07:29:46",
+            "filesum": 79,
+            "codesum": 12075,
+            "commentsum": 221,
+            "blanksum": 2425,
+            "statistics": {
+                ".md": {
+                    "code": 37,
+                    "comment": 12,
+                    "blank": 31
+                },
+                "": {
+                    "code": 18,
+                    "comment": 1,
+                    "blank": 5
+                },
+                ".html": {
+                    "code": 20,
+                    "comment": 0,
+                    "blank": 1
+                },
+                ".json": {
+                    "code": 65,
+                    "comment": 0,
+                    "blank": 2
+                },
+                ".lock": {
+                    "code": 9445,
+                    "comment": 31,
+                    "blank": 2018
+                },
+                ".txt": {
+                    "code": 3,
+                    "comment": 1,
+                    "blank": 0
+                },
+                ".css": {
+                    "code": 33,
+                    "comment": 0,
+                    "blank": 5
+                },
+                ".js": {
+                    "code": 1943,
+                    "comment": 131,
+                    "blank": 249
+                },
+                ".svg": {
+                    "code": 7,
+                    "comment": 0,
+                    "blank": 0
+                },
+                ".scss": {
+                    "code": 504,
+                    "comment": 45,
+                    "blank": 114
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 5,
+                    "code": 18,
+                    "comment": 1,
+                    "filename": ".gitignore"
+                },
+                {
+                    "blank": 2,
+                    "code": 40,
+                    "comment": 0,
+                    "filename": "package.json"
+                },
+                {
+                    "filename": "public/favicon.ico",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "public/index.html"
+                },
+                {
+                    "filename": "public/logo192.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "public/logo512.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "public/manifest.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 3,
+                    "comment": 1,
+                    "filename": "public/robots.txt"
+                },
+                {
+                    "blank": 31,
+                    "code": 37,
+                    "comment": 12,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 6,
+                    "code": 30,
+                    "comment": 0,
+                    "filename": "src/actions/accInfo.js"
+                },
+                {
+                    "blank": 11,
+                    "code": 27,
+                    "comment": 3,
+                    "filename": "src/actions/columns.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 18,
+                    "comment": 3,
+                    "filename": "src/actions/filters.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 15,
+                    "comment": 3,
+                    "filename": "src/actions/phases.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 29,
+                    "comment": 3,
+                    "filename": "src/actions/rows.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 46,
+                    "comment": 0,
+                    "filename": "src/actions/selected.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 11,
+                    "comment": 3,
+                    "filename": "src/actions/values.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 33,
+                    "comment": 0,
+                    "filename": "src/App.css"
+                },
+                {
+                    "blank": 5,
+                    "code": 42,
+                    "comment": 0,
+                    "filename": "src/App.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "src/App.test.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 47,
+                    "comment": 0,
+                    "filename": "src/components/Column/ColumnContainer.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 13,
+                    "comment": 0,
+                    "filename": "src/components/Column/ColumnItemBox.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 43,
+                    "comment": 0,
+                    "filename": "src/components/Column/ColumnValue.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 75,
+                    "comment": 0,
+                    "filename": "src/components/DecisionGate/DecisionGate.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "src/components/DecisionGate/DecisionItem.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 40,
+                    "comment": 0,
+                    "filename": "src/components/DefaultElement/DefaultContainer.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 60,
+                    "comment": 0,
+                    "filename": "src/components/DefaultElement/ElementCreator.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 107,
+                    "comment": 0,
+                    "filename": "src/components/Filters/FilterCreator.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/components/Filters/FilterPopUpEditor.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 20,
+                    "comment": 2,
+                    "filename": "src/components/Filters/FilterSausage.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/components/Filters/FilterSausageBar.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src/components/Filters/FilterTypes.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 18,
+                    "comment": 0,
+                    "filename": "src/components/newElementButton.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 81,
+                    "comment": 0,
+                    "filename": "src/components/Phase/phaseContainer.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 61,
+                    "comment": 0,
+                    "filename": "src/components/PositionsDashboard/AccInfo/AccForm.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "src/components/PositionsDashboard/AccInfo/AccInfo.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 34,
+                    "comment": 0,
+                    "filename": "src/components/PositionsDashboard/AccInfo/AccSummary.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 68,
+                    "comment": 0,
+                    "filename": "src/components/PositionsDashboard/AccInfo/BrokerFeesForm.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 90,
+                    "comment": 0,
+                    "filename": "src/components/PositionsDashboard/AssetsAccordion/AssetAccordion.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 22,
+                    "comment": 0,
+                    "filename": "src/components/PositionsDashboard/AssetsAccordion/AssetContainer.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 78,
+                    "comment": 0,
+                    "filename": "src/components/PositionsDashboard/AssetsAccordion/PriceForm.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 39,
+                    "comment": 0,
+                    "filename": "src/components/PositionsDashboard/AssetsAccordion/TradeDetails.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "src/components/PositionsDashboard/Dashboard-context.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 31,
+                    "comment": 0,
+                    "filename": "src/components/PositionsDashboard/DashboardContainer.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 10,
+                    "comment": 1,
+                    "filename": "src/components/SmallBtn.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "src/components/Table/Table-context.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 81,
+                    "comment": 1,
+                    "filename": "src/components/Table/TableContainer.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 27,
+                    "comment": 0,
+                    "filename": "src/index.js"
+                },
+                {
+                    "blank": 16,
+                    "code": 78,
+                    "comment": 20,
+                    "filename": "src/internalAPI/tradeData.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/logo.svg"
+                },
+                {
+                    "blank": 1,
+                    "code": 38,
+                    "comment": 0,
+                    "filename": "src/reducers/accInfo.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 54,
+                    "comment": 0,
+                    "filename": "src/reducers/columns.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 21,
+                    "comment": 0,
+                    "filename": "src/reducers/filters.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 21,
+                    "comment": 0,
+                    "filename": "src/reducers/phases.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 29,
+                    "comment": 0,
+                    "filename": "src/reducers/rows.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 77,
+                    "comment": 0,
+                    "filename": "src/reducers/selected.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 75,
+                    "comment": 0,
+                    "filename": "src/reducers/values.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 33,
+                    "comment": 22,
+                    "filename": "src/selectors/rowSelector.js"
+                },
+                {
+                    "blank": 15,
+                    "code": 95,
+                    "comment": 31,
+                    "filename": "src/serviceWorker.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 4,
+                    "filename": "src/setupTests.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "src/store/localStorage.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 31,
+                    "comment": 0,
+                    "filename": "src/store/store.js"
+                },
+                {
+                    "blank": 14,
+                    "code": 55,
+                    "comment": 18,
+                    "filename": "src/styles/abstracts/_mixins.scss"
+                },
+                {
+                    "blank": 8,
+                    "code": 19,
+                    "comment": 3,
+                    "filename": "src/styles/abstracts/_variables.scss"
+                },
+                {
+                    "blank": 18,
+                    "code": 84,
+                    "comment": 1,
+                    "filename": "src/styles/base/_animations.scss"
+                },
+                {
+                    "blank": 11,
+                    "code": 27,
+                    "comment": 20,
+                    "filename": "src/styles/base/_base.scss"
+                },
+                {
+                    "blank": 2,
+                    "code": 16,
+                    "comment": 0,
+                    "filename": "src/styles/base/_typography.scss"
+                },
+                {
+                    "blank": 5,
+                    "code": 27,
+                    "comment": 0,
+                    "filename": "src/styles/components/_BtnSmall.scss"
+                },
+                {
+                    "blank": 7,
+                    "code": 51,
+                    "comment": 2,
+                    "filename": "src/styles/components/_DefaultCreator.scss"
+                },
+                {
+                    "blank": 2,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "src/styles/components/_smallBtn.scss"
+                },
+                {
+                    "blank": 3,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/styles/components/Phase/_FilterBar.scss"
+                },
+                {
+                    "blank": 9,
+                    "code": 38,
+                    "comment": 0,
+                    "filename": "src/styles/components/Phase/_PhaseContainer.scss"
+                },
+                {
+                    "blank": 7,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "src/styles/components/Phase/Table/_ColumnItem.scss"
+                },
+                {
+                    "blank": 7,
+                    "code": 36,
+                    "comment": 1,
+                    "filename": "src/styles/components/Phase/Table/_TableContainer.scss"
+                },
+                {
+                    "blank": 12,
+                    "code": 69,
+                    "comment": 0,
+                    "filename": "src/styles/components/Phase/Table/_TableItemLayout.scss"
+                },
+                {
+                    "blank": 3,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/styles/main.scss"
+                },
+                {
+                    "blank": 6,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "src/styles/pages/_App.scss"
+                },
+                {
+                    "blank": 0,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "src/utils/roundingFunc.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 6,
+                    "comment": 35,
+                    "filename": "src/utils/tableGrid/gridControls.js"
+                },
+                {
+                    "blank": 2018,
+                    "code": 9445,
+                    "comment": 31,
+                    "filename": "yarn.lock"
+                }
+            ]
+        }
+    ]
+}
