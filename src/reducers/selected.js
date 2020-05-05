@@ -1,3 +1,5 @@
+import { defaultStopLoss } from '../internalAPI/tradeData';
+
 const selectedReducerDefaultState = [];
 
 export default (state = selectedReducerDefaultState, action) => {
@@ -22,6 +24,15 @@ export default (state = selectedReducerDefaultState, action) => {
       return setPrice(state, action)
     case 'SET_STOP_LOSS':
       return setPrice(state, action)
+    case 'RECALCULATE_MIN_STOPLOSS':
+      return state.map(asset => {
+        const defaultPrice = defaultStopLoss(asset, action.accInfo);
+        const revisedPrice = asset.stopLossPrice > defaultPrice ? defaultPrice : asset.stopLossPrice;
+        return {
+          ...asset,
+          stopLossPrice: revisedPrice
+        }
+      })
     case 'SET_TRADE_DATA':
       return state.map(asset => {
         if (asset.rowId === action.rowId) {

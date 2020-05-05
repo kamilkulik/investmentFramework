@@ -5,10 +5,18 @@ export function setAccountSize(size = 0) {
   }
 }
 
-export function setAccountRisk(risk = 0) {
-  return {
-    type: 'SET_ACC_RISK',
-    risk
+export function setAccountRisk(accInfo) {
+  return (dispatch) => {
+
+    dispatch({
+      type: 'SET_ACC_RISK',
+      risk: accInfo.accRisk
+    })
+
+    dispatch({
+      type: 'RECALCULATE_MIN_STOPLOSS',
+      accInfo
+    })
   }
 }
 

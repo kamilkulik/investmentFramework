@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { calculateShares } from '../../../internalAPI/tradeData';
+import { shareCalcEngine } from '../../../internalAPI/tradeData';
 import { removeAsset } from '../../../actions/selected';
 
 const useStyles = makeStyles(() => ({
@@ -50,7 +50,7 @@ const AssetAccordion = ({ removeSelectedAsset }) => {
   return (
     <div className={classes.root}>
       {selected.map(asset => {
-        const shares = calculateShares(accInfo, asset)
+        const shares = shareCalcEngine(accInfo, selected).find(el => el.rowId === asset.rowId);
         return (
           <React.Fragment key={asset.rowId}>
             <ExpansionPanel 
