@@ -20,7 +20,7 @@ export const calcTradeData = (rowId, accInfo, selected) => {
   const { noOfShares } = shareCalcEngine(accInfo, selected).find(el => el.rowId === rowId)
   const { entryPriceFee, targetPriceFee, stopLossPriceFee } = calculateFees(accInfo, noOfShares, prices)
 
-  const lossPerShare = roundToTwo(0 - (entryPrice - stopLossPrice));
+  const lossPerShare = roundToTwo(stopLossPrice - entryPrice);
   const profitPerShare = roundToTwo(targetPrice - entryPrice);
   const maxLoss = noOfShares === 0 ? 0 : roundToTwo((noOfShares * lossPerShare) + (entryPriceFee + stopLossPriceFee));
   const estimatedTradeProfit = noOfShares === 0 ? 0 : roundToTwo((noOfShares * profitPerShare) + (entryPriceFee + targetPriceFee));
@@ -43,7 +43,7 @@ export const calcTradeData = (rowId, accInfo, selected) => {
 
 // function for the accInfo components. Provides total numbers for the entire account
 export const summaryData = (accInfo, selected) => {
-  let allTradeInfo = selected.map(asset => {
+  const allTradeInfo = selected.map(asset => {
     return calcTradeData(asset.rowId, accInfo, selected)
   });
 
@@ -77,16 +77,16 @@ export const summaryData = (accInfo, selected) => {
 
 export const shareCalcEngine = (accInfo, assets) => {
   let shares = []; 
-  let fundsToAllocate = accInfo.accSize - accInfo.accSize * accInfo.floatingFee * 0.01
-  assets.forEach(el => {
+  let fundsToAllocate = accInfo.accSize;
+  assets.forEach((el, index) => {
     const { noOfShares } = calculateShares({ ...accInfo, accSize: fundsToAllocate }, el);
     const newShares = noOfShares > 0 ? noOfShares : 0;
     const { entryPriceFee } = calculateFees(accInfo, noOfShares, el)
-    fundsToAllocate -= ((noOfShares * el.entryPrice) - entryPriceFee);
+    fundsToAllocate = Math.max(0, fundsToAllocate - ((noOfShares * el.entryPrice) - entryPriceFee));
     shares.push({ rowId: el.rowId, noOfShares: newShares })
   })
 
-  return shares;
+  return shares
 }
 
 /*
@@ -107,8 +107,15 @@ output:
 export const calculateShares = (accInfo, asset) => {
   const { accRisk, accSize } = accInfo;
   const { entryPrice, stopLossPrice } = asset;
-  const lossPerShare = 0 - (entryPrice - stopLossPrice);
-  const noOfShares = Math.floor(((accRisk * 0.01 * accSize) / -lossPerShare));
+  const lossPerShare = roundToTwo(stopLossPrice - entryPrice);
+  const formula = Math.floor(((accRisk * 0.01 * accSize) / -lossPerShare));
+  let newShares;
+  if (formula * entryPrice > accSize) {
+    newShares = Math.floor(accSize / entryPrice)
+  } else {
+    newShares = formula
+  }
+  const noOfShares = Number.isFinite(newShares) ? newShares : 0;
 
   return {
     noOfShares
@@ -123,9 +130,9 @@ export const calculateFees = (accInfo, noOfShares, prices) => {
   const floatingFeeDecimal = floatingFee * 0.01;
   const feeThreshold = minFee / floatingFeeDecimal;
 
-  const entryPriceFee = - roundToTwo(noOfShares * entryPrice < feeThreshold ? minFee : entryPrice * noOfShares * floatingFeeDecimal);
-  const targetPriceFee = - roundToTwo(noOfShares * targetPrice < feeThreshold ? minFee : targetPrice * noOfShares * floatingFeeDecimal);
-  const stopLossPriceFee = - roundToTwo(noOfShares * stopLossPrice < feeThreshold ? minFee : stopLossPrice * noOfShares * floatingFeeDecimal);
+  const entryPriceFee = noOfShares === 0 ? 0 : - roundToTwo(noOfShares * entryPrice < feeThreshold ? minFee : entryPrice * noOfShares * floatingFeeDecimal);
+  const targetPriceFee = noOfShares === 0 ? 0 : - roundToTwo(noOfShares * targetPrice < feeThreshold ? minFee : targetPrice * noOfShares * floatingFeeDecimal);
+  const stopLossPriceFee = noOfShares === 0 ? 0 : - roundToTwo(noOfShares * stopLossPrice < feeThreshold ? minFee : stopLossPrice * noOfShares * floatingFeeDecimal);
 
   return {
     entryPriceFee,

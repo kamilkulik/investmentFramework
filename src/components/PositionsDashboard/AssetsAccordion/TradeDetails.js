@@ -36,7 +36,7 @@ const TradeDetails = ({ rowId }) => {
   }, [rowId, accInfo, selected]);
   
   const { entryPrice, targetPrice, stopLossPrice } = selected.find(el => el.rowId === rowId);
-  const { minFee, floatingFee } = accInfo;
+  const { floatingFee } = accInfo;
 
   return (
     <React.Fragment>
