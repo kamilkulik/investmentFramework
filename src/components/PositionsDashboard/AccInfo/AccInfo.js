@@ -12,11 +12,11 @@ const AccInfo = () => {
         <AccForm />
       </Grid>
       <Grid container item xs={1}/>
-      <Grid container item xs={4}>
+      <Grid container item xs={6}>
         <AccSummary />
       </Grid>
       <Grid container item xs={1}/>
-      <Grid container item xs={3}>
+      <Grid container item xs={2}>
         <BrokerFeesForm />
     </Grid>
     </Grid>

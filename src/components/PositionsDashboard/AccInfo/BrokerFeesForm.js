@@ -11,13 +11,16 @@ import { roundToTwo } from '../../../utils/roundingFunc';
 const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
   
   const { accInfo } = useContext(DashboardContext)
-  const feeThreshold = roundToTwo(accInfo.minFee / (accInfo.floatingFee * 0.01));
 
   const [values, setValues] = useState({
     minFee: accInfo.minFee,
     floatingFee: accInfo.floatingFee,
-    feeThreshold: feeThreshold
   })
+  
+  const feeThreshold = () => {
+    const threshold = roundToTwo(accInfo.minFee / (accInfo.floatingFee * 0.01)); 
+    return threshold
+  }
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value })
@@ -28,9 +31,8 @@ const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
       setMinBrokerFee(values.minFee)
     } else if (prop === 'floatingFee') {
       setFloatingBrokerFee(values.floatingFee)
-    } 
+    }
   }
-
 
   return (
     <React.Fragment>
@@ -60,7 +62,7 @@ const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
       <InputLabel htmlFor="outlined-adornment-feeThreshold">Broker Fee Threshold</InputLabel>
       <OutlinedInput
         id="outlined-adornment-feeThreshold"
-        value={values.feeThreshold}
+        value={feeThreshold()}
         startAdornment={<InputAdornment position="start">$</InputAdornment>}
         labelWidth={60}
       />

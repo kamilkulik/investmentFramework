@@ -1,6 +1,10 @@
-import { calculateShares, shareCalcEngine, defaultStopLoss } from '../../internalAPI/tradeData';
-import { asset, assets } from '../fixtures/assets';
+import { calculateShares, shareCalcEngine, defaultStopLoss, summaryData, calculateFees } from '../../internalAPI/tradeData';
+import { asset, assets, emptyAssets } from '../fixtures/assets';
+import { roundToTwo } from '../../utils/roundingFunc';
 import accInfo from '../fixtures/accInfo';
+
+const NaNnewAsset = { ...asset, entryPrice: NaN, targetPrice: NaN, stopLossPrice: NaN }
+const NaNnewAccInfo = { ...accInfo, accSize: NaN, accRisk: NaN}
 
 describe('noOfShares', () => {
   test('should return zero for Prices = 0', () => {
@@ -16,9 +20,7 @@ describe('noOfShares', () => {
   });
   
   test('should return zero for NaN inputes', () => {
-    const newAsset = { ...asset, entryPrice: NaN, targetPrice: NaN, stopLossPrice: NaN }
-    const newAccInfo = { ...accInfo, accSize: NaN, accRisk: NaN}
-    const result = calculateShares(newAccInfo, newAsset);
+    const result = calculateShares(NaNnewAsset, NaNnewAccInfo);
     expect(result.noOfShares).toEqual(0);
   });
 
@@ -66,3 +68,81 @@ describe('shareCalcEngine', () => {
     })
   }
 })
+
+describe('summaryData', () => {
+
+  const { accSize: size } = accInfo;
+  test('should return an object of 0\'s for empty assets & null accInfo', () => {
+    const result = summaryData(NaNnewAccInfo, emptyAssets);
+    const test = typeof result === 'object' && result !== 'null' && result !== 'undefined';
+    const objectValues = Object.values(result);
+    const objectValuesSet = new Set(objectValues);
+
+    expect(test).toBeTruthy
+    expect(objectValuesSet).toEqual(new Set([0]))
+  });
+
+  test('should return an object of non-zero values for normal inputs', () => {
+    const result = summaryData(accInfo, assets);
+    const objectValues = Object.values(result);
+    const objectValuesSet = new Set(objectValues);
+
+    expect(test).toBeTruthy
+    expect(objectValuesSet.size).toEqual(objectValues.length)
+  });
+
+  for(let i = 0; i <= 100; i += 10 ) {
+    test(`QUALITY: with AccRisk: ${i}% maxTotalLoss < ${size}`, () => {
+      const newAccInfo = { ...accInfo, accRisk: i};
+      const result = summaryData(newAccInfo, assets);
+      
+      expect(result.maxTotalLoss).toBeLessThanOrEqual(size);
+    });
+  }
+
+  for(let i = 0; i <= 100; i += 10 ) {
+    test(`QUALITY: with AccRisk: ${i}% fundsToAllocate < ${size}`, () => {
+      const newAccInfo = { ...accInfo, accRisk: i};
+      const result = summaryData(newAccInfo, assets);
+
+      expect(result.fundsToAllocate).toBeLessThanOrEqual(size);
+    });
+  }
+
+  for(let i = 0; i <= 100; i += 10 ) {
+    test(`QUALITY: with AccRisk: ${i}% fundsCommited < ${size}`, () => {
+      const newAccInfo = { ...accInfo, accRisk: i};
+      const result = summaryData(newAccInfo, assets);
+      
+      expect(result.fundsCommitted).toBeLessThanOrEqual(size);
+      });
+    }
+});
+
+describe('calculateFees', () => {
+  
+  const noOfShares = Math.round(Math.random() * 10 ** 4);
+
+  test('returns object with properties: entryPriceFee, targetPriceFee, stopLossPriceFee', () => {
+    const result = calculateFees(accInfo, noOfShares, asset);
+    expect(Object.keys(result)).toEqual(['entryPriceFee', 'targetPriceFee', 'stopLossPriceFee']);
+  });
+
+  test('returns object whose values are equal or greater than zero', () => {
+    const result = calculateFees(accInfo, noOfShares, NaNnewAsset);
+    expect(Object.values(result).every(cur => cur >= 0)).toBeTruthy;
+  });
+
+  test('in normal case, returns object whose values are different', () => {
+    const result = calculateFees(accInfo, noOfShares, asset);
+    const values = Object.values(result);
+    const valuesSet = new Set(values)
+    expect(valuesSet.size).toEqual(values.length)
+  });
+
+  test('QUALITY: should return correct entryPrice', () => {
+    const { entryPriceFee } = calculateFees(accInfo, noOfShares, asset);
+    const correctFee = - roundToTwo(accInfo.floatingFee * 0.01 * noOfShares * asset.entryPrice);
+    expect(entryPriceFee).toEqual(correctFee)
+  });
+});

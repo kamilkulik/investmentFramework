@@ -17,7 +17,7 @@ const PriceForm = ({ rowId, setPrice }) => {
   const [values, setValues] = useState({
     entryPrice: assetInfo.entryPrice,
     targetPrice: assetInfo.targetPrice,
-    stopLossPrice: assetInfo.stopLossPrice
+    stopLossPrice: assetInfo.stopLossPrice,
   })
   const defaultStopLossPrice = defaultStopLoss(assetInfo, accInfo);
   const minStopLoss = values.stopLossPrice > defaultStopLossPrice ? defaultStopLossPrice : values.stopLossPrice;
@@ -37,6 +37,7 @@ const PriceForm = ({ rowId, setPrice }) => {
         setValues({ ...values, stopLossPrice: price})
       }
     setPrice(prop, rowId, price)
+
   }
 
   return (

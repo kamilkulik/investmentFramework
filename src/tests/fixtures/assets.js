@@ -29,3 +29,27 @@ export const assets = [
     stopLossPrice: 99,
   }
 ]
+
+export const emptyAssets = [
+  {
+    name: "kghm",
+    rowId: "b3cd288e-548a-4e40-b59e-bb684f08016b",
+    entryPrice: '',
+    targetPrice: '',
+    stopLossPrice: '',
+  },
+  {
+    name: "peo",
+    rowId: "661c7203-32ed-4677-a247-14e7db32069d",
+    entryPrice: '',
+    targetPrice: '',
+    stopLossPrice: '',
+  },
+  {
+    name: "intercars",
+    rowId: "a3503662-35d0-4cfe-a0e3-2c04caecb79e",
+    entryPrice: '',
+    targetPrice: '',
+    stopLossPrice: '',
+  }
+]
