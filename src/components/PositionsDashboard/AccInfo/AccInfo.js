@@ -8,11 +8,11 @@ const AccInfo = () => {
 
   return (
     <Grid container spacing={1}>
-      <Grid container item xs={2}>
+      <Grid container item xs={4}>
         <AccForm />
       </Grid>
       <Grid container item xs={1}/>
-      <Grid container item xs={6}>
+      <Grid container item xs={4}>
         <AccSummary />
       </Grid>
       <Grid container item xs={1}/>

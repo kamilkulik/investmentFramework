@@ -33,3 +33,10 @@ export function setFloatingBrokerFee(floatingFee = 0) {
     floatingFee
   }
 }
+
+export function setFundsPerTrade(fundsPerTrade = 0) {
+  return {
+    type: 'SET_FUNDS_PER_TRADE',
+    fundsPerTrade
+  }
+}

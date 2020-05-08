@@ -1,17 +1,29 @@
 import React, { useState, useContext } from 'react';
 import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import DashboardContext from '../Dashboard-context';
-import { setAccountSize, setAccountRisk } from '../../../actions/accInfo';
+import MaxFundsSlider from './MaxFundsSlider';
+import { setAccountSize, setAccountRisk, setFundsPerTrade } from '../../../actions/accInfo';
 
-const AccForm = ({ setAccountSize, setAccountRisk }) => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '20ch',
+    },
+  },
+}));
+
+const AccForm = ({ setAccountSize, setAccountRisk, setFundsPerTrade }) => {
 
   const { accInfo } = useContext(DashboardContext);
   const [focus, setFocus] = useState(false);
   const accSize = React.createRef();
+  const classes = useStyles();
 
   const [values, setValues] = useState({
     accSize: accInfo.accSize,
@@ -33,7 +45,7 @@ const AccForm = ({ setAccountSize, setAccountRisk }) => {
 
   return (
     <React.Fragment>
-      <FormControl fullWidth variant="outlined">
+      <FormControl fullWidth variant="outlined" className={classes.root}>
         <InputLabel htmlFor="accSize">Account Size</InputLabel>
         <OutlinedInput
           id="accSize"
@@ -46,7 +58,7 @@ const AccForm = ({ setAccountSize, setAccountRisk }) => {
           labelWidth={60}
         />
       </FormControl>
-      <FormControl fullWidth variant="outlined">
+      <FormControl fullWidth variant="outlined" className={classes.root}>
       <InputLabel htmlFor="outlined-adornment-risk">Account Risk</InputLabel>
       <OutlinedInput
         id="outlined-adornment-risk"
@@ -57,13 +69,17 @@ const AccForm = ({ setAccountSize, setAccountRisk }) => {
         labelWidth={60}
       />
       </FormControl>
+      <MaxFundsSlider 
+        setFundsPerTrade={setFundsPerTrade}
+      />
     </React.Fragment>
   )  
 }
 
 const mapDispatchToProps = (dispatch) => ({
   setAccountSize: (size) => dispatch(setAccountSize(size)),
-  setAccountRisk: (risk) => dispatch(setAccountRisk(risk))
+  setAccountRisk: (risk) => dispatch(setAccountRisk(risk)),
+  setFundsPerTrade: (funds) => dispatch(setFundsPerTrade(funds))
 });
 
 export default connect(null, mapDispatchToProps)(AccForm);

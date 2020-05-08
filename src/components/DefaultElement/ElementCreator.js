@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import NewElementButton from '../newElementButton';
 
-const ElementCreatorContainer = ({ setElementName, placeholder, addText, btnText, classNames, phaseId, columns = [], rows = [], type }) => {
+const ElementCreatorContainer = ({ setElementName, placeholder, addText, btnText, classNames = [], phaseId, columns = [], rows = [], type }) => {
 
   const [elementCreator, setElementCreator] = useState(false);
   const [elementName, setElementNameState] = useState('');
@@ -14,6 +14,8 @@ const ElementCreatorContainer = ({ setElementName, placeholder, addText, btnText
       } else if (type === 'column') {
         setElementName(elementName, phaseId, rows);
       } else if (type === 'phase') {
+        setElementName(elementName);
+      } else if (type === 'selectedAsset') {
         setElementName(elementName);
       }
       setElementNameState('');

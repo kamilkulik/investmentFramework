@@ -4,6 +4,7 @@ const accInfoReducerDefaultState = {
   accCcy: 0,
   minFee: 0,
   floatingFee: 0,
+  fundsPerTrade: 0
 };
 
 export default (state = accInfoReducerDefaultState, action) => {
@@ -28,10 +29,10 @@ export default (state = accInfoReducerDefaultState, action) => {
         ...state,
         floatingFee: parseFloat(action.floatingFee)
       }
-    case 'SET_BROKER_FEE_THRESHOLD':
+    case 'SET_FUNDS_PER_TRADE':
       return {
         ...state,
-        feeThreshold: parseFloat(action.feeThreshold)
+        fundsPerTrade: parseFloat(action.fundsPerTrade)
       }
     default:
       return state

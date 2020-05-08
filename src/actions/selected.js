@@ -51,3 +51,14 @@ export const setPrice = (type, rowId, price = 0) => {
     price
   }
 }
+  
+export const addAsset = (name) => {
+  const rows = [{
+    name,
+    rowId: uuidv4()
+  }]
+  return {
+    type: 'ADD_SELECTED',
+    rows
+  }
+}

@@ -72,6 +72,13 @@ export const summaryData = (accInfo, selected) => {
   }
 }
 
+// function to calculate the funds available
+
+export const calcFundsToAllocate = (accInfo, assets) => {
+  const fundsPerTradeAmount = accInfo.fundsPerTrade === 0 ? accInfo.accSize / assets.length : accInfo.accSize * accInfo.fundsPerTrade * 0.01;
+  return roundToTwo(fundsPerTradeAmount);
+}
+
 // function for getting the amount of shares per trade across entire account
 
 export const shareCalcEngine = (accInfo, assets) => {
@@ -102,6 +109,7 @@ output:
 ]
 
 */
+
 
 // function for getting the amount of shares per trade
 export const calculateShares = (accInfo, asset) => {
