@@ -40,3 +40,10 @@ export function setFundsPerTrade(fundsPerTrade = 0) {
     fundsPerTrade
   }
 }
+
+export function toggleAllocation() {
+  return {
+    type: 'TOGGLE_PROPORTIONAL_ALLOCATION',
+  }
+}
+

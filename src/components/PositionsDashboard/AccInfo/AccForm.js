@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import DashboardContext from '../Dashboard-context';
 import MaxFundsSlider from './MaxFundsSlider';
-import { setAccountSize, setAccountRisk, setFundsPerTrade } from '../../../actions/accInfo';
+import LabelSwitch from '../../Switches/SwitchWithLabel';
+import { setAccountSize, setAccountRisk, setFundsPerTrade, toggleAllocation } from '../../../actions/accInfo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,8 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AccForm = ({ setAccountSize, setAccountRisk, setFundsPerTrade }) => {
+const AccForm = ({ setAccountSize, setAccountRisk, setFundsPerTrade, toggleAllocation }) => {
 
+  const defaultAllocation = useSelector(state => state.accInfo.proportionalAllocation);
+  const percentAllocated = useSelector(state => state.selected.reduce((acc, cur) => acc + cur.allocatedFunds, 0))
   const { accInfo } = useContext(DashboardContext);
   const [focus, setFocus] = useState(false);
   const accSize = React.createRef();
@@ -69,9 +73,23 @@ const AccForm = ({ setAccountSize, setAccountRisk, setFundsPerTrade }) => {
         labelWidth={60}
       />
       </FormControl>
-      <MaxFundsSlider 
-        setFundsPerTrade={setFundsPerTrade}
+      <LabelSwitch 
+        state={defaultAllocation}
+        switchLabel='Proportional'
+        topLabel='Allocation of funds to trades:'
+        toggleAction={toggleAllocation}
       />
+      {!defaultAllocation && <TextField
+        className={classes.root}
+        disabled
+        id="outlined-disabled"
+        label="Funds Allocated"
+        value={percentAllocated}
+        variant="outlined"
+      />}
+      {defaultAllocation && <MaxFundsSlider 
+        setFundsPerTrade={setFundsPerTrade}
+      />}
     </React.Fragment>
   )  
 }
@@ -79,7 +97,8 @@ const AccForm = ({ setAccountSize, setAccountRisk, setFundsPerTrade }) => {
 const mapDispatchToProps = (dispatch) => ({
   setAccountSize: (size) => dispatch(setAccountSize(size)),
   setAccountRisk: (risk) => dispatch(setAccountRisk(risk)),
-  setFundsPerTrade: (funds) => dispatch(setFundsPerTrade(funds))
+  setFundsPerTrade: (funds) => dispatch(setFundsPerTrade(funds)),
+  toggleAllocation: () => dispatch(toggleAllocation())
 });
 
 export default connect(null, mapDispatchToProps)(AccForm);

@@ -62,3 +62,9 @@ export const addAsset = (name) => {
     rows
   }
 }
+
+export const setFunds = (rowId, funds) => ({
+  type: 'SET_ALLOCATED_FUNDS',
+  rowId,
+  funds: parseFloat(funds)
+})

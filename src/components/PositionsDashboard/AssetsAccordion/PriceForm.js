@@ -1,18 +1,32 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import DashboardContext from '../Dashboard-context';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-import { setPrice, setTradeData } from '../../../actions/selected';
+import TradeFundsSlider from './TradeFundsSlider';
+import { setPrice, setTradeData, setFunds } from '../../../actions/selected';
 import { roundToTwo } from '../../../utils/roundingFunc';
 import { defaultStopLoss } from '../../../internalAPI/tradeData';
 
-const PriceForm = ({ rowId, setPrice }) => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '20ch',
+    },
+  },
+}));
+
+const PriceForm = ({ rowId, setPrice, setFunds }) => {
+
+  const proportionalAllocation = useSelector(state => state.accInfo.proportionalAllocation);
 
   const { accInfo, selected } = React.useContext(DashboardContext);
   const assetInfo = selected.find(el => el.rowId === rowId);
+  const classes = useStyles();
   
   const [values, setValues] = useState({
     entryPrice: assetInfo.entryPrice,
@@ -42,7 +56,7 @@ const PriceForm = ({ rowId, setPrice }) => {
 
   return (
     <React.Fragment>
-      <FormControl fullWidth variant="outlined">
+      <FormControl fullWidth variant="outlined" className={classes.root}>
         <InputLabel htmlFor={`${rowId}-entry-price`}>Entry Price</InputLabel>
         <OutlinedInput
           id={`${rowId}-entry-price`}
@@ -53,7 +67,7 @@ const PriceForm = ({ rowId, setPrice }) => {
           labelWidth={60}
         />
       </FormControl>
-      <FormControl fullWidth variant="outlined">
+      <FormControl fullWidth variant="outlined" className={classes.root}>
       <InputLabel htmlFor={`${rowId}-target-price`}>Target Price</InputLabel>
       <OutlinedInput
         id={`${rowId}-target-price`}
@@ -64,7 +78,7 @@ const PriceForm = ({ rowId, setPrice }) => {
         labelWidth={60}
       />
       </FormControl>
-      <FormControl fullWidth variant="outlined">
+      <FormControl fullWidth variant="outlined" className={classes.root}>
       <InputLabel htmlFor={`${rowId}-stop-loss-price`}>Stop-Loss Price</InputLabel>
       <OutlinedInput
         id={`${rowId}-stop-loss-price`}
@@ -75,13 +89,18 @@ const PriceForm = ({ rowId, setPrice }) => {
         labelWidth={60}
       />
       </FormControl>
+      {!proportionalAllocation && <TradeFundsSlider 
+        setFunds={setFunds}
+        rowId={rowId}
+      />}
     </React.Fragment>
   )  
 }
 
 const mapDispatchToProps = (dispatch) => ({
   setPrice: (prop, rowId, price) => dispatch(setPrice(prop, rowId, price)),
-  setTradeDataRedux: (rowId, tradeData) => dispatch(setTradeData(rowId, tradeData))
+  setTradeDataRedux: (rowId, tradeData) => dispatch(setTradeData(rowId, tradeData)),
+  setFunds: (rowId, funds) => dispatch(setFunds(rowId, funds))
 });
 
 export default connect(null, mapDispatchToProps)(PriceForm);

@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
-import { roundToTwo } from '../../../utils/roundingFunc';
+// import { roundToTwo } from '../../../utils/roundingFunc';
 
 const useStyles = makeStyles({
   root: {
@@ -16,57 +16,53 @@ const useStyles = makeStyles({
   },
 });
 
-export default function InputSlider({ setFundsPerTrade }) {
+export default function InputSlider({ rowId, setFunds }) {
 
-  const startValue = useSelector(state => state.accInfo.fundsPerTrade);
-  const NoOfTrades = useSelector(state => state.selected.length === 0 ? 1 : state.selected.length);
-  const maxSliderValue = 100 / NoOfTrades;
+  const allocatedFunds = useSelector(state => state.selected.find(el => el.rowId === rowId).allocatedFunds);
   const classes = useStyles();
-  const [value, setValue] = React.useState(startValue);
+  const [value, setValue] = React.useState(allocatedFunds);
+  const inputRef = React.createRef();
+
+  React.useEffect(() => {
+   setValue(allocatedFunds) 
+  }, [allocatedFunds])
 
   const handleSliderChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const handleOnMouseUp = () => {
-    setFundsPerTrade(value);
+    setFunds(rowId, value);
   }
 
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
     setValue(inputValue === '' ? '' : Number(inputValue));
-    setFundsPerTrade(inputValue);
   };
 
   const handleBlur = () => {
     if (value < 0) {
       setValue(0);
-    } else if (value > maxSliderValue) {
-      setValue(maxSliderValue);
+      setFunds(rowId, 0);
+    } else if (value > 100) {
+      setValue(100);
+      setFunds(rowId, 100)
+    } else {
+      setFunds(rowId, value);
     }
   };
 
-  const determineInputProps = () => {
-    if (value === 0) {
-      return {
-        type: 'text',
-        'aria-labelledby': 'input-slider',
-      }
-    } else {
-      return {
-        step: 5,
-        min: 0,
-        max: 100 / NoOfTrades,
-        type: 'number',
-        'aria-labelledby': 'input-slider',
-      }
+  const onKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      inputRef.current.blur();
     }
   }
 
   return (
     <div className={classes.root}>
       <Typography id="input-slider" gutterBottom>
-        Max Funds Per Trade
+        Funds Per This Trade:
       </Typography>
       <Grid container spacing={2} alignItems="center">
         <Grid item>
@@ -78,17 +74,25 @@ export default function InputSlider({ setFundsPerTrade }) {
             onChange={handleSliderChange}
             onChangeCommitted={handleOnMouseUp}
             aria-labelledby="input-slider"
-            max={maxSliderValue}
+            max={100}
           />
         </Grid>
         <Grid item>
           <Input
             className={classes.input}
-            value={value === 0 ? 'AUTO' : roundToTwo(value)}
+            value={value}
             margin="dense"
             onChange={handleInputChange}
             onBlur={handleBlur}
-            inputProps={determineInputProps()}
+            inputProps={{
+              onKeyDown: onKeyPress,
+              ref: inputRef,
+              step: 5,
+              min: 0,
+              max: 100,
+              type: 'number',
+              'aria-labelledby': 'input-slider',
+            }}
           />
         </Grid>
       </Grid>

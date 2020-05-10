@@ -5,4 +5,6 @@ export default {
   floatingFee: 0.38,
   feeThreshold: 893,
   accSize: 100000,
+  fundsPerTrade: 0,
+  proportionalAllocation: false
 }

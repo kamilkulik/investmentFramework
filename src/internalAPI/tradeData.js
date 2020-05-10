@@ -83,13 +83,10 @@ export const calcFundsToAllocate = (accInfo, assets) => {
 
 export const shareCalcEngine = (accInfo, assets) => {
   let shares = []; 
-  let fundsToAllocate = accInfo.accSize;
+  let fundsToAllocate = calcFundsToAllocate(accInfo, assets);
   assets.forEach((el) => {
     const { noOfShares } = calculateShares({ ...accInfo, accSize: fundsToAllocate }, el);
     const newShares = noOfShares > 0 ? noOfShares : 0;
-    const { entryPrice } = el;
-    const entryPriceFee = singleFee(accInfo, noOfShares, entryPrice)
-    fundsToAllocate = Math.max(0, fundsToAllocate - ((noOfShares * el.entryPrice) - entryPriceFee));
     shares.push({ rowId: el.rowId, noOfShares: newShares })
   })
 

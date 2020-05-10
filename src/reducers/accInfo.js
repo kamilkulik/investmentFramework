@@ -4,7 +4,8 @@ const accInfoReducerDefaultState = {
   accCcy: 0,
   minFee: 0,
   floatingFee: 0,
-  fundsPerTrade: 0
+  fundsPerTrade: 0,
+  proportionalAllocation: true
 };
 
 export default (state = accInfoReducerDefaultState, action) => {
@@ -33,6 +34,11 @@ export default (state = accInfoReducerDefaultState, action) => {
       return {
         ...state,
         fundsPerTrade: parseFloat(action.fundsPerTrade)
+      }
+    case 'TOGGLE_PROPORTIONAL_ALLOCATION':
+      return {
+        ...state,
+        proportionalAllocation: !state.proportionalAllocation
       }
     default:
       return state
