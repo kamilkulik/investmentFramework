@@ -16,10 +16,10 @@ const DashboardContainer = ({ classNames = [], selected, accInfo, addAsset }) =>
   return (
     <DashboardContext.Provider value={{ selected, accInfo }}>
     <div className={cssClassNames.join(' ')}>
-      <Container maxWidth='md'>
+      <Container>
         <AccInfo />
       </Container>
-      <Container maxWidth='md'>
+      <Container>
         <AssetAccordion />
       </Container>
       <AddAnotherAsset

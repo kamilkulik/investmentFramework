@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PriceForm = ({ rowId, setPrice, setFunds }) => {
 
+  const riskPerTrade = useSelector(state => state.accInfo.riskPerTrade);
   const proportionalAllocation = useSelector(state => state.accInfo.proportionalAllocation);
 
   const { accInfo, selected } = React.useContext(DashboardContext);
@@ -89,7 +90,7 @@ const PriceForm = ({ rowId, setPrice, setFunds }) => {
         labelWidth={60}
       />
       </FormControl>
-      {!proportionalAllocation && <TradeFundsSlider 
+      {!proportionalAllocation && !riskPerTrade && <TradeFundsSlider 
         setFunds={setFunds}
         rowId={rowId}
       />}

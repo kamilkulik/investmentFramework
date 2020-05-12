@@ -1,11 +1,13 @@
 const accInfoReducerDefaultState = {
   accRisk: 0,
+  tradeRisk: 0,
   accSize: 0,
   accCcy: 0,
   minFee: 0,
   floatingFee: 0,
   fundsPerTrade: 0,
-  proportionalAllocation: true
+  proportionalAllocation: true,
+  riskPerTrade: false
 };
 
 export default (state = accInfoReducerDefaultState, action) => {
@@ -19,6 +21,11 @@ export default (state = accInfoReducerDefaultState, action) => {
       return {
         ...state,
         accRisk: parseFloat(action.risk)
+      }
+    case 'SET_TRADE_RISK':
+      return {
+        ...state,
+        tradeRisk: parseFloat(action.risk)
       }
     case 'SET_BROKER_MIN_FEE':
       return {
@@ -39,6 +46,11 @@ export default (state = accInfoReducerDefaultState, action) => {
       return {
         ...state,
         proportionalAllocation: !state.proportionalAllocation
+      }
+    case 'TOGGLE_RISK_PER_TRADE':
+      return {
+        ...state,
+        riskPerTrade: !state.riskPerTrade
       }
     default:
       return state

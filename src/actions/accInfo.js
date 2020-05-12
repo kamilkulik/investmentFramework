@@ -20,6 +20,21 @@ export function setAccountRisk(accInfo) {
   }
 }
 
+export function setTradeRisk(accInfo) {
+  return (dispatch) => {
+
+    dispatch({
+      type: 'SET_TRADE_RISK',
+      risk: accInfo.tradeRisk
+    })
+
+    dispatch({
+      type: 'RECALCULATE_MIN_STOPLOSS',
+      accInfo
+    })
+  }
+}
+
 export function setMinBrokerFee(minFee = 0) {
   return {
     type: 'SET_BROKER_MIN_FEE',
@@ -47,3 +62,8 @@ export function toggleAllocation() {
   }
 }
 
+export function toggleRiskPerTrade() {
+  return {
+    type: 'TOGGLE_RISK_PER_TRADE',
+  }
+}

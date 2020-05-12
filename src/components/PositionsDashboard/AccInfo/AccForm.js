@@ -9,7 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import DashboardContext from '../Dashboard-context';
 import MaxFundsSlider from './MaxFundsSlider';
 import LabelSwitch from '../../Switches/SwitchWithLabel';
-import { setAccountSize, setAccountRisk, setFundsPerTrade, toggleAllocation } from '../../../actions/accInfo';
+import { setAccountSize, setAccountRisk, setFundsPerTrade, toggleAllocation, toggleRiskPerTrade, setTradeRisk } from '../../../actions/accInfo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,9 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AccForm = ({ setAccountSize, setAccountRisk, setFundsPerTrade, toggleAllocation }) => {
+const AccForm = ({ setAccountSize, setAccountRisk, setTradeRisk, setFundsPerTrade, toggleAllocation, toggleRiskPerTrade }) => {
 
   const defaultAllocation = useSelector(state => state.accInfo.proportionalAllocation);
+  const riskPerTrade = useSelector(state => state.accInfo.riskPerTrade);
   const percentAllocated = useSelector(state => state.selected.reduce((acc, cur) => acc + cur.allocatedFunds, 0))
   const { accInfo } = useContext(DashboardContext);
   const [focus, setFocus] = useState(false);
@@ -32,6 +33,7 @@ const AccForm = ({ setAccountSize, setAccountRisk, setFundsPerTrade, toggleAlloc
   const [values, setValues] = useState({
     accSize: accInfo.accSize,
     accRisk: accInfo.accRisk,
+    tradeRisk: accInfo.tradeRisk
   })
 
   const handleChange = (prop) => (event) => {
@@ -43,6 +45,8 @@ const AccForm = ({ setAccountSize, setAccountRisk, setFundsPerTrade, toggleAlloc
       setAccountSize(values.accSize)
     } else if (prop === 'accRisk') {
       setAccountRisk({ ...accInfo, accSize: values.accSize, accRisk: parseFloat(values.accRisk) })
+    } else if (prop === 'tradeRisk') {
+      setTradeRisk({ ...accInfo, accSize: values.accSize, tradeRisk: parseFloat(values.tradeRisk) })
     }
     setFocus(false)
   }
@@ -62,34 +66,43 @@ const AccForm = ({ setAccountSize, setAccountRisk, setFundsPerTrade, toggleAlloc
           labelWidth={60}
         />
       </FormControl>
+      <LabelSwitch 
+        state={riskPerTrade}
+        switchLabel='Risk Per Trade (Advanced)'
+        topLabel='Risk on Account or Trade level:'
+        toggleAction={toggleRiskPerTrade}
+      />
       <FormControl fullWidth variant="outlined" className={classes.root}>
-      <InputLabel htmlFor="outlined-adornment-risk">Account Risk</InputLabel>
+      <InputLabel htmlFor="outlined-adornment-risk">{riskPerTrade ? 'Trade Risk' : 'Account Risk'}</InputLabel>
       <OutlinedInput
         id="outlined-adornment-risk"
-        value={values.accRisk}
-        onChange={handleChange('accRisk')}
-        onBlur={setValue('accRisk')}
+        value={riskPerTrade ? values.tradeRisk : values.accRisk}
+        onChange={riskPerTrade ? handleChange('tradeRisk') : handleChange('accRisk')}
+        onBlur={riskPerTrade ? setValue('tradeRisk') : setValue('accRisk')}
         startAdornment={<InputAdornment position="start">%</InputAdornment>}
         labelWidth={60}
       />
       </FormControl>
-      <LabelSwitch 
-        state={defaultAllocation}
-        switchLabel='Proportional'
-        topLabel='Allocation of funds to trades:'
-        toggleAction={toggleAllocation}
-      />
-      {!defaultAllocation && <TextField
-        className={classes.root}
-        disabled
-        id="outlined-disabled"
-        label="Funds Allocated"
-        value={percentAllocated}
-        variant="outlined"
-      />}
-      {defaultAllocation && <MaxFundsSlider 
-        setFundsPerTrade={setFundsPerTrade}
-      />}
+      {!riskPerTrade && 
+        <React.Fragment>
+          <LabelSwitch 
+            state={defaultAllocation}
+            switchLabel='Proportional'
+            topLabel='Allocation of funds to trades:'
+            toggleAction={toggleAllocation}
+          />
+          {!defaultAllocation && <TextField
+            className={classes.root}
+            disabled
+            id="outlined-disabled"
+            label="Funds Allocated"
+            value={percentAllocated}
+            variant="outlined"
+          />}
+          {defaultAllocation && <MaxFundsSlider 
+            setFundsPerTrade={setFundsPerTrade}
+          />}
+      </React.Fragment>}
     </React.Fragment>
   )  
 }
@@ -97,8 +110,10 @@ const AccForm = ({ setAccountSize, setAccountRisk, setFundsPerTrade, toggleAlloc
 const mapDispatchToProps = (dispatch) => ({
   setAccountSize: (size) => dispatch(setAccountSize(size)),
   setAccountRisk: (risk) => dispatch(setAccountRisk(risk)),
+  setTradeRisk: (risk) => dispatch(setTradeRisk(risk)),
   setFundsPerTrade: (funds) => dispatch(setFundsPerTrade(funds)),
-  toggleAllocation: () => dispatch(toggleAllocation())
+  toggleAllocation: () => dispatch(toggleAllocation()),
+  toggleRiskPerTrade: () => dispatch(toggleRiskPerTrade())
 });
 
 export default connect(null, mapDispatchToProps)(AccForm);

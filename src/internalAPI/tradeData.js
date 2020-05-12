@@ -79,13 +79,26 @@ export const calcFundsToAllocate = (accInfo, assets) => {
   return roundToTwo(fundsPerTradeAmount);
 }
 
+// function to calculate funds per trade if that option is selected on UI
+
+export const calcFundsPerTrade = (accInfo, assets) => {
+  const allocatedFundsPercentages = assets.map(asset => asset.allocatedFunds);
+  const arrayOfFundsPerTrade = allocatedFundsPercentages.map(el => el * 0.01 * accInfo.accSize);
+  return arrayOfFundsPerTrade
+}
+
 // function for getting the amount of shares per trade across entire account
 
 export const shareCalcEngine = (accInfo, assets) => {
   let shares = []; 
-  let fundsToAllocate = calcFundsToAllocate(accInfo, assets);
-  assets.forEach((el) => {
-    const { noOfShares } = calculateShares({ ...accInfo, accSize: fundsToAllocate }, el);
+  const fundsToAllocate = calcFundsToAllocate(accInfo, assets);
+  const variableFundsPerTrade = calcFundsPerTrade(accInfo, assets);
+  assets.forEach((el, index) => {
+    const noOfShares = accInfo.riskPerTrade ?
+        calculateShares(accInfo, el).noOfShares :
+        accInfo.proportionalAllocation ? 
+          calculateShares({ ...accInfo, accSize: fundsToAllocate }, el).noOfShares :
+          calculateShares({ ...accInfo, accSize: variableFundsPerTrade[index] }, el).noOfShares;
     const newShares = noOfShares > 0 ? noOfShares : 0;
     shares.push({ rowId: el.rowId, noOfShares: newShares })
   })
@@ -110,10 +123,12 @@ output:
 
 // function for getting the amount of shares per trade
 export const calculateShares = (accInfo, asset) => {
-  const { accRisk, accSize } = accInfo;
+  const { accRisk, accSize, riskPerTrade, tradeRisk } = accInfo;
   const { entryPrice, stopLossPrice } = asset;
   const lossPerShare = roundToTwo(stopLossPrice - entryPrice);
-  const formula = Math.floor(((accRisk * 0.01 * accSize) / -lossPerShare));
+  const formula = riskPerTrade ? 
+  Math.floor(((tradeRisk * 0.01 * accSize) / -lossPerShare)):
+  Math.floor(((accRisk * 0.01 * accSize) / -lossPerShare));
   let newShares;
   if (formula * entryPrice > accSize) {
     newShares = Math.floor(accSize / entryPrice)

@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import AccSummary from './AccSummary';
 import AccForm from './AccForm';
 import BrokerFeesForm from './BrokerFeesForm';
+import SettingsDrawer from './SettingsDrawer';
 
 const AccInfo = () => {
 
@@ -12,13 +13,16 @@ const AccInfo = () => {
         <AccForm />
       </Grid>
       <Grid container item xs={1}/>
-      <Grid container item xs={4}>
+      <Grid container item xs={3}>
         <AccSummary />
       </Grid>
       <Grid container item xs={1}/>
       <Grid container item xs={2}>
         <BrokerFeesForm />
-    </Grid>
+      </Grid>
+      <Grid contrainer item xs={1}>
+        <SettingsDrawer />
+      </Grid>
     </Grid>
   )  
 }

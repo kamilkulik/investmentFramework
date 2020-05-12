@@ -87,7 +87,6 @@ const calcAllocatedFunds = (state, action) => {
   const alreadyAllocated = state.filter(asset => asset.rowId !== action.rowId).reduce((acc, cur) => acc + cur.allocatedFunds, 0)
   const fundsAllocated = 100 - (alreadyAllocated + action.funds);
   const decreaseFactor = 1 - Math.abs(fundsAllocated / alreadyAllocated);
-  console.log(fundsAllocated)
 
   let changePerAsset;
   if (state.length > 0 && fundsAllocated < 0) {
@@ -97,7 +96,6 @@ const calcAllocatedFunds = (state, action) => {
   } else {
     changePerAsset = 1;
   }
-  console.log(changePerAsset)
 
   const updatedState = state.map(asset => {
     if (asset.rowId === action.rowId) {
