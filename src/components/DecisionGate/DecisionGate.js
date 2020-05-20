@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import TableContext from '../Table/Table-context';
 import ColumnItemBox from '../Column/ColumnItemBox';
 import DecisionItem from './DecisionItem';
@@ -11,6 +12,7 @@ const DecisionGate = ({ handleFireAction, phases, phaseId, classNames, nextPhase
   const { rows } = useContext(TableContext);
   const [actionType, setActionType] = useState('');
   const [selectedRowsState, setSelectedRows] = useState([]);
+  let history = useHistory();
 
   const handleRowSelect = (selected, rowId) => {
     selected ? 
@@ -33,8 +35,10 @@ const DecisionGate = ({ handleFireAction, phases, phaseId, classNames, nextPhase
         break;
       case 'proceed':
         selectedRowsState.length > 0 && addToPositionSizing(selectedRowsState)
+        history.push('/calculator')
         break;
       case 'add':
+        selectedRowsState.length > 0 && addToPositionSizing(selectedRowsState)
         break;
       default:
         console.log('run with error')

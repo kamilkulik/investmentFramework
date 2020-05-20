@@ -6,7 +6,8 @@ const selectedReducerDefaultState = [];
 export default (state = selectedReducerDefaultState, action) => {
   switch (action.type) {
     case 'ADD_SELECTED':
-      const rows = action.rows.map(el => ({
+      const rowIds = state.map(el => el.rowId);
+      const rows = action.rows.filter(el => !rowIds.includes(el.rowId)).map(el => ({
         name: el.name,
         rowId: el.rowId,
         entryPrice: 0,
@@ -74,6 +75,15 @@ const setPrice = (state, action) => {
           updatedAsset = asset;
       }
       return { ...updatedAsset }
+    } else if (action.defaultStop || action.defaultTake) {
+      if (action.defaultStop) { 
+        return { ...asset, 
+          stopLossPrice: Math.min(
+            defaultStopLoss(asset, action.accInfo), 
+            roundToTwo((asset.entryPrice * ((100 - parseFloat(action.defaultStop)) * 0.01)))
+            ) }
+      } else { 
+        return { ...asset, targetPrice: roundToTwo((asset.entryPrice * ((100 + parseFloat(action.defaultTake)) * 0.01))) } }
     } else {
       return { ...asset }
     }

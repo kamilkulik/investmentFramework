@@ -56,6 +56,37 @@ export function setFundsPerTrade(fundsPerTrade = 0) {
   }
 }
 
+export function setDefaultStop(accInfo, defaultStop = 0) {
+  return (dispatch) => {
+  
+    dispatch({
+      type: 'SET_DEFAULT_STOP_LOSS',
+      defaultStop
+    })
+
+    dispatch({
+      type: 'SET_STOP_LOSS',
+      accInfo,
+      defaultStop
+    })
+  }
+}
+
+export function setDefaultTake(defaultTake = 0) {
+  return (dispatch) => {
+    
+    dispatch({
+      type: 'SET_DEFAULT_TAKE_PROFIT',
+      defaultTake
+    })
+
+    dispatch({
+      type: 'SET_TARGET_PRICE',
+      defaultTake
+    })
+  }
+}
+
 export function toggleAllocation() {
   return {
     type: 'TOGGLE_PROPORTIONAL_ALLOCATION',

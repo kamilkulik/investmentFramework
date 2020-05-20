@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { BsPlusSquare, BsCheckBox } from 'react-icons/bs';
 
 const DecisionItem = ({ row, handleRowSelect }) => {
 
-  const [icon, toggleIcon] = useState(false);
+  const selected = !!useSelector(state => state.selected.find(el => el.rowId === row.rowId));
+  const [icon, toggleIcon] = useState(selected);
   
   const handleClick = () => {
-    toggleIcon(!icon)
-    handleRowSelect(!icon, row.rowId);
+    if (!selected) {
+      toggleIcon(!icon)
+      handleRowSelect(!icon, row.rowId);
+    }  
   }
 
   return (

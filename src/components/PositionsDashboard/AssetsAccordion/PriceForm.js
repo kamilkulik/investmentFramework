@@ -20,22 +20,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PriceForm = ({ rowId, setPrice, setFunds }) => {
+const PriceForm = ({ assetInfo, rowId, setPrice, setFunds }) => {
 
   const riskPerTrade = useSelector(state => state.accInfo.riskPerTrade);
   const proportionalAllocation = useSelector(state => state.accInfo.proportionalAllocation);
 
-  const { accInfo, selected } = React.useContext(DashboardContext);
-  const assetInfo = selected.find(el => el.rowId === rowId);
+  const { accInfo } = React.useContext(DashboardContext);
   const classes = useStyles();
   
   const [values, setValues] = useState({
     entryPrice: assetInfo.entryPrice,
     targetPrice: assetInfo.targetPrice,
     stopLossPrice: assetInfo.stopLossPrice,
-  })
+  });
+
+  React.useEffect(() => {
+    setValues({ ...values, stopLossPrice: assetInfo.stopLossPrice })
+  }, [assetInfo])
+  
   const defaultStopLossPrice = defaultStopLoss(assetInfo, accInfo);
-  const minStopLoss = values.stopLossPrice > defaultStopLossPrice ? defaultStopLossPrice : values.stopLossPrice;
+
+  const minStopLoss = Math.min(defaultStopLossPrice, values.stopLossPrice)
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value })
@@ -52,7 +57,6 @@ const PriceForm = ({ rowId, setPrice, setFunds }) => {
         setValues({ ...values, stopLossPrice: price})
       }
     setPrice(prop, rowId, price)
-
   }
 
   return (
@@ -83,7 +87,7 @@ const PriceForm = ({ rowId, setPrice, setFunds }) => {
       <InputLabel htmlFor={`${rowId}-stop-loss-price`}>Stop-Loss Price</InputLabel>
       <OutlinedInput
         id={`${rowId}-stop-loss-price`}
-        value={minStopLoss}
+        value={values.stopLossPrice}
         onChange={handleChange('stopLossPrice')}
         onBlur={setValue('stopLossPrice')}
         startAdornment={<InputAdornment position="start">$</InputAdornment>}
@@ -98,10 +102,17 @@ const PriceForm = ({ rowId, setPrice, setFunds }) => {
   )  
 }
 
+const mapStateToProps = (state, ownProps) => {
+  const assetInfo = state.selected.find(el => el.rowId === ownProps.rowId);
+  return {
+    assetInfo
+  }
+} 
+
 const mapDispatchToProps = (dispatch) => ({
   setPrice: (prop, rowId, price) => dispatch(setPrice(prop, rowId, price)),
   setTradeDataRedux: (rowId, tradeData) => dispatch(setTradeData(rowId, tradeData)),
   setFunds: (rowId, funds) => dispatch(setFunds(rowId, funds))
 });
 
-export default connect(null, mapDispatchToProps)(PriceForm);
+export default connect(mapStateToProps, mapDispatchToProps)(PriceForm);

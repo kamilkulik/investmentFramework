@@ -1,20 +1,16 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+// import { useLocation } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import FlightTakeoffIcon from '@material-ui/icons/FlightTakeoff';
 import BarChartIcon from '@material-ui/icons/BarChart';
-import { BrowserRouter as Router, NavLink, Route, Switch } from 'react-router-dom';
-import StockSelector from './pages/StockSelector';
-import PositionCalculator from './pages/PositionCalculator';
+import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 200;
 
@@ -42,20 +38,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const App = () => {
+const MainSidebar = ({ children }) => {
   const classes = useStyles();
+  // const location = useLocation().pathname.slice(1);
+
+  // const toolBarTitle = () => {
+  //   switch(location) {
+  //     case 'selector':
+  //       return 'Asset Selector'
+  //     case 'calculator':
+  //       return 'Position Sizing Calculator'
+  //     default:
+  //       return 'Investment Framework'
+  //   }
+  // }
 
   return (
-    <Router>
+
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Permanent drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -84,15 +85,11 @@ const App = () => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Switch>
-          <Route path='/' exact={true}><App /></Route>
-          <Route path='/selector'><StockSelector /></Route>
-          <Route path='/calculator'><PositionCalculator /></Route>
-      </Switch>
+        {children}
       </main>
     </div>
-    </Router>
+
   );
 }
 
-export default App;
+export default MainSidebar;

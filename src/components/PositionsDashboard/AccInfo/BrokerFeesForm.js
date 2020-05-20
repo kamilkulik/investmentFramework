@@ -1,16 +1,26 @@
-import React, { useState, useContext } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { connect, useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-import DashboardContext from '../Dashboard-context';
 import { setMinBrokerFee, setFloatingBrokerFee } from '../../../actions/accInfo';
 import { roundToTwo } from '../../../utils/roundingFunc';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '20ch',
+    },
+  },
+}));
+
 const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
   
-  const { accInfo } = useContext(DashboardContext)
+  const classes = useStyles();
+  const accInfo = useSelector(state => state.accInfo)
 
   const [values, setValues] = useState({
     minFee: accInfo.minFee,
@@ -36,7 +46,7 @@ const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
 
   return (
     <React.Fragment>
-      <FormControl fullWidth variant="outlined">
+      <FormControl fullWidth variant="outlined" className={classes.root}>
         <InputLabel htmlFor="outlined-adornment-minFee">Min Broker Fee</InputLabel>
         <OutlinedInput
           id="outlined-adornment-minFee"
@@ -47,7 +57,7 @@ const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
           labelWidth={60}
         />
       </FormControl>
-      <FormControl fullWidth variant="outlined">
+      <FormControl fullWidth variant="outlined" className={classes.root}>
       <InputLabel htmlFor="outlined-adornment-floatingFee">Floating Broker Fee</InputLabel>
       <OutlinedInput
         id="outlined-adornment-floatingFee"
@@ -58,7 +68,7 @@ const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
         labelWidth={60}
       />
       </FormControl>
-      <FormControl fullWidth variant="outlined">
+      <FormControl fullWidth variant="outlined" className={classes.root}>
       <InputLabel htmlFor="outlined-adornment-feeThreshold">Broker Fee Threshold</InputLabel>
       <OutlinedInput
         id="outlined-adornment-feeThreshold"
