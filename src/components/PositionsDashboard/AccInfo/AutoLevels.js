@@ -8,6 +8,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { setDefaultStop, setDefaultTake } from '../../../actions/accInfo';
+import { onKeyPress } from '../../../utils/onKeyPress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,6 +42,11 @@ const AutoLevels = () => {
     }
   }
 
+  const keyPress = (e) => {
+    onKeyPress(e);
+    setDefaultLevels();
+  }
+
   const setDefaultLevels = () => {
     dispatch(setDefaultStop(accInfo, values.stopLoss))
     dispatch(setDefaultTake(values.takeProfit))
@@ -56,12 +62,13 @@ const AutoLevels = () => {
       <FormControl className={classes.root} noValidate autoComplete="off" variant='outlined'>
         <InputLabel htmlFor="stopLoss">Default Stop Loss</InputLabel>
         <OutlinedInput
-          id="stopLoss" 
+          id="defaultStopLoss" 
           type='number'
           variant="outlined" 
           value={values.stopLoss}
           onChange={handleChange('stopLoss')}
           onBlur={handleBlur('stopLoss')}
+          onKeyDown={keyPress}
           labelWidth={85}
           startAdornment={<InputAdornment position="start">%</InputAdornment>}
           inputProps={{
@@ -73,12 +80,13 @@ const AutoLevels = () => {
       <FormControl className={classes.root} noValidate autoComplete="off" variant='outlined'>
         <InputLabel htmlFor="takeProfit">Default Take Profit</InputLabel>
         <OutlinedInput
-          id="takeProfit" 
+          id="defaultTakeProfit" 
           type='number'
           variant="outlined" 
           value={values.takeProfit}
           onChange={handleChange('takeProfit')}
           onBlur={handleBlur('takeProfit')}
+          onKeyDown={keyPress}
           labelWidth={85}
           startAdornment={<InputAdornment position="start">%</InputAdornment>}
           inputProps={{

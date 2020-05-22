@@ -5,9 +5,9 @@ import { roundToTwo } from '../utils/roundingFunc';
 // function that calculates default stop loss. Returns a number
 
 export const defaultStopLoss = (asset, accInfo) => {
-  const { noOfShares } = calculateShares(accInfo, asset);
+  const { noOfShares = 0 } = calculateShares(accInfo, asset);
   const { entryPriceFee, stopLossPriceFee } = calculateFees(accInfo, noOfShares, asset);
-  const feesPerShare = (entryPriceFee + stopLossPriceFee) / noOfShares;
+  const feesPerShare = noOfShares === 0 ? 0 : (entryPriceFee + stopLossPriceFee) / noOfShares;
   return roundToTwo((asset.entryPrice * ((100 - accInfo.accRisk) * 0.01)) - feesPerShare) ;
 }
 
@@ -25,7 +25,7 @@ export const calcTradeData = (rowId, accInfo, selected) => {
   const maxLoss = noOfShares === 0 ? 0 : roundToTwo((noOfShares * lossPerShare) + (entryPriceFee + stopLossPriceFee));
   const estimatedTradeProfit = noOfShares === 0 ? 0 : roundToTwo((noOfShares * profitPerShare) + (entryPriceFee + targetPriceFee));
   const positionValue = roundToTwo(noOfShares * entryPrice)
-  const returnRiskRatio = profitPerShare === 0 & lossPerShare === 0 ? 0 : - (roundToTwo(profitPerShare/lossPerShare));
+  const returnRiskRatio = profitPerShare === 0 && lossPerShare === 0 ? 0 : - (roundToTwo(profitPerShare/lossPerShare));
 
   return {
     lossPerShare,
@@ -123,19 +123,32 @@ output:
 
 // function for getting the amount of shares per trade
 export const calculateShares = (accInfo, asset) => {
-  const { accRisk, accSize, riskPerTrade, tradeRisk } = accInfo;
+  const { accRisk, accSize, riskPerTrade, tradeRisk, defaultStop } = accInfo;
   const { entryPrice, stopLossPrice } = asset;
-  const lossPerShare = roundToTwo(stopLossPrice - entryPrice);
+
+  const newStopLossPrice = !!stopLossPrice ? stopLossPrice : roundToTwo(entryPrice * defaultStop * 0.01)
+  const lossPerShare = roundToTwo(newStopLossPrice - entryPrice);
   const formula = riskPerTrade ? 
-  Math.floor(((tradeRisk * 0.01 * accSize) / -lossPerShare)):
-  Math.floor(((accRisk * 0.01 * accSize) / -lossPerShare));
+    Math.floor(((tradeRisk * 0.01 * accSize) / -lossPerShare)):
+    Math.floor(((accRisk * 0.01 * accSize) / -lossPerShare));
+
   let newShares;
   if (formula * entryPrice > accSize) {
     newShares = Math.floor(accSize / entryPrice)
   } else {
     newShares = formula
   }
-  const noOfShares = Number.isFinite(newShares) ? newShares : 0;
+  const noOfSharesNoFees = Number.isFinite(newShares) ? newShares : 0;
+
+  // revise the number of shares based on fees
+
+  const { entryPriceFee } = calculateFees(accInfo, noOfSharesNoFees, asset);
+
+  const sharesAdjustment = entryPrice > - entryPriceFee ? 
+    (accSize - (noOfSharesNoFees * entryPrice)) >= - entryPriceFee ? 0 : 1 : 
+    - Math.ceil(entryPriceFee / entryPrice);
+
+  const noOfShares = noOfSharesNoFees - sharesAdjustment;
 
   return {
     noOfShares

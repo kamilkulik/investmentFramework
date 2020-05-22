@@ -37,18 +37,18 @@ const TradeDetails = ({ rowId }) => {
 
   return (
     <React.Fragment>
-      <p>Number of shares: {noOfShares.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
-      <p>Position Value: ${positionValue.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
-      <p>Return / Risk ratio: {returnRiskRatio}</p>
-      <p>Estimated trade profit: ${estimatedTradeProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
-      <p>Max loss: ${maxLoss.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
-      <p>Profit per Share: ${profitPerShare.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
-      <p>Loss per Share: ${lossPerShare.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
-      <p>Entry Price Fee: ${entryPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
-      <p>Target price Fee: ${targetPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
-      <p>Stop Loss Fee: ${stopLossPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
-      <p>Take profit deal fee: ${roundToTwo(targetPriceFee + entryPriceFee).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
-      <p>Stop Loss deal Fee: ${roundToTwo(stopLossPriceFee + entryPriceFee).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
+      <p>Number of shares: {noOfShares.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
+      Position Value: ${positionValue.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
+      Return / Risk ratio: {returnRiskRatio}<br/>
+      Estimated trade profit: ${estimatedTradeProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
+      Max loss: ${maxLoss.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
+      Profit per Share: ${profitPerShare.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
+      Loss per Share: ${lossPerShare.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
+      Entry Price Fee: ${entryPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
+      Target price Fee: ${targetPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
+      Stop Loss Fee: ${stopLossPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
+      Take profit deal fee: ${roundToTwo(targetPriceFee + entryPriceFee).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
+      Stop Loss deal Fee: ${roundToTwo(stopLossPriceFee + entryPriceFee).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
       
     </React.Fragment>
   )

@@ -10,6 +10,7 @@ import TradeFundsSlider from './TradeFundsSlider';
 import { setPrice, setTradeData, setFunds } from '../../../actions/selected';
 import { roundToTwo } from '../../../utils/roundingFunc';
 import { defaultStopLoss } from '../../../internalAPI/tradeData';
+import { onKeyPress } from '../../../utils/onKeyPress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +36,7 @@ const PriceForm = ({ assetInfo, rowId, setPrice, setFunds }) => {
   });
 
   React.useEffect(() => {
-    setValues({ ...values, stopLossPrice: assetInfo.stopLossPrice })
+    setValues({ ...values, stopLossPrice: assetInfo.stopLossPrice, targetPrice: assetInfo.targetPrice })
   }, [assetInfo])
   
   const defaultStopLossPrice = defaultStopLoss(assetInfo, accInfo);
@@ -68,6 +69,7 @@ const PriceForm = ({ assetInfo, rowId, setPrice, setFunds }) => {
           value={values.entryPrice}
           onChange={handleChange('entryPrice')}
           onBlur={setValue('entryPrice')}
+          onKeyDown={onKeyPress}
           startAdornment={<InputAdornment position="start">$</InputAdornment>}
           labelWidth={60}
         />
@@ -79,6 +81,7 @@ const PriceForm = ({ assetInfo, rowId, setPrice, setFunds }) => {
         value={values.targetPrice}
         onChange={handleChange('targetPrice')}
         onBlur={setValue('targetPrice')}
+        onKeyDown={onKeyPress}
         startAdornment={<InputAdornment position="start">$</InputAdornment>}
         labelWidth={60}
       />
@@ -90,6 +93,7 @@ const PriceForm = ({ assetInfo, rowId, setPrice, setFunds }) => {
         value={values.stopLossPrice}
         onChange={handleChange('stopLossPrice')}
         onBlur={setValue('stopLossPrice')}
+        onKeyDown={onKeyPress}
         startAdornment={<InputAdornment position="start">$</InputAdornment>}
         labelWidth={60}
       />

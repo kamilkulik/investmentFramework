@@ -79,7 +79,7 @@ const setPrice = (state, action) => {
       if (action.defaultStop) { 
         return { ...asset, 
           stopLossPrice: Math.min(
-            defaultStopLoss(asset, action.accInfo), 
+            defaultStopLoss(asset, action.accInfo),
             roundToTwo((asset.entryPrice * ((100 - parseFloat(action.defaultStop)) * 0.01)))
             ) }
       } else { 

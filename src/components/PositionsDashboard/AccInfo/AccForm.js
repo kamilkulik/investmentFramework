@@ -8,6 +8,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import DashboardContext from '../Dashboard-context';
 import { setAccountSize, setAccountRisk, setTradeRisk } from '../../../actions/accInfo';
+import { onKeyPress } from '../../../utils/onKeyPress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,6 +60,7 @@ const AccForm = ({ setAccountSize, setAccountRisk, setTradeRisk }) => {
           value={focus ? values.accSize : values.accSize.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
           onChange={handleChange('accSize')}
           onBlur={setValue('accSize')}
+          onKeyDown={onKeyPress}
           onClick={() => setFocus(true)}
           startAdornment={<InputAdornment position="start">$</InputAdornment>}
           labelWidth={60}
@@ -71,6 +73,7 @@ const AccForm = ({ setAccountSize, setAccountRisk, setTradeRisk }) => {
         value={riskPerTrade ? values.tradeRisk : values.accRisk}
         onChange={riskPerTrade ? handleChange('tradeRisk') : handleChange('accRisk')}
         onBlur={riskPerTrade ? setValue('tradeRisk') : setValue('accRisk')}
+        onKeyDown={onKeyPress}
         startAdornment={<InputAdornment position="start">%</InputAdornment>}
         labelWidth={60}
       />

@@ -7,6 +7,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import { setMinBrokerFee, setFloatingBrokerFee } from '../../../actions/accInfo';
 import { roundToTwo } from '../../../utils/roundingFunc';
+import { onKeyPress } from '../../../utils/onKeyPress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +54,7 @@ const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
           value={values.minFee}
           onChange={handleChange('minFee')}
           onBlur={setValue('minFee')}
+          onKeyDown={onKeyPress}
           startAdornment={<InputAdornment position="start">$</InputAdornment>}
           labelWidth={60}
         />
@@ -64,6 +66,7 @@ const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
         value={values.floatingFee}
         onChange={handleChange('floatingFee')}
         onBlur={setValue('floatingFee')}
+        onKeyDown={onKeyPress}
         startAdornment={<InputAdornment position="start">%</InputAdornment>}
         labelWidth={60}
       />

@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
-    maxHeight: '80%',
+    maxHeight: '95%',
     display: 'flex',
     flexDirection: 'column'
   },
