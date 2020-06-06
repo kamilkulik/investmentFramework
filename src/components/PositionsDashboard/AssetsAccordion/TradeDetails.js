@@ -1,7 +1,7 @@
-import React from 'react';
-import { calcTradeData } from '../../../internalAPI/tradeData';
-import { roundToTwo } from '../../../utils/roundingFunc';
-import DashboardContext from '../Dashboard-context';
+import React from "react";
+import { calcTradeData } from "../../../internalAPI/tradeData";
+import { roundToTwo } from "../../../utils/roundingFunc";
+import DashboardContext from "../Dashboard-context";
 
 const TradeDetails = ({ rowId }) => {
   const { accInfo, selected } = React.useContext(DashboardContext);
@@ -15,10 +15,10 @@ const TradeDetails = ({ rowId }) => {
     returnRiskRatio: 0,
     entryPriceFee: 0,
     targetPriceFee: 0,
-    stopLossPriceFee: 0
+    stopLossPriceFee: 0,
   });
 
-  const { 
+  const {
     lossPerShare,
     profitPerShare,
     noOfShares,
@@ -28,8 +28,8 @@ const TradeDetails = ({ rowId }) => {
     returnRiskRatio,
     entryPriceFee,
     targetPriceFee,
-    stopLossPriceFee
-   } = tradeData;
+    stopLossPriceFee,
+  } = tradeData;
 
   React.useEffect(() => {
     setTradeData(calcTradeData(rowId, accInfo, selected));
@@ -37,21 +37,50 @@ const TradeDetails = ({ rowId }) => {
 
   return (
     <React.Fragment>
-      <p>Number of shares: {noOfShares.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
-      Position Value: ${positionValue.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
-      Return / Risk ratio: {returnRiskRatio}<br/>
-      Estimated trade profit: ${estimatedTradeProfit.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
-      Max loss: ${maxLoss.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
-      Profit per Share: ${profitPerShare.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
-      Loss per Share: ${lossPerShare.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
-      Entry Price Fee: ${entryPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
-      Target price Fee: ${targetPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
-      Stop Loss Fee: ${stopLossPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
-      Take profit deal fee: ${roundToTwo(targetPriceFee + entryPriceFee).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}<br/>
-      Stop Loss deal Fee: ${roundToTwo(stopLossPriceFee + entryPriceFee).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</p>
-      
+      <p>
+        Number of shares:{" "}
+        {noOfShares.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+        <br />
+        Position Value: $
+        {positionValue.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+        <br />
+        Return / Risk ratio: {returnRiskRatio}
+        <br />
+        Estimated trade profit: $
+        {estimatedTradeProfit
+          .toString()
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+        <br />
+        Max loss: $
+        {maxLoss.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+        <br />
+        Profit per Share: $
+        {profitPerShare.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+        <br />
+        Loss per Share: $
+        {lossPerShare.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+        <br />
+        Entry Price Fee: $
+        {entryPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+        <br />
+        Target price Fee: $
+        {targetPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+        <br />
+        Stop Loss Fee: $
+        {stopLossPriceFee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+        <br />
+        Take profit deal fee: $
+        {roundToTwo(targetPriceFee + entryPriceFee)
+          .toString()
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+        <br />
+        Stop Loss deal Fee: $
+        {roundToTwo(stopLossPriceFee + entryPriceFee)
+          .toString()
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+      </p>
     </React.Fragment>
-  )
-}
+  );
+};
 
 export default TradeDetails;

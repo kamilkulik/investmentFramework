@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
-import Input from '@material-ui/core/Input';
+import React from "react";
+import { useSelector } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Slider from "@material-ui/core/Slider";
+import Input from "@material-ui/core/Input";
 // import { roundToTwo } from '../../../utils/roundingFunc';
 
 const useStyles = makeStyles({
@@ -17,15 +17,16 @@ const useStyles = makeStyles({
 });
 
 export default function InputSlider({ rowId, setFunds }) {
-
-  const allocatedFunds = useSelector(state => state.selected.find(el => el.rowId === rowId).allocatedFunds);
+  const allocatedFunds = useSelector(
+    (state) => state.selected.find((el) => el.rowId === rowId).allocatedFunds
+  );
   const classes = useStyles();
   const [value, setValue] = React.useState(allocatedFunds);
   const inputRef = React.createRef();
 
   React.useEffect(() => {
-   setValue(allocatedFunds) 
-  }, [allocatedFunds])
+    setValue(allocatedFunds);
+  }, [allocatedFunds]);
 
   const handleSliderChange = (event, newValue) => {
     setValue(newValue);
@@ -33,11 +34,11 @@ export default function InputSlider({ rowId, setFunds }) {
 
   const handleOnMouseUp = () => {
     setFunds(rowId, value);
-  }
+  };
 
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
-    setValue(inputValue === '' ? '' : Number(inputValue));
+    setValue(inputValue === "" ? "" : Number(inputValue));
   };
 
   const handleBlur = () => {
@@ -46,7 +47,7 @@ export default function InputSlider({ rowId, setFunds }) {
       setFunds(rowId, 0);
     } else if (value > 100) {
       setValue(100);
-      setFunds(rowId, 100)
+      setFunds(rowId, 100);
     } else {
       setFunds(rowId, value);
     }
@@ -57,7 +58,7 @@ export default function InputSlider({ rowId, setFunds }) {
       e.preventDefault();
       inputRef.current.blur();
     }
-  }
+  };
 
   return (
     <div className={classes.root}>
@@ -65,12 +66,10 @@ export default function InputSlider({ rowId, setFunds }) {
         Funds Per This Trade:
       </Typography>
       <Grid container spacing={2} alignItems="center">
-        <Grid item>
-          %
-        </Grid>
+        <Grid item>%</Grid>
         <Grid item xs>
           <Slider
-            value={typeof value === 'number' ? value : 0}
+            value={typeof value === "number" ? value : 0}
             onChange={handleSliderChange}
             onChangeCommitted={handleOnMouseUp}
             aria-labelledby="input-slider"
@@ -90,8 +89,8 @@ export default function InputSlider({ rowId, setFunds }) {
               step: 5,
               min: 0,
               max: 100,
-              type: 'number',
-              'aria-labelledby': 'input-slider',
+              type: "number",
+              "aria-labelledby": "input-slider",
             }}
           />
         </Grid>

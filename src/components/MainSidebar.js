@@ -1,22 +1,22 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 // import { useLocation } from 'react-router-dom';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import FlightTakeoffIcon from '@material-ui/icons/FlightTakeoff';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import { NavLink } from 'react-router-dom';
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import FlightTakeoffIcon from "@material-ui/icons/FlightTakeoff";
+import BarChartIcon from "@material-ui/icons/BarChart";
+import { NavLink } from "react-router-dom";
 
 const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    display: "flex",
   },
   appBar: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -54,7 +54,6 @@ const MainSidebar = ({ children }) => {
   // }
 
   return (
-
     <div className={classes.root}>
       <CssBaseline />
       <Drawer
@@ -68,16 +67,20 @@ const MainSidebar = ({ children }) => {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          <NavLink to='/selector' activeClassName='currentLocation'>
-            <ListItem button key={'Asset Selector'}>
-              <ListItemIcon><FlightTakeoffIcon /></ListItemIcon>
-              <ListItemText primary={'Asset Selector'} />
+          <NavLink to="/selector" activeClassName="currentLocation">
+            <ListItem button key={"Asset Selector"}>
+              <ListItemIcon>
+                <FlightTakeoffIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Asset Selector"} />
             </ListItem>
           </NavLink>
-          <NavLink to='/calculator' activeClassName='currentLocation'>
-            <ListItem button key={'Position Calculator'}>
-              <ListItemIcon><BarChartIcon /></ListItemIcon>
-              <ListItemText primary={'Position Calculator'} />
+          <NavLink to="/calculator" activeClassName="currentLocation">
+            <ListItem button key={"Position Calculator"}>
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Position Calculator"} />
             </ListItem>
           </NavLink>
         </List>
@@ -88,8 +91,7 @@ const MainSidebar = ({ children }) => {
         {children}
       </main>
     </div>
-
   );
-}
+};
 
 export default MainSidebar;

@@ -1,69 +1,83 @@
-import React, { useState } from 'react';
-import NewElementButton from '../newElementButton';
+import React, { useState, useMemo } from "react";
+import NewElementButton from "../newElementButton";
 
-const ElementCreatorContainer = ({ setElementName, placeholder, addText, btnText, classNames = [], phaseId, columns = [], rows = [], type }) => {
-
+const ElementCreatorContainer = ({
+  setElementName,
+  placeholder,
+  addText,
+  btnText,
+  classNames,
+  phaseId,
+  columns = [],
+  rows = [],
+  type,
+}) => {
   const [elementCreator, setElementCreator] = useState(false);
-  const [elementName, setElementNameState] = useState('');
+  const [elementName, setElementNameState] = useState("");
   const elementNameRef = React.createRef();
-  
+
   const setElement = () => {
     if (elementName) {
-      if (type === 'row') {
+      if (type === "row") {
         setElementName(elementName, phaseId, columns);
-      } else if (type === 'column') {
+      } else if (type === "column") {
         setElementName(elementName, phaseId, rows);
-      } else if (type === 'phase') {
+      } else if (type === "phase") {
         setElementName(elementName);
-      } else if (type === 'selectedAsset') {
+      } else if (type === "selectedAsset") {
         setElementName(elementName);
       }
-      setElementNameState('');
+      setElementNameState("");
       setElementCreator(false);
-    } 
-  }
-  
+    }
+  };
+
   const onKeyPress = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault();
       elementNameRef.current.blur();
     }
-  }
+  };
 
-  const cssClassNames = [];
-  if (classNames.length > 0) {
-    Array.prototype.push.apply(cssClassNames, classNames)
-  }
+  const handleOnChange = (e) => {
+    setElementNameState(e.target.value);
+  };
+
+  const handleElementCreator = () => {
+    setElementCreator(!elementCreator);
+  };
+
+  const classHandler = (classes) => {
+    return !!classes ? classes : undefined;
+  };
+
+  const className = useMemo(() => classHandler(classNames), [classNames]);
 
   return (
-    <div className={`${cssClassNames.join(' ')} creator`} >
-      {elementCreator ? 
+    <div className={`${className} creator`}>
+      {elementCreator ? (
         <div>
-          <input 
-            type='text'
+          <input
+            type="text"
             placeholder={placeholder}
             ref={elementNameRef}
             value={elementName}
-            onChange={(e) => setElementNameState(e.target.value)}
+            onChange={handleOnChange}
             onKeyDown={onKeyPress}
             onBlur={setElement}
-            />
-          <button 
-            className='creator--button'
-            onClick={setElement}
-            >{addText}</button>
-          <button 
-            className='creator--button-x' 
-            onClick={() => setElementCreator(false)}
-            >X</button>
-        </div> :
-        <NewElementButton 
-        title={btnText}
-        buttonAction={() => setElementCreator(true)}
-        />
-      }
+          />
+          <button className="creator--button" onClick={setElement}>
+            {addText}
+          </button>
+          <button className="creator--button-x" onClick={handleElementCreator}>
+            X
+          </button>
+        </div>
+      ) : (
+        <NewElementButton title={btnText} buttonAction={handleElementCreator} />
+      )}
     </div>
   );
-}
+};
 
 export default ElementCreatorContainer;

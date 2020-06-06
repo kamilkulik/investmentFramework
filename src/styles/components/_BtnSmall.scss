@@ -1,7 +1,6 @@
 .btn-small,
 .btn-small:link,
 .btn-small:visited {
-
   outline: none;
   font-size: 3rem;
   color: $color-secondary-dark;
@@ -10,7 +9,7 @@
   border: 3px solid $color-secondary-dark;
   padding: 1.5rem 3rem;
   cursor: pointer;
-  transition: all .4s;
+  transition: all 0.4s;
 
   position: absolute;
   left: 50%;

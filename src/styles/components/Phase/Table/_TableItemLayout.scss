@@ -1,5 +1,4 @@
 .row {
-
   &--container {
     display: flex;
     height: 30px;
@@ -34,11 +33,9 @@
       text-align: center;
     }
   }
-
 }
 
 .column {
-
   &--container {
     height: 30px;
     display: flex;
@@ -46,7 +43,7 @@
     justify-content: space-evenly;
 
     textarea {
-      resize: none; 
+      resize: none;
       padding: 2px;
       font-size: 1.2rem;
       border: none;

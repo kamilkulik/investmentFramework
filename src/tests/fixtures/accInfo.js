@@ -6,5 +6,5 @@ export default {
   feeThreshold: 893,
   accSize: 100000,
   fundsPerTrade: 0,
-  proportionalAllocation: false
-}
+  proportionalAllocation: false,
+};

@@ -1,29 +1,36 @@
-import React, { useState, useContext } from 'react';
-import { connect, useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
-import DashboardContext from '../Dashboard-context';
-import { setAccountSize, setAccountRisk, setTradeRisk } from '../../../actions/accInfo';
-import { onKeyPress } from '../../../utils/onKeyPress';
+import React, { useState, useContext } from "react";
+import { connect, useSelector } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import DashboardContext from "../Dashboard-context";
+import {
+  setAccountSize,
+  setAccountRisk,
+  setTradeRisk,
+} from "../../../actions/accInfo";
+import { onKeyPress } from "../../../utils/onKeyPress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(1),
-      width: '20ch',
+      width: "20ch",
     },
   },
 }));
 
 const AccForm = ({ setAccountSize, setAccountRisk, setTradeRisk }) => {
-
-  const defaultAllocation = useSelector(state => state.accInfo.proportionalAllocation);
-  const riskPerTrade = useSelector(state => state.accInfo.riskPerTrade);
-  const percentAllocated = useSelector(state => state.selected.reduce((acc, cur) => acc + cur.allocatedFunds, 0))
+  const defaultAllocation = useSelector(
+    (state) => state.accInfo.proportionalAllocation
+  );
+  const riskPerTrade = useSelector((state) => state.accInfo.riskPerTrade);
+  const percentAllocated = useSelector((state) =>
+    state.selected.reduce((acc, cur) => acc + cur.allocatedFunds, 0)
+  );
   const { accInfo } = useContext(DashboardContext);
   const [focus, setFocus] = useState(false);
   const accSize = React.createRef();
@@ -32,23 +39,31 @@ const AccForm = ({ setAccountSize, setAccountRisk, setTradeRisk }) => {
   const [values, setValues] = useState({
     accSize: accInfo.accSize,
     accRisk: accInfo.accRisk,
-    tradeRisk: accInfo.tradeRisk
-  })
+    tradeRisk: accInfo.tradeRisk,
+  });
 
   const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const setValue = (prop) => () => {
-    if (prop === 'accSize') {
-      setAccountSize(values.accSize)
-    } else if (prop === 'accRisk') {
-      setAccountRisk({ ...accInfo, accSize: values.accSize, accRisk: parseFloat(values.accRisk) })
-    } else if (prop === 'tradeRisk') {
-      setTradeRisk({ ...accInfo, accSize: values.accSize, tradeRisk: parseFloat(values.tradeRisk) })
+    if (prop === "accSize") {
+      setAccountSize(values.accSize);
+    } else if (prop === "accRisk") {
+      setAccountRisk({
+        ...accInfo,
+        accSize: values.accSize,
+        accRisk: parseFloat(values.accRisk),
+      });
+    } else if (prop === "tradeRisk") {
+      setTradeRisk({
+        ...accInfo,
+        accSize: values.accSize,
+        tradeRisk: parseFloat(values.tradeRisk),
+      });
     }
-    setFocus(false)
-  }
+    setFocus(false);
+  };
 
   return (
     <React.Fragment>
@@ -57,9 +72,15 @@ const AccForm = ({ setAccountSize, setAccountRisk, setTradeRisk }) => {
         <OutlinedInput
           id="accSize"
           ref={accSize}
-          value={focus ? values.accSize : values.accSize.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
-          onChange={handleChange('accSize')}
-          onBlur={setValue('accSize')}
+          value={
+            focus
+              ? values.accSize
+              : values.accSize
+                  .toString()
+                  .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+          }
+          onChange={handleChange("accSize")}
+          onBlur={setValue("accSize")}
           onKeyDown={onKeyPress}
           onClick={() => setFocus(true)}
           startAdornment={<InputAdornment position="start">$</InputAdornment>}
@@ -67,31 +88,38 @@ const AccForm = ({ setAccountSize, setAccountRisk, setTradeRisk }) => {
         />
       </FormControl>
       <FormControl fullWidth variant="outlined" className={classes.root}>
-      <InputLabel htmlFor="outlined-adornment-risk">{riskPerTrade ? 'Trade Risk' : 'Account Risk'}</InputLabel>
-      <OutlinedInput
-        id="outlined-adornment-risk"
-        value={riskPerTrade ? values.tradeRisk : values.accRisk}
-        onChange={riskPerTrade ? handleChange('tradeRisk') : handleChange('accRisk')}
-        onBlur={riskPerTrade ? setValue('tradeRisk') : setValue('accRisk')}
-        onKeyDown={onKeyPress}
-        startAdornment={<InputAdornment position="start">%</InputAdornment>}
-        labelWidth={60}
-      />
+        <InputLabel htmlFor="outlined-adornment-risk">
+          {riskPerTrade ? "Trade Risk" : "Account Risk"}
+        </InputLabel>
+        <OutlinedInput
+          id="outlined-adornment-risk"
+          value={riskPerTrade ? values.tradeRisk : values.accRisk}
+          onChange={
+            riskPerTrade ? handleChange("tradeRisk") : handleChange("accRisk")
+          }
+          onBlur={riskPerTrade ? setValue("tradeRisk") : setValue("accRisk")}
+          onKeyDown={onKeyPress}
+          startAdornment={<InputAdornment position="start">%</InputAdornment>}
+          labelWidth={60}
+        />
       </FormControl>
-      {!riskPerTrade && 
+      {!riskPerTrade && (
         <React.Fragment>
-          {!defaultAllocation && <TextField
-            className={classes.root}
-            disabled
-            id="outlined-disabled"
-            label="Funds Allocated"
-            value={percentAllocated}
-            variant="outlined"
-          />}
-      </React.Fragment>}
+          {!defaultAllocation && (
+            <TextField
+              className={classes.root}
+              disabled
+              id="outlined-disabled"
+              label="Funds Allocated"
+              value={percentAllocated}
+              variant="outlined"
+            />
+          )}
+        </React.Fragment>
+      )}
     </React.Fragment>
-  )  
-}
+  );
+};
 
 const mapDispatchToProps = (dispatch) => ({
   setAccountSize: (size) => dispatch(setAccountSize(size)),

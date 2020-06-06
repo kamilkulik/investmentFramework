@@ -2,17 +2,17 @@
 
 // REMOVE_VALUE
 
-export const removerow = ( rowId, phaseId, index ) => ({
-  type: 'REMOVE_ROW',
+export const removerow = (rowId, phaseId, index) => ({
+  type: "REMOVE_ROW",
   rowId,
   phaseId,
-  index
-})
+  index,
+});
 
 // SET_VALUE
 
 export const setValue = (value = 0, valueId) => ({
-  type: 'SET_VALUE',
+  type: "SET_VALUE",
   value,
   valueId,
-})
+});

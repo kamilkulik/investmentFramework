@@ -1,12 +1,10 @@
-
-
 // COLORS
-$color-primary:#192B1A;
+$color-primary: #192b1a;
 $color-primary-light: #3e6b41;
 $color-primary-dark: #0e180e;
 
 $color-secondary-light: #cfac65;
-$color-secondary-dark: #977B2D;
+$color-secondary-dark: #977b2d;
 
 $color-tertiary-light: #2998ff;
 $color-tertiary-dark: #5643fa;
@@ -25,6 +23,6 @@ $default-font-size: 1.6rem;
 
 //SHADOWS
 
-$box-shadow-light: 0 1.5rem 4rem rgba($color-black, .15);
-$box-shadow-min: 0 1rem 1.5rem rgba($color-black, .15);
-$box-shadow-value: 0 2px 2px rgba($color-black, .15);
+$box-shadow-light: 0 1.5rem 4rem rgba($color-black, 0.15);
+$box-shadow-min: 0 1rem 1.5rem rgba($color-black, 0.15);
+$box-shadow-value: 0 2px 2px rgba($color-black, 0.15);

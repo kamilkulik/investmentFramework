@@ -30,7 +30,8 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "jest": "24.9.0"
+    "jest": "24.9.0",
+    "prettier": "^2.0.5"
   },
   "browserslist": {
     "production": [

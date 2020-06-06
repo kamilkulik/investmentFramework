@@ -3,7 +3,7 @@
   padding: 4px;
   display: grid;
   grid-template-columns: 124px 54px;
-  grid-template-rows: repeat(minmax(auto-fill, 2), minmax(min-content, 27px)) ;
+  grid-template-rows: repeat(minmax(auto-fill, 2), minmax(min-content, 27px));
   row-gap: 4px;
 
   & > div {
@@ -42,7 +42,7 @@
 
   &--button-title {
     width: 178px;
-    
+
     button {
       width: 158px;
       height: 30px;
@@ -50,7 +50,7 @@
       border: none;
       overflow: hidden;
       background-color: $color-grey-light-2;
-      
+
       &:hover {
         cursor: pointer;
         background-color: $color-grey-light-3;

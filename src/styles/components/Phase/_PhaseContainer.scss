@@ -3,10 +3,10 @@
   grid-template-columns: min-content min-content;
   grid-template-rows: auto auto auto 70px;
   grid-template-areas:
-    'phaseName .'
-    'filterBar .'
-    'tableContainer columnCreator'
-    'rowCreator columnCreator';
+    "phaseName ."
+    "filterBar ."
+    "tableContainer columnCreator"
+    "rowCreator columnCreator";
 
   &--header {
     grid-area: phaseName;
@@ -25,6 +25,8 @@
       height: 4rem;
       font-size: 2rem;
       padding: 2px;
+      resize: none;
+      border: none;
     }
   }
 
@@ -44,4 +46,4 @@
   &--newRow {
     grid-area: rowCreator;
   }
-};
+}
