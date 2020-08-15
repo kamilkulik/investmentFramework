@@ -36,8 +36,8 @@ function changeCol(action) {
 // MINE
 
 export const addGridColumn = () => {
-  const select = el => document.querySelector(el);
+  const select = (el) => document.querySelector(el);
   let htmlStyles = window.getComputedStyle(select("html"));
   let colNum = parseInt(htmlStyles.getPropertyValue("--colNum"));
   document.documentElement.style.setProperty(`--colNum`, colNum + 1);
-}
+};

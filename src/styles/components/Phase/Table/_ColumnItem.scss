@@ -1,17 +1,14 @@
 .column-item {
-
   width: 100%;
   height: 100%;
   background-color: $color-grey-light-2;
-
 }
 
 .decision-gate {
-
   padding: 10px;
   margin: 15px;
   box-shadow: $box-shadow-min;
-  border-radius: 5px;;
+  border-radius: 5px;
 
   & > p {
     font-size: 1.2rem;

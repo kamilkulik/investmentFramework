@@ -1,11 +1,11 @@
 export default [
   {
-    name: 'MIN'
+    name: "MIN",
   },
   {
-    name: 'MAX'
+    name: "MAX",
   },
   {
-    name: 'BETWEEN'
-  }
-]
+    name: "BETWEEN",
+  },
+];

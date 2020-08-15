@@ -5,23 +5,23 @@ import { connect } from 'react-redux';
 import { removeFilter } from '../../actions/filters';
 
 const FilterSausage = ({ filter, removeFilter }) => {
-
-  //const [filterEditor, setFilterEditor] = useState(false)
+  const handleClick = () => {
+    removeFilter(filter.filterId);
+  };
 
   return (
     <React.Fragment>
       <NewElementButton
         title={`${filter.name}: ${filter.filterType} ${filter.value}`}
         classNames={['filterSausage']}
-        //onClick={() => setFilterEditor(true)}
       />
-      <SmallBtn onClick={() => removeFilter(filter.filterId)}>X</SmallBtn>
+      <SmallBtn onClick={handleClick}>X</SmallBtn>
     </React.Fragment>
-  )
+  );
 };
 
-const mapDispatchToProps = dispatch => ({
-  removeFilter: filterId => dispatch(removeFilter(filterId)),
+const mapDispatchToProps = (dispatch) => ({
+  removeFilter: (filterId) => dispatch(removeFilter(filterId)),
 });
 
 export default connect(null, mapDispatchToProps)(FilterSausage);

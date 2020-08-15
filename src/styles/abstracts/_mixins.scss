@@ -1,35 +1,37 @@
+@import "./variables";
+
 @mixin clearfix {
-    &::after {
-        content: "";
-        clear: both;
-        display: table;
-    }
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
 }
 
 @mixin flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @mixin center-hor-ver {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @mixin greyToDarkGrey {
-    cursor: pointer;
-    background-color: $color-grey-light-3;
+  cursor: pointer;
+  background-color: $color-grey-light-3;
 }
 
 @mixin greyButton {
-    border-radius: 5px;
-    border: none;
-    overflow: hidden;
-    background-color: $color-grey-light-2;
-    color: $color-grey-dark;
+  border-radius: 5px;
+  border: none;
+  overflow: hidden;
+  background-color: $color-grey-light-2;
+  color: $color-grey-dark;
 }
 
 // MEDIA QUERY MANAGER
@@ -45,35 +47,51 @@
 */
 
 @mixin respond($breakpoint) {
-    @if $breakpoint == small-phone {
-        @media only screen and (max-width: 25em) { @content }; // 400px
-    }
+  @if $breakpoint == small-phone {
+    @media only screen and (max-width: 25em) {
+      @content;
+    } // 400px
+  }
 
-    @if $breakpoint == phone {
-        @media only screen and (max-width: 37.5em) { @content}; // 600px
-    }
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    } // 600px
+  }
 
-    @if $breakpoint == phone-land {
-        @media only screen and (max-width: 56.25em) and (orientation: landscape) { @content}; // 600px
-    }
-    
-    @if $breakpoint == tab-port-small {
-        @media only screen and (max-width: 43.75em) { @content}; // 700px
-    }
+  @if $breakpoint == phone-land {
+    @media only screen and (max-width: 56.25em) and (orientation: landscape) {
+      @content;
+    } // 600px
+  }
 
-    @if $breakpoint == tab-port {
-        @media only screen and (max-width: 56.25em) { @content}; // 800px
-    }
+  @if $breakpoint == tab-port-small {
+    @media only screen and (max-width: 43.75em) {
+      @content;
+    } // 700px
+  }
 
-    @if $breakpoint == tab-land {
-        @media only screen and (max-width: 75em) { @content}; // 1200px
-    }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 56.25em) {
+      @content;
+    } // 800px
+  }
 
-    @if $breakpoint == big-desktop {
-        @media only screen and (min-width: 93.75em) { @content}; // 1500px
-    }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 75em) {
+      @content;
+    } // 1200px
+  }
 
-    @if $breakpoint == port-desktop {
-        @media only screen and (min-height: 112.5rem) { @content}; // 1200px in portrait mode
-    }
+  @if $breakpoint == big-desktop {
+    @media only screen and (min-width: 93.75em) {
+      @content;
+    } // 1500px
+  }
+
+  @if $breakpoint == port-desktop {
+    @media only screen and (min-height: 112.5rem) {
+      @content;
+    } // 1200px in portrait mode
+  }
 }

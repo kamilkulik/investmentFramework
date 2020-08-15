@@ -9,25 +9,23 @@ import valuesReducer from '../reducers/values';
 import accInfoReducer from '../reducers/accInfo';
 import { loadState } from './localStorage';
 
-const reducer = combineReducers(
-  {
-    phases: phaseReducer,
-    rows: rowReducer,
-    columns: columnReducer,
-    filters: filterReducer,
-    selected: selectedReducer,
-    values: valuesReducer,
-    accInfo: accInfoReducer
-  }
-)
+const rootReducer = combineReducers({
+  phases: phaseReducer,
+  rows: rowReducer,
+  columns: columnReducer,
+  filters: filterReducer,
+  selected: selectedReducer,
+  values: valuesReducer,
+  accInfo: accInfoReducer,
+});
 const persistedState = loadState();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
   const store = createStore(
-    reducer,
+    rootReducer,
     persistedState,
     composeEnhancers(applyMiddleware(thunk))
-    );
-  return store
+  );
+  return store;
 };

@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-const newElementButton = ({ children, classNames = [], title, buttonAction }) => {
-  const cssClassNames = [];
-  if (classNames.length > 0) {
-    Array.prototype.push.apply(cssClassNames, classNames)
-  }
+const NewElementButton = ({
+  children,
+  classNames = [],
+  title,
+  buttonAction,
+}) => {
+  const cssClassNames = useMemo(() => classNames.join(' '), [classNames]);
+
+  const actionHandler = () => buttonAction();
+
   return (
-    <div className={`creator--button-title ${cssClassNames.join(' ')}`}>
-      <button 
-        onClick={() => buttonAction()}
-        >
-        {title}
-        </button>
-        {children}
+    <div className={`creator--button-title ${cssClassNames}`}>
+      <button onClick={actionHandler}>{title}</button>
+      {children}
     </div>
   );
-}
+};
 
-export default newElementButton;
+export default NewElementButton;

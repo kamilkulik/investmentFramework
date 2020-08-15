@@ -7,7 +7,7 @@
   20% {
     color: $color-secondary-light;
     border: 3px solid $color-secondary-light;
-    box-shadow: 0 0 1.5rem rgba($color-secondary-light,.4);
+    box-shadow: 0 0 1.5rem rgba($color-secondary-light, 0.4);
   }
 
   40% {
@@ -18,7 +18,7 @@
   60% {
     color: $color-secondary-light;
     border: 3px solid $color-secondary-light;
-    box-shadow: 0 0 1.5rem rgba($color-secondary-light,.4);
+    box-shadow: 0 0 1.5rem rgba($color-secondary-light, 0.4);
   }
 
   80% {
@@ -30,7 +30,6 @@
     color: $color-secondary-light;
     border: 3px solid $color-secondary-light;
   }
-
 }
 
 @keyframes hovering {
@@ -52,10 +51,9 @@
 }
 
 .float-in {
-  
   animation-fill-mode: backwards;
   animation-iteration-count: 1;
-  
+
   &-left {
     animation: 1s ease-out 0s float-in-from-left;
   }
