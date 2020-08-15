@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import ElementCreator from "../DefaultElement/ElementCreator";
-import ColumnContainer from "../../components/Column/ColumnContainer";
-import { addrow, removerow, renamerow } from "../../actions/rows";
-import DefaultContainer from "../DefaultElement/DefaultContainer";
-import selectorFunction from "../../selectors/rowSelector";
-import DecisionGate from "../DecisionGate/DecisionGate";
-import TableContext from "./Table-context";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import ElementCreator from '../DefaultElement/ElementCreator';
+import ColumnContainer from '../../components/Column/ColumnContainer';
+import { addrow, removerow, renamerow } from '../../actions/rows';
+import DefaultContainer from '../DefaultElement/DefaultContainer';
+import selectorFunction from '../../selectors/rowSelector';
+import DecisionGate from '../DecisionGate/DecisionGate';
+import TableContext from './Table-context';
 
 const TableContainer = ({
   phaseId,
@@ -18,7 +18,6 @@ const TableContainer = ({
   addGenericColumnValue,
   removerow,
   renamerow,
-  visibleValues,
 }) => {
   const [actionFired, fireAction] = useState(false);
 
@@ -29,11 +28,11 @@ const TableContainer = ({
   return (
     <TableContext.Provider value={{ rows, phaseId }}>
       <div className={`${className} table`}>
-        <div className="table--rowStart"></div>
+        <div className='table--rowStart'></div>
         {
-          <div className="table--rowName">
+          <div className='table--rowName'>
             {rows.map((row, index) => (
-              <div key={row.rowId} className="row--container">
+              <div key={row.rowId} className='row--container'>
                 <DefaultContainer
                   name={row.name}
                   elementId={row.rowId}
@@ -47,14 +46,14 @@ const TableContainer = ({
             {filters.length === 0 && (
               <ElementCreator
                 phaseId={phaseId}
-                classNames="phase--newRow"
+                classNames='phase--newRow'
                 setElementName={addrow}
-                placeholder="Add an asset"
-                addText="Add Asset"
-                btnText="+ Add Another Asset"
+                placeholder='Add an asset'
+                addText='Add Asset'
+                btnText='+ Add Another Asset'
                 columns={columns}
                 addGenericColumnValue={addGenericColumnValue}
-                type="row"
+                type='row'
               />
             )}
           </div>
@@ -70,7 +69,7 @@ const TableContainer = ({
         ))}
         {filters.length > 0 && actionFired === false && (
           <DecisionGate
-            classNames={["table--decision"]}
+            classNames={['table--decision']}
             phaseId={phaseId}
             handleFireAction={handleFireAction}
           />

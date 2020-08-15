@@ -3,9 +3,9 @@ export default (rows, columns, filters, values) => {
     return rows.filter((row) => {
       const rowId = row.rowId;
       return (
-        minmaxFilter("MIN", rowId, filters, values) &&
-        minmaxFilter("MAX", rowId, filters, values) &&
-        minmaxFilter("BETWEEN", rowId, filters, values)
+        minmaxFilter('MIN', rowId, filters, values) &&
+        minmaxFilter('MAX', rowId, filters, values) &&
+        minmaxFilter('BETWEEN', rowId, filters, values)
       );
     });
   } else {
@@ -47,13 +47,13 @@ const minmaxFilter = (type, rowId, filters, values) => {
   const test = usedFiltersValues.every((cur, index) => {
     let testResult;
     const filteredValue = parseFloat(filterColumnsValues[index]);
-    if (type === "MIN") {
-      testResult = parseFloat(cur) < filteredValue;
-    } else if (type === "MAX") {
+    if (type === 'MIN') {
+      testResult = parseFloat(cur) <= filteredValue;
+    } else if (type === 'MAX') {
       testResult = parseFloat(cur) > filteredValue;
-    } else if (type === "BETWEEN") {
+    } else if (type === 'BETWEEN') {
       testResult =
-        parseFloat(cur[1]) > filteredValue &&
+        parseFloat(cur[1]) >= filteredValue &&
         parseFloat(cur[0]) < filteredValue;
     }
     return testResult;

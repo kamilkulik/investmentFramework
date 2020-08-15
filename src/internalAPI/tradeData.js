@@ -1,4 +1,4 @@
-import { roundToTwo } from "../utils/roundingFunc";
+import { roundToTwo } from '../utils/roundingFunc';
 
 // TODO - break everything into separate functions
 
@@ -236,7 +236,7 @@ export const calculateFees = (accInfo, noOfShares, prices) => {
 export const singleFee = (accInfo, noOfShares, assetPrice) => {
   const { minFee, floatingFee } = accInfo;
   const floatingFeeDecimal = floatingFee * 0.01;
-  const feeThreshold = minFee / floatingFeeDecimal;
+  const feeThreshold = minFee / floatingFeeDecimal || 0;
 
   const positionValue = noOfShares * assetPrice;
   const feeDue =

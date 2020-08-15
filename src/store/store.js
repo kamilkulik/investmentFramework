@@ -1,15 +1,15 @@
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import phaseReducer from "../reducers/phases";
-import rowReducer from "../reducers/rows";
-import columnReducer from "../reducers/columns";
-import filterReducer from "../reducers/filters";
-import selectedReducer from "../reducers/selected";
-import valuesReducer from "../reducers/values";
-import accInfoReducer from "../reducers/accInfo";
-import { loadState } from "./localStorage";
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import phaseReducer from '../reducers/phases';
+import rowReducer from '../reducers/rows';
+import columnReducer from '../reducers/columns';
+import filterReducer from '../reducers/filters';
+import selectedReducer from '../reducers/selected';
+import valuesReducer from '../reducers/values';
+import accInfoReducer from '../reducers/accInfo';
+import { loadState } from './localStorage';
 
-const reducer = combineReducers({
+const rootReducer = combineReducers({
   phases: phaseReducer,
   rows: rowReducer,
   columns: columnReducer,
@@ -23,7 +23,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
   const store = createStore(
-    reducer,
+    rootReducer,
     persistedState,
     composeEnhancers(applyMiddleware(thunk))
   );

@@ -1,7 +1,7 @@
-import React from "react";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import { useIgnoreMountEffect } from "../../utils/customHooks";
+import React from 'react';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import { useIgnoreMountEffect } from '../../utils/customHooks';
 
 const SwitchLabels = ({ state, switchLabel, topLabel, toggleAction }) => {
   const [checked, setChecked] = React.useState(state);
@@ -10,17 +10,21 @@ const SwitchLabels = ({ state, switchLabel, topLabel, toggleAction }) => {
     toggleAction();
   }, checked);
 
+  const handleOnChange = (value) => () => {
+    setChecked(value);
+  };
+
   return (
     <FormControlLabel
       label={topLabel}
-      labelPlacement="top"
+      labelPlacement='top'
       control={
         <FormControlLabel
           control={
             <Switch
               checked={checked}
-              onChange={() => setChecked(!checked)}
-              color="primary"
+              onChange={handleOnChange(!checked)}
+              color='primary'
             />
           }
           label={switchLabel}

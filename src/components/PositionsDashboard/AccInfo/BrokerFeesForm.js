@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { connect, useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import InputLabel from "@material-ui/core/InputLabel";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import FormControl from "@material-ui/core/FormControl";
+import React, { useState } from 'react';
+import { connect, useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
 import {
   setMinBrokerFee,
   setFloatingBrokerFee,
-} from "../../../actions/accInfo";
-import { roundToTwo } from "../../../utils/roundingFunc";
-import { onKeyPress } from "../../../utils/onKeyPress";
+} from '../../../actions/accInfo';
+import { roundToTwo } from '../../../utils/roundingFunc';
+import { onKeyPress } from '../../../utils/onKeyPress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& > *": {
+    '& > *': {
       margin: theme.spacing(1),
-      width: "20ch",
+      width: '20ch',
     },
   },
 }));
@@ -31,7 +31,8 @@ const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
   });
 
   const feeThreshold = () => {
-    const threshold = roundToTwo(accInfo.minFee / (accInfo.floatingFee * 0.01));
+    const threshold =
+      roundToTwo(accInfo.minFee / (accInfo.floatingFee * 0.01)) || 0;
     return threshold;
   };
 
@@ -40,51 +41,51 @@ const BrokerFeesForm = ({ setMinBrokerFee, setFloatingBrokerFee }) => {
   };
 
   const setValue = (prop) => () => {
-    if (prop === "minFee") {
+    if (prop === 'minFee') {
       setMinBrokerFee(values.minFee);
-    } else if (prop === "floatingFee") {
+    } else if (prop === 'floatingFee') {
       setFloatingBrokerFee(values.floatingFee);
     }
   };
 
   return (
     <React.Fragment>
-      <FormControl fullWidth variant="outlined" className={classes.root}>
-        <InputLabel htmlFor="outlined-adornment-minFee">
+      <FormControl fullWidth variant='outlined' className={classes.root}>
+        <InputLabel htmlFor='outlined-adornment-minFee'>
           Min Broker Fee
         </InputLabel>
         <OutlinedInput
-          id="outlined-adornment-minFee"
+          id='outlined-adornment-minFee'
           value={values.minFee}
-          onChange={handleChange("minFee")}
-          onBlur={setValue("minFee")}
+          onChange={handleChange('minFee')}
+          onBlur={setValue('minFee')}
           onKeyDown={onKeyPress}
-          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          startAdornment={<InputAdornment position='start'>$</InputAdornment>}
           labelWidth={60}
         />
       </FormControl>
-      <FormControl fullWidth variant="outlined" className={classes.root}>
-        <InputLabel htmlFor="outlined-adornment-floatingFee">
+      <FormControl fullWidth variant='outlined' className={classes.root}>
+        <InputLabel htmlFor='outlined-adornment-floatingFee'>
           Floating Broker Fee
         </InputLabel>
         <OutlinedInput
-          id="outlined-adornment-floatingFee"
+          id='outlined-adornment-floatingFee'
           value={values.floatingFee}
-          onChange={handleChange("floatingFee")}
-          onBlur={setValue("floatingFee")}
+          onChange={handleChange('floatingFee')}
+          onBlur={setValue('floatingFee')}
           onKeyDown={onKeyPress}
-          startAdornment={<InputAdornment position="start">%</InputAdornment>}
+          startAdornment={<InputAdornment position='start'>%</InputAdornment>}
           labelWidth={60}
         />
       </FormControl>
-      <FormControl fullWidth variant="outlined" className={classes.root}>
-        <InputLabel htmlFor="outlined-adornment-feeThreshold">
+      <FormControl fullWidth variant='outlined' className={classes.root}>
+        <InputLabel htmlFor='outlined-adornment-feeThreshold'>
           Broker Fee Threshold
         </InputLabel>
         <OutlinedInput
-          id="outlined-adornment-feeThreshold"
+          id='outlined-adornment-feeThreshold'
           value={feeThreshold()}
-          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          startAdornment={<InputAdornment position='start'>$</InputAdornment>}
           labelWidth={60}
         />
       </FormControl>

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { BsPlusSquare, BsCheckBox } from "react-icons/bs";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { BsPlusSquare, BsCheckBox } from 'react-icons/bs';
 
 const DecisionItem = ({ row, handleRowSelect }) => {
   const selected = !!useSelector((state) =>
@@ -19,12 +19,9 @@ const DecisionItem = ({ row, handleRowSelect }) => {
     <React.Fragment>
       <p>{row.name}</p>
       {icon ? (
-        <BsCheckBox
-          onClick={() => handleClick()}
-          className="decision-gate__icon"
-        />
+        <BsCheckBox onClick={handleClick} className='decision-gate__icon' />
       ) : (
-        <BsPlusSquare onClick={() => handleClick()} />
+        <BsPlusSquare onClick={handleClick} />
       )}
     </React.Fragment>
   );

@@ -1,65 +1,83 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { addFilter } from '../../actions/filters';
 import filterTypes from './FilterTypes';
 import NewElementButton from '../newElementButton';
 
-const FilterCreator = ({
-  phaseId,
-  classNames = [],
-  columns,
-  filters,
-  addFilter,
-  titleButton,
-}) => {
-  const [selectedFilter, setSelectedFilter] = useState('');
-  const [selectedFilterType, setSelectedFilterType] = useState('');
+const initialState = {
+  selectedFilter: '',
+  selectedFilterType: '',
+  filterValue: '',
+  filterBetweenMin: '',
+  filterBetweenMax: '',
+};
+
+const FilterCreator = ({ phaseId, classNames = [], titleButton }) => {
+  const [filterConfig, setFilterConfig] = useState(initialState);
   const [filterCreator, setFilterCreator] = useState(false);
-  const [filterValue, setFilterValue] = useState('');
-  const [filterValueBetween, setFilterValueBetween] = useState([]);
-  const filterNameRef = React.createRef();
+  const columns = useSelector((state) =>
+    state.columns.filter((column) => column.phaseId === phaseId)
+  );
+  const filters = useSelector((state) => state.filters);
+  const dispatch = useDispatch();
+
+  const setFilterConfigHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setFilterConfig({
+      ...filterConfig,
+      [name]: value,
+    });
+  };
+
+  const setFilterCreatorHandler = (value) => () => {
+    setFilterCreator(value);
+  };
 
   const setFilter = () => {
+    const {
+      selectedFilter,
+      selectedFilterType,
+      filterValue,
+      filterBetweenMax,
+      filterBetweenMin,
+    } = filterConfig;
     const columnId = columns.find((c) => c.name === selectedFilter).columnId;
-    const value = filterValue ? filterValue : filterValueBetween;
-    addFilter(selectedFilter, phaseId, columnId, selectedFilterType, value);
-    setSelectedFilterType('');
-    setFilterValue('');
-    setFilterValueBetween([]);
+    const value = +filterValue || [+filterBetweenMin, +filterBetweenMax];
+
+    dispatch(
+      addFilter(selectedFilter, phaseId, columnId, selectedFilterType, value)
+    );
+
+    setFilterConfig({
+      ...initialState,
+      selectedFilter,
+    });
     setFilterCreator(false);
   };
 
-  const handleBetween = (e) => {
-    let value = e.target.value;
-    e.target.name === 'filterBetweenMin'
-      ? (filterValueBetween[0] = value)
-      : (filterValueBetween[1] = value);
-  };
-
-  const cssClassNames = [];
-  if (classNames.length > 0) {
-    Array.prototype.push.apply(cssClassNames, classNames);
-  }
-
+  const cssClassNames = useMemo(() => classNames.join(' '), [classNames]); // ?
   const usedFilters = filters.map((filter) => filter.columnId);
   const availableFilters = columns.filter(
     (column) => !usedFilters.includes(column.columnId)
   );
 
   return (
-    <div className={`${cssClassNames.join(' ')} creator`}>
+    <div className={`${cssClassNames} creator`}>
       {filterCreator ? (
         <div>
           <div>
             <p>Which indicator should filter our assets?</p>
             <select
               id='filterSelect'
-              onChange={(e) => setSelectedFilter(e.target.value)}>
+              name='selectedFilter'
+              onChange={setFilterConfigHandler}>
               <option value=''>Select indicator</option>
-              {availableFilters.map((column) => {
+              {availableFilters.map(({ name }) => {
                 return (
-                  <option key={column.name} value={column.name}>
-                    {column.name}
+                  <option key={name} value={name}>
+                    {name}
                   </option>
                 );
               })}
@@ -69,41 +87,42 @@ const FilterCreator = ({
             <p>What type of filter is this?</p>
             <select
               id='filterType'
-              onChange={(e) => setSelectedFilterType(e.target.value)}>
+              name='selectedFilterType'
+              onChange={setFilterConfigHandler}>
               <option value=''>Select type</option>
-              {filterTypes.map((type) => {
+              {filterTypes.map(({ name }) => {
                 return (
-                  <option key={type.name} value={type.name}>
-                    {type.name}
+                  <option key={name} value={name}>
+                    {name}
                   </option>
                 );
               })}
             </select>
           </div>
-          {selectedFilterType === 'BETWEEN' ? (
+          {filterConfig.selectedFilterType === 'BETWEEN' ? (
             <React.Fragment>
               <input
                 name='filterBetweenMin'
                 type='text'
                 placeholder={`Enter MIN value`}
-                value={filterValueBetween[0]}
-                onChange={handleBetween}
+                value={filterConfig.filterBetweenMin}
+                onChange={setFilterConfigHandler}
               />
               <input
                 name='filterBetweenMax'
                 type='text'
                 placeholder={`Enter MAX value`}
-                value={filterValueBetween[1]}
-                onChange={handleBetween}
+                value={filterConfig.filterBetweenMax}
+                onChange={setFilterConfigHandler}
               />
             </React.Fragment>
           ) : (
             <input
               type='text'
-              placeholder={`Enter ${selectedFilterType} value`}
-              ref={filterNameRef}
-              value={filterValue}
-              onChange={(e) => setFilterValue(e.target.value)}
+              placeholder={`Enter ${filterConfig.selectedFilterType} value`}
+              value={filterConfig.filterValue}
+              name='filterValue'
+              onChange={setFilterConfigHandler}
             />
           )}
           <button className='creator--button' onClick={setFilter}>
@@ -111,30 +130,18 @@ const FilterCreator = ({
           </button>
           <button
             className='creator--button-x'
-            onClick={() => setFilterCreator(false)}>
+            onClick={setFilterCreatorHandler(false)}>
             X
           </button>
         </div>
       ) : (
         <NewElementButton
           title={titleButton}
-          buttonAction={() => setFilterCreator(true)}
+          buttonAction={setFilterCreatorHandler(true)}
         />
       )}
     </div>
   );
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  columns: state.columns.filter(
-    (column) => column.phaseId === ownProps.phaseId
-  ),
-  filters: state.filters,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  addFilter: (name, phaseId, columnId, filterType, between) =>
-    dispatch(addFilter(name, phaseId, columnId, filterType, between)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilterCreator);
+export default FilterCreator;
