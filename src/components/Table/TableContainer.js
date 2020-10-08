@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import ElementCreator from '../DefaultElement/ElementCreator';
-import ColumnContainer from '../../components/Column/ColumnContainer';
-import { addrow, removerow, renamerow } from '../../actions/rows';
-import DefaultContainer from '../DefaultElement/DefaultContainer';
-import selectorFunction from '../../selectors/rowSelector';
-import DecisionGate from '../DecisionGate/DecisionGate';
-import TableContext from './Table-context';
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import axios from 'axios'
+import ElementCreator from '../DefaultElement/ElementCreator'
+import ColumnContainer from '../../components/Column/ColumnContainer'
+import { addrow, removerow, renamerow } from '../../actions/rows'
+import DefaultContainer from '../DefaultElement/DefaultContainer'
+import selectorFunction from '../../selectors/rowSelector'
+import DecisionGate from '../DecisionGate/DecisionGate'
+import TableContext from './Table-context'
 
 const TableContainer = ({
   phaseId,
@@ -19,11 +20,22 @@ const TableContainer = ({
   removerow,
   renamerow,
 }) => {
-  const [actionFired, fireAction] = useState(false);
+  const [actionFired, fireAction] = useState(false)
 
   const handleFireAction = () => {
-    fireAction(true);
-  };
+    fireAction(true)
+  }
+
+  let stockNames
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/api/wse/stocknames')
+      .then((res) => {
+        const stockArr = res.data.map((stock) => stock.name)
+        if (stockArr.length !== 0) stockNames = stockArr
+      })
+      .catch((err) => console.log(err))
+  }, [])
 
   return (
     <TableContext.Provider value={{ rows, phaseId }}>
@@ -76,33 +88,26 @@ const TableContainer = ({
         )}
       </div>
     </TableContext.Provider>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state, ownProps) => {
-  const rows = state.rows.filter((row) => row.phaseId === ownProps.phaseId);
-  const columns = state.columns.filter(
-    (column) => column.phaseId === ownProps.phaseId
-  );
-  const filters = state.filters.filter(
-    (filter) => filter.phaseId === ownProps.phaseId
-  );
-  const values = state.values.filter(
-    (value) => value.phaseId === ownProps.phaseId
-  );
-  const visibleRows = selectorFunction(rows, columns, filters, values); // OK
+  const rows = state.rows.filter((row) => row.phaseId === ownProps.phaseId)
+  const columns = state.columns.filter((column) => column.phaseId === ownProps.phaseId)
+  const filters = state.filters.filter((filter) => filter.phaseId === ownProps.phaseId)
+  const values = state.values.filter((value) => value.phaseId === ownProps.phaseId)
+  const visibleRows = selectorFunction(rows, columns, filters, values) // OK
   return {
     rows: visibleRows,
     columns,
     filters,
-  };
-};
+  }
+}
 
 const mapDispatchToProps = (dispatch) => ({
   addrow: (name, phaseId, columns) => dispatch(addrow(name, phaseId, columns)),
-  removerow: (rowId, phaseId, index) =>
-    dispatch(removerow(rowId, phaseId, index)),
+  removerow: (rowId, phaseId, index) => dispatch(removerow(rowId, phaseId, index)),
   renamerow: (name, rowId) => dispatch(renamerow(name, rowId)),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(TableContainer)
