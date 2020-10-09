@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import ElementCreator from '../DefaultElement/ElementCreator'
 import ColumnContainer from '../../components/Column/ColumnContainer'
 import { addrow, removerow, renamerow } from '../../actions/rows'
@@ -25,17 +24,6 @@ const TableContainer = ({
   const handleFireAction = () => {
     fireAction(true)
   }
-
-  let stockNames
-  useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/wse/stocknames')
-      .then((res) => {
-        const stockArr = res.data.map((stock) => stock.name)
-        if (stockArr.length !== 0) stockNames = stockArr
-      })
-      .catch((err) => console.log(err))
-  }, [])
 
   return (
     <TableContext.Provider value={{ rows, phaseId }}>
