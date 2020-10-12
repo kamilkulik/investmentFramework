@@ -1,14 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { saveStockInfo } from '../actions/assetData'
 import { Router, Route, Switch } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import MainSidebar from '../components/MainSidebar'
 import StockSelector from '../pages/StockSelector'
 import PositionCalculator from '../pages/PositionCalculator'
-import io from 'socket.io-client'
+import { useFetchStockInfo } from '../utils/customHooks'
+
+// import io from 'socket.io-client'
 
 export const history = createBrowserHistory()
 
-const AppRouter = () => {
+const AppRouter = ({ saveStockInfo }) => {
+  const { stockInfo: fetchedStockInfo, status: fetchStatus } = useFetchStockInfo('name')
+
+  useEffect(() => {
+    if (fetchStatus !== 'fetched') return undefined
+
+    saveStockInfo(fetchedStockInfo)
+  }, [fetchStatus])
+
   // React.useEffect(() => {
   //   const socket = io('http://localhost:3000');
   //   socket.on('connect', () => {
@@ -46,4 +58,8 @@ const AppRouter = () => {
   )
 }
 
-export default AppRouter
+const mapDispatchToProps = (dispatch) => ({
+  saveStockInfo: (stockInfo) => dispatch(saveStockInfo(stockInfo)),
+})
+
+export default connect(null, mapDispatchToProps)(AppRouter)

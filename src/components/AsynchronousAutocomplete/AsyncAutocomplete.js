@@ -2,7 +2,6 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { useFetchStockInfo } from '../../utils/customHooks'
 
 export default function AsyncAutocomplete() {
   const [open, setOpen] = React.useState(false)
@@ -10,29 +9,23 @@ export default function AsyncAutocomplete() {
   const loading = open && options.length === 0
 
   React.useEffect(() => {
-    let active = true
-
-    if (!loading) {
-      return undefined
-    }
-
-    ;(async () => {
-      const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000')
-      await sleep(1e3) // For demo purposes.
-      const countries = await response.json()
-
-      if (active) {
-        setOptions(Object.keys(countries).map((key) => countries[key].item[0]))
-      }
-    })()
-
-    const { stockInfo: fetchedStockInfo, status: fetchStatus } = useFetchStockInfo('name')
-    setOptions(fetchedStockInfo)
-
-    return () => {
-      active = false
-    }
-  }, [loading])
+    // let active = true
+    // if (!loading) {
+    //   return undefined
+    // }
+    // ;(async () => {
+    //   const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000')
+    //   await sleep(1e3) // For demo purposes.
+    //   const countries = await response.json()
+    //   if (active) {
+    //     setOptions(Object.keys(countries).map((key) => countries[key].item[0]))
+    //   }
+    // })()
+    // setOptions(fetchedStockInfo)
+    // return () => {
+    //   active = false
+    // }
+  }, [fetchStatus])
 
   React.useEffect(() => {
     if (!open) {

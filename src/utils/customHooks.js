@@ -22,8 +22,7 @@ export const useFetchStockInfo = (info) => {
       .get('http://localhost:4000/api/wse/stocknames')
       .then((res) => {
         if (res.data.length !== 0) {
-          const stockArr = res.data.map((stock) => stock[info])
-          setStockInfo(stockArr)
+          setStockInfo(res)
           setStatus('fetched')
         }
       })
