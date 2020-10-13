@@ -13,7 +13,7 @@ import { useFetchStockInfo } from '../utils/customHooks'
 export const history = createBrowserHistory()
 
 const AppRouter = ({ saveStockInfo }) => {
-  const { stockInfo: fetchedStockInfo, status: fetchStatus } = useFetchStockInfo('name')
+  const { data: fetchedStockInfo, status: fetchStatus } = useFetchStockInfo('stockInfo')
 
   useEffect(() => {
     if (fetchStatus !== 'fetched') return undefined

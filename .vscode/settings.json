@@ -1,0 +1,12 @@
+{
+  "codemetrics.basics.CodeLensEnabled": false,
+  "codemetrics.basics.DecorationModeEnabled": false,
+  "codemetrics.basics.MetricsForArrowFunctionsToggled": false,
+  "codemetrics.basics.MetricsForClassDeclarationsToggled": false,
+  "codemetrics.basics.MetricsForConstructorsToggled": false,
+  "codemetrics.basics.MetricsForEnumDeclarationsToggled": false,
+  "codemetrics.basics.MetricsForFunctionDeclarationsToggled": false,
+  "codemetrics.basics.MetricsForFunctionExpressionsToggled": false,
+  "codemetrics.basics.MetricsForMethodDeclarationsToggled": false,
+  "codemetrics.basics.OverviewRulerModeEnabled": false
+}

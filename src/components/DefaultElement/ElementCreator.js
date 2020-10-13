@@ -62,7 +62,7 @@ const ElementCreatorContainer = ({
   return (
     <div className={`${className} creator`}>
       {elementCreator ? (
-        <div>
+        <React.Fragment>
           <input
             type='text'
             placeholder={placeholder}
@@ -79,7 +79,7 @@ const ElementCreatorContainer = ({
           <button className='creator--button-x' onClick={handleElementCreator}>
             X
           </button>
-        </div>
+        </React.Fragment>
       ) : (
         <NewElementButton title={btnText} buttonAction={handleElementCreator} />
       )}

@@ -5,14 +5,14 @@ export default (state = assetDataDefaultState, action) => {
     case 'SAVE_STOCK_INFO':
       return {
         ...state,
-        stocks: {
+        stocks: [
           ...action.stockInfo.data.map((stock) => {
             return {
               name: stock.name,
               ticker: stock.ticker,
             }
           }),
-        },
+        ],
       }
     default:
       return state

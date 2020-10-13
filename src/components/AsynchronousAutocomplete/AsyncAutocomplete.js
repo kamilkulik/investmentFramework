@@ -1,18 +1,22 @@
 import React from 'react'
+import connect from 'react-redux'
 import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-export default function AsyncAutocomplete() {
+export default function AsyncAutocomplete(props) {
   const [open, setOpen] = React.useState(false)
   const [options, setOptions] = React.useState([])
   const loading = open && options.length === 0
 
   React.useEffect(() => {
-    // let active = true
-    // if (!loading) {
-    //   return undefined
-    // }
+    let active = true
+    if (!loading) {
+      return undefined
+    }
+    if (active) {
+      setOptions(props.assetData)
+    }
     // ;(async () => {
     //   const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000')
     //   await sleep(1e3) // For demo purposes.
@@ -21,11 +25,10 @@ export default function AsyncAutocomplete() {
     //     setOptions(Object.keys(countries).map((key) => countries[key].item[0]))
     //   }
     // })()
-    // setOptions(fetchedStockInfo)
-    // return () => {
-    //   active = false
-    // }
-  }, [fetchStatus])
+    return () => {
+      active = false
+    }
+  }, [props.assetData])
 
   React.useEffect(() => {
     if (!open) {
@@ -67,3 +70,11 @@ export default function AsyncAutocomplete() {
     />
   )
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    assetData: state.assetData.stocks,
+  }
+}
+
+export default connect(mapStateToProps)(AsyncAutocomplete)
