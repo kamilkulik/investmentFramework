@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-export default function AsyncAutocomplete(props) {
+export default function AsyncAutocomplete({ assetData }) {
   const [open, setOpen] = React.useState(false)
   const [options, setOptions] = React.useState([])
   const loading = open && options.length === 0
@@ -15,7 +15,7 @@ export default function AsyncAutocomplete(props) {
       return undefined
     }
     if (active) {
-      setOptions(props.assetData)
+      setOptions(assetData)
     }
     // ;(async () => {
     //   const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000')
@@ -28,7 +28,7 @@ export default function AsyncAutocomplete(props) {
     return () => {
       active = false
     }
-  }, [props.assetData])
+  }, [assetData])
 
   React.useEffect(() => {
     if (!open) {
