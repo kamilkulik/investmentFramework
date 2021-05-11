@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from "react";
-import NewElementButton from "../newElementButton";
+import React, { useState, useMemo } from 'react'
+import NewElementButton from '../newElementButton'
 
 const ElementCreatorContainer = ({
   setElementName,
@@ -12,72 +12,79 @@ const ElementCreatorContainer = ({
   rows = [],
   type,
 }) => {
-  const [elementCreator, setElementCreator] = useState(false);
-  const [elementName, setElementNameState] = useState("");
-  const elementNameRef = React.createRef();
+  const [elementCreator, setElementCreator] = useState(false)
+  const [elementName, setElementNameState] = useState('')
+  const [inputFocused, setInputFocus] = useState(false)
+  const elementNameRef = React.createRef()
 
   const setElement = () => {
     if (elementName) {
-      if (type === "row") {
-        setElementName(elementName, phaseId, columns);
-      } else if (type === "column") {
-        setElementName(elementName, phaseId, rows);
-      } else if (type === "phase") {
-        setElementName(elementName);
-      } else if (type === "selectedAsset") {
-        setElementName(elementName);
+      if (type === 'row') {
+        setElementName(elementName, phaseId, columns)
+      } else if (type === 'column') {
+        setElementName(elementName, phaseId, rows)
+      } else if (type === 'phase') {
+        setElementName(elementName)
+      } else if (type === 'selectedAsset') {
+        setElementName(elementName)
       }
-      setElementNameState("");
-      setElementCreator(false);
+      setElementNameState('')
+      setElementCreator(false)
     }
-  };
+    setInputFocus(false)
+  }
 
   const onKeyPress = (e) => {
     if (e.keyCode === 13) {
-      e.preventDefault();
-      elementNameRef.current.blur();
+      e.preventDefault()
+      elementNameRef.current.blur()
     }
-  };
+  }
 
   const handleOnChange = (e) => {
-    setElementNameState(e.target.value);
-  };
+    setElementNameState(e.target.value)
+  }
 
   const handleElementCreator = () => {
-    setElementCreator(!elementCreator);
-  };
+    setElementCreator(!elementCreator)
+  }
 
   const classHandler = (classes) => {
-    return !!classes ? classes : undefined;
-  };
+    return !!classes ? classes : undefined
+  }
 
-  const className = useMemo(() => classHandler(classNames), [classNames]);
+  const handleFocus = () => {
+    setInputFocus(true)
+  }
+
+  const className = useMemo(() => classHandler(classNames), [classNames])
 
   return (
     <div className={`${className} creator`}>
       {elementCreator ? (
-        <div>
+        <React.Fragment>
           <input
-            type="text"
+            type='text'
             placeholder={placeholder}
             ref={elementNameRef}
             value={elementName}
             onChange={handleOnChange}
             onKeyDown={onKeyPress}
             onBlur={setElement}
+            onFocus={handleFocus}
           />
-          <button className="creator--button" onClick={setElement}>
+          <button className='creator--button' onClick={setElement}>
             {addText}
           </button>
-          <button className="creator--button-x" onClick={handleElementCreator}>
+          <button className='creator--button-x' onClick={handleElementCreator}>
             X
           </button>
-        </div>
+        </React.Fragment>
       ) : (
         <NewElementButton title={btnText} buttonAction={handleElementCreator} />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ElementCreatorContainer;
+export default ElementCreatorContainer
